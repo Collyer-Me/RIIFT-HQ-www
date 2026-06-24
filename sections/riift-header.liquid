@@ -1,0 +1,133 @@
+<header class="riift-header{% unless section.settings.transparent_mode %} is-scrolled{% endunless %}" data-section-id="{{ section.id }}">
+  <a href="{{ routes.root_url }}" class="riift-header__logo">
+    {% if section.settings.logo != blank %}
+      {{
+        section.settings.logo
+        | image_url: width: 200
+        | image_tag: alt: shop.name, loading: 'eager'
+      }}
+    {% else %}
+      <img
+        src="{{ 'riift-logo-white.png' | asset_url }}"
+        alt="{{ shop.name }}"
+        width="80"
+        height="24"
+        loading="eager"
+      >
+    {% endif %}
+  </a>
+
+  <nav class="riift-header__nav" aria-label="Main">
+    {% for block in section.blocks %}
+      {% if block.type == 'link' %}
+        <a
+          href="{{ block.settings.url }}"
+          class="riift-header__link{% if block.settings.active %} is-active{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.label }}
+        </a>
+      {% endif %}
+    {% endfor %}
+    {% if section.settings.show_search %}
+      <a href="{{ routes.search_url }}" class="riift-header__search" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+        </svg>
+      </a>
+    {% endif %}
+  </nav>
+
+  <button type="button" class="riift-header__menu-toggle" data-riift-menu-toggle aria-label="Menu" aria-expanded="false">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <line x1="4" y1="7" x2="20" y2="7"></line>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="17" x2="20" y2="17"></line>
+    </svg>
+  </button>
+</header>
+
+{% unless section.settings.transparent_mode and template.name == 'index' %}
+  <div class="riift-header-spacer" aria-hidden="true"></div>
+{% endunless %}
+
+{% stylesheet %}
+  @media (max-width: 899px) {
+    .riift-header__nav.is-open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--riift-nav-bg-scrolled);
+      padding: 20px var(--riift-page-gutter) 28px;
+      border-bottom: 1px solid var(--riift-nav-border-scrolled);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "RIIFT Header",
+  "class": "riift-header-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (white on dark)"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_mode",
+      "label": "Transparent until scroll",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Nav link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "active",
+          "label": "Active state",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Header",
+      "blocks": [
+        { "type": "link", "settings": { "label": "Boards", "url": "/pages/boards" } },
+        { "type": "link", "settings": { "label": "System", "url": "/pages/system" } },
+        { "type": "link", "settings": { "label": "Shapers", "url": "/pages/shapers" } },
+        { "type": "link", "settings": { "label": "Dealers", "url": "/pages/dealers" } },
+        { "type": "link", "settings": { "label": "People", "url": "/pages/people" } },
+        { "type": "link", "settings": { "label": "Contact", "url": "/pages/contact" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

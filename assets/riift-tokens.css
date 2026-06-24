@@ -1,0 +1,55 @@
+/**
+ * RIIFT design tokens — source: Brand & Style Guidelines
+ * Monochrome palette; Poppins + Inter
+ */
+
+:root {
+  /* Colour */
+  --riift-ink: #111111;
+  --riift-footer-black: #0d0d0d;
+  --riift-white: #ffffff;
+  --riift-off-white: #f2f1ee;
+  --riift-label: #999999;
+  --riift-border: #e4e2dc;
+  --riift-hairline: #efece5;
+  --riift-placeholder: #b3aea3;
+  --riift-scrim: rgba(13, 13, 13, 0.6);
+  --riift-nav-border-scrolled: #222222;
+  --riift-nav-bg-scrolled: rgba(13, 13, 13, 0.92);
+  --riift-body-muted: rgba(17, 17, 17, 0.7);
+  --riift-body-subtle: rgba(17, 17, 17, 0.62);
+  --riift-on-dark-muted: rgba(255, 255, 255, 0.62);
+  --riift-on-dark-subtle: rgba(255, 255, 255, 0.55);
+  --riift-on-dark-faint: rgba(255, 255, 255, 0.4);
+  --riift-btn-hover: #333333;
+
+  /* Typography */
+  --riift-font-display: 'Poppins', sans-serif;
+  --riift-font-body: 'Inter', sans-serif;
+  --riift-h1: clamp(2.4rem, 7vw, 5.2rem);
+  --riift-h2: clamp(1.6rem, 3.4vw, 3rem);
+  --riift-h3: 1.2rem;
+  --riift-eyebrow-size: clamp(11px, 0.75rem, 12px);
+  --riift-body: 1.05rem;
+  --riift-body-opacity: 0.7;
+  --riift-caption: clamp(0.82rem, 0.9vw, 0.92rem);
+  --riift-pullquote: 1.4rem;
+  --riift-tracking-eyebrow: 0.14em;
+  --riift-tracking-nav: 0.14em;
+  --riift-tracking-heading: -0.01em;
+
+  /* Layout */
+  --riift-page-max: 1200px;
+  --riift-page-gutter: clamp(20px, 4vw, 56px);
+  --riift-section-pad-y: clamp(48px, 6vw, 80px);
+  --riift-logo-height: 24px;
+
+  /* Motion */
+  --riift-ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --riift-duration-reveal: 700ms;
+  --riift-duration-hover: 200ms;
+  --riift-duration-image: 600ms;
+  --riift-reveal-offset: 28px;
+  --riift-radius-card: 2px;
+  --riift-radius-pill: 999px;
+}

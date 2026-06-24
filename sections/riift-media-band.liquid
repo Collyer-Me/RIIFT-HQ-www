@@ -1,0 +1,57 @@
+<div class="riift-media-band riift-full-bleed" data-section-id="{{ section.id }}" data-reveal>
+  {% if section.settings.image != blank %}
+    {{
+      section.settings.image
+      | image_url: width: 2400
+      | image_tag: class: 'riift-media-band__image', loading: 'lazy', alt: section.settings.button_label
+    }}
+  {% else %}
+    <div class="riift-media-band__placeholder"></div>
+  {% endif %}
+  <div class="riift-media-band__scrim"></div>
+  {% if section.settings.button_label != blank %}
+    <div class="riift-media-band__content">
+      {% if section.settings.video_url != blank %}
+        <a href="{{ section.settings.video_url }}" class="riift-btn riift-btn--pill riift-media-band__play" target="_blank" rel="noopener">
+          <span class="riift-media-band__play-icon" aria-hidden="true"></span>
+          {{ section.settings.button_label }}
+        </a>
+      {% else %}
+        <span class="riift-btn riift-btn--pill riift-media-band__play">
+          <span class="riift-media-band__play-icon" aria-hidden="true"></span>
+          {{ section.settings.button_label }}
+        </span>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Media band",
+  "class": "riift-media-band-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Play button label",
+      "default": "Watch"
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Video URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Media band"
+    }
+  ]
+}
+{% endschema %}

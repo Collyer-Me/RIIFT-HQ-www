@@ -1,0 +1,33 @@
+---
+description: Theme deploy workflow — git and live Shopify stay in sync
+alwaysApply: true
+---
+
+# Theme deploy workflow
+
+**Source of truth:** this git repo on `master`.
+
+## Routine workflow
+
+1. Edit theme files locally (or in Theme Editor while `shopify theme dev` is running — then pull/sync changes back into the repo).
+2. Preview: `shopify theme dev` → press `e` for Theme Editor, or browse `http://127.0.0.1:9292`.
+3. Ship: commit + push to `master` — GitHub Actions runs `theme check` then `shopify theme push` to live theme `162909520093`.
+
+Quick local command:
+
+```powershell
+.\scripts\push-live.ps1 "Describe your change"
+```
+
+Or manually: `git add -A`, `git commit`, `git push origin master`.
+
+## Do not
+
+- Run `shopify theme push` for routine releases unless CI is broken or you need an emergency hotfix without a commit.
+- Edit the live theme in Admin Customize **without** `theme dev` and without pulling those JSON/settings changes back into git — they will be overwritten on the next deploy.
+
+## CI
+
+- Workflow: `.github/workflows/theme-deploy.yml`
+- Secret: `SHOPIFY_CLI_THEME_TOKEN` (Theme Access app password)
+- Manual re-deploy: GitHub → Actions → **Deploy theme to Shopify** → **Run workflow**

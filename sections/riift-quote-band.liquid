@@ -1,0 +1,92 @@
+<div class="riift-quote-band riift-full-bleed" data-section-id="{{ section.id }}">
+  {% if section.settings.image != blank %}
+    {{
+      section.settings.image
+      | image_url: width: 2400
+      | image_tag: class: 'riift-quote-band__image', loading: 'lazy', alt: ''
+    }}
+  {% else %}
+    <div class="riift-quote-band__placeholder"></div>
+  {% endif %}
+  <div class="riift-quote-band__scrim"></div>
+  <div class="riift-quote-band__content" data-reveal>
+    {% if section.settings.eyebrow != blank %}
+      <p class="riift-eyebrow" style="color: rgba(255,255,255,0.7); margin-bottom: 18px;">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="riift-h2" style="color: #fff; margin-bottom: 24px;">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.body != blank %}
+      <div class="riift-body" style="color: rgba(255,255,255,0.82); max-width: 60ch; margin: 0 auto 32px;">{{ section.settings.body }}</div>
+    {% endif %}
+    {% if section.settings.quote != blank %}
+      <blockquote class="riift-pullquote" style="color: #fff; max-width: 48ch; margin: 0 auto 18px;">{{ section.settings.quote }}</blockquote>
+    {% endif %}
+    {% if section.settings.attribution != blank %}
+      <p class="riift-eyebrow" style="color: rgba(255,255,255,0.6); margin-bottom: 30px;">{{ section.settings.attribution }}</p>
+    {% endif %}
+    {% if section.settings.button_label != blank %}
+      {% render 'riift-button',
+        variant: 'pill',
+        label: section.settings.button_label,
+        url: section.settings.button_url
+      %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Quote band",
+  "class": "riift-quote-band-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The heart of the system"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Perfect balance"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Pull quote"
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Quote attribution"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Quote band"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,47 @@
+<div class="riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% elsif section.settings.band_style == 'dark' %} riift-band--dark{% endif %}" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner" style="max-width: 640px;">
+    {% if section.settings.heading != blank %}
+      <h2 class="riift-h3" style="margin-bottom: 16px;">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.embed_html != blank %}
+      <div class="riift-klaviyo-embed">{{ section.settings.embed_html }}</div>
+    {% else %}
+      <p class="riift-caption">Paste Klaviyo embed HTML in Theme Editor.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Klaviyo embed",
+  "class": "riift-klaviyo-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "html",
+      "id": "embed_html",
+      "label": "Klaviyo embed HTML"
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "off-white"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Klaviyo embed"
+    }
+  ]
+}
+{% endschema %}

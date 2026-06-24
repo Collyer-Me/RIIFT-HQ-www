@@ -1,0 +1,49 @@
+{% comment %}
+  @param {string} eyebrow
+  @param {string} title
+  @param {string} body
+  @param {image} image
+  @param {string} url - Optional card link
+  @param {boolean} reveal
+  @param {string} attributes - e.g. block.shopify_attributes
+{% endcomment %}
+
+{% if url != blank %}
+  <a
+    href="{{ url }}"
+    class="riift-card"
+    {% if reveal %}data-reveal{% endif %}
+    {{ attributes }}
+  >
+{% else %}
+  <div
+    class="riift-card"
+    {% if reveal %}data-reveal{% endif %}
+    {{ attributes }}
+  >
+{% endif %}
+  <div class="riift-card__media">
+    {% if image != blank %}
+      {{
+        image
+        | image_url: width: 800
+        | image_tag: loading: 'lazy', alt: title | default: eyebrow
+      }}
+    {% endif %}
+  </div>
+  <div class="riift-card__body">
+    {% if eyebrow != blank %}
+      {% render 'riift-eyebrow', text: eyebrow %}
+    {% endif %}
+    {% if title != blank %}
+      <p class="riift-h3 riift-card__title">{{ title }}</p>
+    {% endif %}
+    {% if body != blank %}
+      <p class="riift-body">{{ body }}</p>
+    {% endif %}
+  </div>
+{% if url != blank %}
+  </a>
+{% else %}
+  </div>
+{% endif %}

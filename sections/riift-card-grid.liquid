@@ -1,0 +1,125 @@
+<div class="riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% elsif section.settings.band_style == 'dark' %} riift-band--dark{% endif %}" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner">
+    {% if section.settings.heading != blank or section.settings.eyebrow != blank %}
+      <div class="riift-card-grid" style="margin-bottom: 32px;" data-reveal>
+        {% if section.settings.eyebrow != blank %}
+          {% render 'riift-eyebrow', text: section.settings.eyebrow %}
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="riift-h2">{{ section.settings.heading }}</h2>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="riift-card-grid{% if section.settings.columns == '3' %} riift-card-grid--3{% endif %}">
+      {% for block in section.blocks %}
+        {% render 'riift-card',
+          eyebrow: block.settings.eyebrow,
+          title: block.settings.title,
+          body: block.settings.body,
+          image: block.settings.image,
+          url: block.settings.url,
+          reveal: true,
+          attributes: block.shopify_attributes
+        %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Card grid",
+  "class": "riift-card-grid-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Section eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2 (auto-fit)" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "off-white"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Card grid",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Mode",
+            "title": "Surf",
+            "body": "Low-aspect foil feel with responsive power delivery."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "eyebrow": "Mode",
+            "title": "Cruise",
+            "body": "Efficient range for long sessions on the water."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,91 @@
+<div class="riift-band" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="riift-h2" style="margin-bottom: clamp(28px, 3.5vw, 44px);" data-reveal>{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="riift-stat-grid riift-stat-grid--{{ section.settings.columns }}">
+      {% for block in section.blocks %}
+        <div class="riift-stat-column" data-reveal {{ block.shopify_attributes }}>
+          {% if block.settings.title != blank %}
+            <p class="riift-h3">{{ block.settings.title }}</p>
+          {% endif %}
+          {% if block.settings.body != blank %}
+            <p class="riift-body">{{ block.settings.body }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Stat grid",
+  "class": "riift-stat-grid-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Engineered to ride"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Drag free"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Stat grid",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "title": "Drag free",
+            "body": "Recess-integrated carbon tracks eliminate bolt-on drag."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "title": "Tool-less",
+            "body": "Clip-in PowerPack swaps without tools on the water."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "title": "Balanced",
+            "body": "Centre of mass over the foil's centre of lift."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

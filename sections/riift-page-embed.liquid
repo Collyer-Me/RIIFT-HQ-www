@@ -1,0 +1,68 @@
+{% liquid
+  assign layout = section.settings.layout | default: 'full_bleed'
+%}
+
+{% if layout == 'full_bleed' %}
+  <div class="riift-page riift-page-embed riift-page-embed--full riift-full-bleed" data-section-id="{{ section.id }}">
+    {%- if section.settings.page != blank and section.settings.page.content != blank -%}
+      {{ section.settings.page.content }}
+    {%- else -%}
+      <div class="riift-band">
+        <div class="riift-band__inner">
+          <p class="riift-caption">Select a page in Theme Editor to embed its HTML content here.</p>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+{% else %}
+  <div class="riift-page riift-page-embed riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% elsif section.settings.band_style == 'dark' %} riift-band--dark{% endif %}" data-section-id="{{ section.id }}">
+    <div class="riift-band__inner">
+      {%- if section.settings.page != blank and section.settings.page.content != blank -%}
+        {{ section.settings.page.content }}
+      {%- else -%}
+        <p class="riift-caption">Select a page in Theme Editor to embed its HTML content here.</p>
+      {%- endif -%}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "RIIFT Page embed",
+  "class": "riift-page-embed-section",
+  "settings": [
+    {
+      "type": "page",
+      "id": "page",
+      "label": "Page"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "full_bleed", "label": "Full bleed (homepage hero)" },
+        { "value": "contained", "label": "Contained band" }
+      ],
+      "default": "full_bleed"
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "info": "Only applies when layout is Contained band",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "none"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Page embed"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "riift-styleguide",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

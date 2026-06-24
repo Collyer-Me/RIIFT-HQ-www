@@ -30,6 +30,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
+    {%- render 'riift-horizon-bridge' -%}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -140,5 +141,8 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    <script src="{{ 'riift.js' | asset_url }}" defer></script>
+    <script src="{{ 'riift-hero.js' | asset_url }}" defer></script>
   </body>
 </html>

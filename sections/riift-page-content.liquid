@@ -1,0 +1,63 @@
+{% liquid
+  assign layout = section.settings.layout | default: 'full_bleed'
+%}
+
+{% if layout == 'full_bleed' %}
+  <div class="riift-page riift-page-content riift-page-content--full riift-full-bleed" data-section-id="{{ section.id }}">
+    {% if section.settings.show_hero and page.title != blank %}
+      {% render 'riift-page-hero', title: page.title %}
+    {% endif %}
+    {% if page.content != blank %}
+      {{ page.content }}
+    {% else %}
+      <div class="riift-band">
+        <div class="riift-band__inner">
+          <p class="riift-caption">This page has no content yet.</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="riift-page riift-band riift-page-content" data-section-id="{{ section.id }}">
+    <div class="riift-band__inner riift-page-embed">
+      {% if section.settings.show_hero and page.title != blank %}
+        {% render 'riift-page-hero', title: page.title %}
+      {% endif %}
+      {% if page.content != blank %}
+        {{ page.content }}
+      {% else %}
+        <p class="riift-caption">This page has no content yet.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "RIIFT Page content",
+  "class": "riift-page-content-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "full_bleed", "label": "Full bleed (hero / edge-to-edge)" },
+        { "value": "contained", "label": "Contained band" }
+      ],
+      "default": "full_bleed"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero",
+      "label": "Show page title hero",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Page content"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+<div class="riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% elsif section.settings.band_style == 'dark' %} riift-band--dark{% endif %}"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id }}"{% endif %} data-section-id="{{ section.id }}">
+  <div class="riift-band__inner riift-text-band riift-text-band--{{ section.settings.alignment }}" data-reveal>
+    {% if section.settings.eyebrow != blank %}
+      {% render 'riift-eyebrow', text: section.settings.eyebrow %}
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="riift-h2 riift-text-band__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.body != blank %}
+      <div class="riift-body riift-text-band__body">{{ section.settings.body }}</div>
+    {% endif %}
+    {% if section.settings.button_label != blank %}
+      <div class="riift-text-band__cta">
+        {% render 'riift-button',
+          variant: section.settings.button_style,
+          label: section.settings.button_label,
+          url: section.settings.button_url
+        %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Text band",
+  "class": "riift-text-band-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID",
+      "info": "For in-page links, e.g. core"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Section heading"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body"
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "pill", "label": "Pill" },
+        { "value": "link", "label": "Text link" }
+      ],
+      "default": "link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Text band",
+      "settings": {
+        "heading": "The core of the board",
+        "alignment": "center"
+      }
+    }
+  ]
+}
+{% endschema %}

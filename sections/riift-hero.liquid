@@ -1,0 +1,212 @@
+{% liquid
+  assign slides = ''
+  assign slide_count = 0
+
+  if section.settings.image_1 != blank
+    assign image_url = section.settings.image_1 | image_url: width: 2400
+    assign slides = slides | append: '"' | append: image_url | append: '"'
+    assign slide_count = slide_count | plus: 1
+  endif
+  if section.settings.image_2 != blank
+    assign image_url = section.settings.image_2 | image_url: width: 2400
+    if slide_count > 0
+      assign slides = slides | append: ','
+    endif
+    assign slides = slides | append: '"' | append: image_url | append: '"'
+    assign slide_count = slide_count | plus: 1
+  endif
+  if section.settings.image_3 != blank
+    assign image_url = section.settings.image_3 | image_url: width: 2400
+    if slide_count > 0
+      assign slides = slides | append: ','
+    endif
+    assign slides = slides | append: '"' | append: image_url | append: '"'
+    assign slide_count = slide_count | plus: 1
+  endif
+
+  for block in section.blocks
+    if block.type == 'slide' and block.settings.image != blank
+      assign image_url = block.settings.image | image_url: width: 2400
+      if slide_count > 0
+        assign slides = slides | append: ','
+      endif
+      assign slides = slides | append: '"' | append: image_url | append: '"'
+      assign slide_count = slide_count | plus: 1
+    endif
+  endfor
+
+  assign phrases_lines = section.settings.phrases | newline_to_br | split: '<br />'
+  assign phrases_json = ''
+  assign phrase_count = 0
+  for line in phrases_lines
+    assign trimmed = line | strip
+    if trimmed != blank
+      if phrase_count > 0
+        assign phrases_json = phrases_json | append: ','
+      endif
+      assign phrases_json = phrases_json | append: '"' | append: trimmed | append: '"'
+      assign phrase_count = phrase_count | plus: 1
+    endif
+  endfor
+%}
+
+<div
+  class="riift-full-bleed"
+  data-riift-hero
+  {% if slide_count > 0 %}data-slides='[{{ slides }}]'{% endif %}
+  {% if phrase_count > 0 %}data-phrases='[{{ phrases_json }}]'{% endif %}
+  data-slide-interval="{{ section.settings.slide_interval | times: 1000 }}"
+  data-phrase-interval="{{ section.settings.phrase_interval | times: 1000 }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="riift-hero__slides">
+    {% if slide_count == 0 %}
+      <div class="riift-hero__slide is-active" style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #2a3a4a 100%);"></div>
+    {% endif %}
+  </div>
+  <div class="riift-hero__scrim"></div>
+  <div class="riift-hero__content{% if section.settings.alignment == 'center' %} riift-hero__content--center{% endif %}">
+    {% if section.settings.eyebrow != blank %}
+      <p class="riift-eyebrow" style="color: rgba(255,255,255,0.55); margin-bottom: 16px;">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <div class="riift-hero__headline">
+      {% if phrase_count == 0 and section.settings.fallback_headline != blank %}
+        <span class="riift-hero__phrase riift-h1 is-active">{{ section.settings.fallback_headline }}</span>
+      {% endif %}
+    </div>
+    {% if section.settings.subtitle != blank %}
+      <p class="riift-hero__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+    {% if section.settings.button_label != blank %}
+      {% render 'riift-button',
+        variant: 'pill',
+        label: section.settings.button_label,
+        url: section.settings.button_url,
+        class: 'riift-hero__cta'
+      %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Hero",
+  "class": "riift-hero-section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Hero image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Hero image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Hero image 3"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add 1–3 images for crossfade rotation. Leave empty for a dark placeholder."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "textarea",
+      "id": "phrases",
+      "label": "Rotating headlines",
+      "info": "One phrase per line. Cycles with kinetic fade.",
+      "default": "Recess Integrated\nDrag Free.\nTool-less."
+    },
+    {
+      "type": "text",
+      "id": "fallback_headline",
+      "label": "Static headline",
+      "info": "Used when rotating phrases is empty",
+      "default": "Recess Integrated"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "No Drag. No Tools. No Compromise."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Timing"
+    },
+    {
+      "type": "range",
+      "id": "slide_interval",
+      "label": "Slide interval (seconds)",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "phrase_interval",
+      "label": "Phrase interval (seconds)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Extra hero slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#F4F2ED;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;color:#111}
+  ::selection{background:#111;color:#fff}
+  a{text-decoration:none;color:inherit}
+  @keyframes wz-fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#F4F2ED;display:flex;flex-direction:column">
+
+  <!-- TOP BAR -->
+  <header style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,48px);background:#0d0d0d;color:#fff">
+    <div style="display:flex;align-items:center;gap:14px">
+      <a href="Home E - Wireframe.dc.html" style="display:inline-flex;align-items:center"><img src="assets/riift-logo-white.png" alt="RIIFT" style="height:20px;width:auto;display:block" /></a>
+      <span style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);padding-left:14px;border-left:1px solid rgba(255,255,255,.2)">Setup Finder</span>
+    </div>
+    <span style="font-family:'Inter';font-size:.88rem;color:rgba(255,255,255,.7)">{{ topStatus }}</span>
+  </header>
+
+  <!-- progress -->
+  <div style="flex:none;height:4px;background:#e6e2d9">
+    <div style="height:100%;width:{{ progressPct }};background:#111;transition:width 450ms cubic-bezier(.2,.7,.3,1)"></div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1.1fr;gap:0;align-items:stretch">
+
+    <!-- LEFT: intro / question / result -->
+    <section style="padding:clamp(28px,4vw,64px);display:flex;flex-direction:column;justify-content:center;min-width:0;border-right:1px solid #e6e2d9">
+
+      <sc-if value="{{ screenIntro }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:46ch">
+          <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#999;margin-bottom:18px">Live match finder</p>
+          <h1 style="font-family:'Poppins';font-weight:800;font-size:clamp(2rem,4vw,3.2rem);line-height:1.03;letter-spacing:-.02em;text-transform:uppercase">Watch the right setup rise to the top.</h1>
+          <p style="font-family:'Inter';font-size:1.08rem;line-height:1.65;color:rgba(17,17,17,.66);margin-top:22px">Answer a few quick questions. Your RIIFT Tracks and Battery Kit are scored against your riding in real time — both rankings on the right re-sort with each answer until clear winners emerge.</p>
+          <button onclick="{{ onStart }}" style="margin-top:36px;font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#111;border:none;padding:17px 40px;cursor:pointer;border-radius:999px;transition:background 200ms ease" onmouseenter="{{ darkEnter }}" onmouseleave="{{ darkLeave }}">Start RIIFT Wizard</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ screenQuiz }}" hint-placeholder-val="{{ true }}">
+        <div key="{{ stepKey }}" style="animation:wz-fade 380ms cubic-bezier(.2,.7,.3,1);max-width:520px">
+          <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#999;margin-bottom:14px">{{ stepEyebrow }}</p>
+          <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.5rem,2.8vw,2.2rem);line-height:1.08;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:clamp(22px,3vw,32px)">{{ stepTitle }}</h2>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <sc-for list="{{ options }}" as="o" hint-placeholder-count="4">
+              <button onclick="{{ o.onClick }}" onmouseenter="{{ o.enter }}" onmouseleave="{{ o.leave }}" style="text-align:left;cursor:pointer;background:{{ o.bg }};border:1.5px solid {{ o.ring }};border-radius:8px;padding:18px 20px;transition:border-color 160ms ease,background 160ms ease,transform 160ms ease;display:flex;align-items:center;justify-content:space-between;gap:14px">
+                <span style="display:block">
+                  <span style="display:block;font-family:'Poppins';font-weight:600;font-size:1.08rem;color:#111">{{ o.label }}</span>
+                  <sc-if value="{{ o.hasDesc }}" hint-placeholder-val="{{ true }}">
+                    <span style="display:block;font-family:'Inter';font-size:.9rem;line-height:1.45;color:rgba(17,17,17,.58);margin-top:4px">{{ o.desc }}</span>
+                  </sc-if>
+                </span>
+                <span style="flex:none;width:22px;height:22px;border-radius:999px;border:1.5px solid {{ o.checkRing }};background:{{ o.checkFill }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px">{{ o.check }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;margin-top:28px">
+            <button onclick="{{ onBack }}" style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#111;background:transparent;border:1px solid #ccc;border-radius:999px;padding:12px 24px;cursor:pointer;transition:border-color 160ms ease" onmouseenter="{{ ghostEnter }}" onmouseleave="{{ ghostLeave }}">← Back</button>
+            <span style="font-family:'Inter';font-size:.88rem;color:rgba(17,17,17,.5)">{{ stepCounter }}</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ screenResults }}" hint-placeholder-val="{{ true }}">
+        <div style="animation:wz-fade 480ms cubic-bezier(.2,.7,.3,1);max-width:520px">
+          <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#999;margin-bottom:14px">Your recommended setup</p>
+          <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.04;letter-spacing:-.02em;text-transform:uppercase">{{ rec.headline }}</h2>
+          <p style="font-family:'Poppins';font-weight:500;font-size:1rem;color:#111;margin-top:8px">{{ rec.matchLine }}</p>
+          <p style="font-family:'Inter';font-size:1.02rem;line-height:1.6;color:rgba(17,17,17,.66);margin-top:18px">{{ rec.blurb }}</p>
+
+          <div style="background:#fff;border:1px solid #e6e2d9;border-radius:10px;padding:20px 22px;margin-top:24px;display:flex;flex-direction:column;gap:13px">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:11px"><span style="font-family:'Inter';font-size:.9rem;color:#888">Tracks</span><span style="font-family:'Inter';font-weight:600;font-size:.95rem">{{ rec.trackLine }}</span></div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:11px"><span style="font-family:'Inter';font-size:.9rem;color:#888">Battery Kit</span><span style="font-family:'Inter';font-weight:600;font-size:.95rem">{{ rec.packLine }}</span></div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:11px"><span style="font-family:'Inter';font-size:.9rem;color:#888">Matched shaper</span><span style="font-family:'Inter';font-weight:600;font-size:.95rem">{{ rec.shaper }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="font-family:'Inter';font-size:.9rem;color:#888">Est. run time</span><span style="font-family:'Inter';font-weight:600;font-size:.95rem">{{ rec.run }}</span></div>
+          </div>
+
+          <sc-if value="{{ rec.showWarn }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#f2f1ee;border:1px solid #e0ddd4;border-radius:10px;padding:14px 18px;margin-top:14px;display:flex;align-items:flex-start;gap:12px">
+              <span style="flex:none;width:22px;height:22px;border-radius:999px;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">!</span>
+              <p style="font-family:'Inter';font-size:.88rem;line-height:1.5;color:rgba(17,17,17,.78)">{{ rec.warn }}</p>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+            <a href="#" style="font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#111;border-radius:999px;padding:15px 32px;transition:background 200ms ease" onmouseenter="{{ darkEnter }}" onmouseleave="{{ darkLeave }}">Buy now</a>
+            <button onclick="{{ onRestart }}" style="font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#111;background:transparent;border:1px solid #ccc;border-radius:999px;padding:15px 28px;cursor:pointer;transition:border-color 160ms ease" onmouseenter="{{ ghostEnter }}" onmouseleave="{{ ghostLeave }}">Start over</button>
+          </div>
+        </div>
+      </sc-if>
+
+    </section>
+
+    <!-- RIGHT: two live leaderboards -->
+    <section style="padding:clamp(28px,4vw,52px) clamp(20px,3vw,48px);background:#efece4;min-width:0">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+        <div style="margin-bottom:clamp(26px,3vw,38px)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px">
+            <h3 style="font-family:'Poppins';font-weight:700;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase">{{ g.title }}</h3>
+            <span style="font-family:'Inter';font-size:.8rem;color:rgba(17,17,17,.5)">{{ g.hint }}</span>
+          </div>
+          <div style="position:relative;width:100%;height:{{ g.height }}">
+            <sc-for list="{{ g.rows }}" as="b" hint-placeholder-count="3">
+              <div style="position:absolute;left:0;right:0;top:0;height:84px;transform:translateY({{ b.ty }});transition:transform 560ms cubic-bezier(.4,.1,.2,1);background:#fff;border:1.5px solid {{ b.border }};border-radius:10px;padding:13px 18px;display:flex;align-items:center;gap:15px;box-shadow:{{ b.shadow }}">
+                <span style="flex:none;width:32px;height:32px;border-radius:999px;background:{{ b.rankBg }};color:{{ b.rankColor }};display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-weight:700;font-size:13px;transition:background 400ms ease">{{ b.rank }}</span>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                    <span style="font-family:'Poppins';font-weight:600;font-size:1rem;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.name }}</span>
+                    <span style="font-family:'Poppins';font-weight:700;font-size:.98rem;color:{{ b.pctColor }};flex:none">{{ b.pctLabel }}</span>
+                  </div>
+                  <div style="font-family:'Inter';font-size:.8rem;color:rgba(17,17,17,.55);margin:2px 0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.sub }}</div>
+                  <div style="height:6px;border-radius:999px;background:#e2ded4;overflow:hidden">
+                    <div style="height:100%;width:{{ b.barW }};background:{{ b.barColor }};border-radius:999px;transition:width 560ms cubic-bezier(.4,.1,.2,1)"></div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { phase:'intro', step:0, answers:{} };
+
+  STEPS = [
+    { key:'mode', eyebrow:'01 · Discipline', title:'How do you want to ride?', options:[
+      { id:'prone', label:'Pure foiling', desc:'Prone & SUP, unpowered.' },
+      { id:'assist', label:'Foil assist', desc:'A subtle push to catch more waves.' },
+      { id:'efoil', label:'Efoil', desc:'Ride with no waves and no wind.' },
+      { id:'everything', label:'Everything', desc:'One quiver, all three modes.' }
+    ]},
+    { key:'build', eyebrow:'02 · Board', title:'How should your board be set up?', options:[
+      { id:'versatile', label:'Versatile build', desc:'Keep my options open — fit any battery size.' },
+      { id:'perf', label:'Peak-performance build', desc:'Lightest possible, optimised for one battery.' },
+      { id:'unsure', label:'Not sure yet', desc:'Recommend the right tracks for me.' }
+    ]},
+    { key:'conditions', eyebrow:'03 · Conditions', title:'Where do you ride most?', options:[
+      { id:'waves', label:'Ocean waves', desc:'Reef and beach breaks.' },
+      { id:'downwind', label:'Open ocean & downwind', desc:'Bumps and long runs.' },
+      { id:'flat', label:'Flat water & lakes', desc:'Calm, glassy conditions.' },
+      { id:'mix', label:'A bit of everything' }
+    ]},
+    { key:'weight', eyebrow:'04 · Rider', title:'Your riding weight?', options:[
+      { id:'u70', label:'Under 70 kg' },
+      { id:'70-85', label:'70 – 85 kg' },
+      { id:'85-100', label:'85 – 100 kg' },
+      { id:'o100', label:'Over 100 kg' }
+    ]},
+    { key:'session', eyebrow:'05 · Range', title:'How long do you want to ride?', options:[
+      { id:'short', label:'Quick blasts', desc:'Around 30 minutes.' },
+      { id:'medium', label:'Half sessions', desc:'Around 45 minutes.' },
+      { id:'long', label:'Long sessions', desc:'60 minutes or more.' }
+    ]},
+    { key:'experience', eyebrow:'06 · Level', title:'Your foiling experience?', options:[
+      { id:'new', label:'New to foiling' },
+      { id:'inter', label:'Intermediate' },
+      { id:'adv', label:'Advanced' }
+    ]},
+    { key:'region', eyebrow:'07 · Location', title:'Where are you based?', options:[
+      { id:'aus', label:'Australia / NZ' },
+      { id:'eu', label:'Europe / UK' },
+      { id:'na', label:'North America' },
+      { id:'apac', label:'Asia-Pacific' },
+      { id:'other', label:'Elsewhere' }
+    ]}
+  ];
+
+  // GROUP 1 — the two Tracks (ranking is driven by the 4P-default rule below)
+  TRACKS = [
+    { id:'t2', name:'RIIFT 2P Tracks', short:'2P Tracks', sub:'Compact layup · 2P battery only', price:'~$2,200' },
+    { id:'t4', name:'RIIFT 4P Tracks', short:'4P Tracks', sub:'Full-length · fits every battery', price:'~$2,500' }
+  ];
+
+  // GROUP 2 — the three Battery Kits, scored against each other
+  BATTERIES = [
+    { id:'2p', name:'RIIFT Battery Kit · 2P', short:'2P Kit', sub:'Entry · 518 Wh · ~30 min', pack:0,
+      w:{ mode:{prone:10,assist:6,everything:2,efoil:2}, conditions:{waves:7,flat:4,mix:3}, weight:{u70:10,'70-85':5}, session:{short:10,medium:4}, experience:{new:8,inter:4} } },
+    { id:'3p', name:'RIIFT Battery Kit · 3P', short:'3P Kit', sub:'All-day · 778 Wh · ~45 min', pack:1,
+      w:{ mode:{assist:8,efoil:7,everything:6,prone:3}, conditions:{flat:8,mix:7,waves:6,downwind:5}, weight:{'70-85':9,'85-100':7,u70:5}, session:{medium:10,long:6,short:5}, experience:{inter:9,new:6,adv:6} } },
+    { id:'4p', name:'RIIFT Battery Kit · 4P', short:'4P Kit', sub:'Flagship · 1,036 Wh · ~60 min', pack:2,
+      w:{ mode:{everything:10,efoil:9,assist:5}, conditions:{downwind:10,mix:6,flat:4,waves:3}, weight:{o100:10,'85-100':9,'70-85':5}, session:{long:10,medium:5}, experience:{adv:10,inter:5} } }
+  ];
+
+  PACKS = [
+    { name:'2P', wh:'518 Wh', run:'~30 min', price:'$7,000' },
+    { name:'3P', wh:'778 Wh', run:'~45 min', price:'$8,500' },
+    { name:'4P', wh:'1,036 Wh', run:'~60 min', price:'$10,000' }
+  ];
+  SHAPERS = { aus:'Jarrod Snow Designs', eu:'AppleTree Surfboards', na:'KT Boards', apac:'SUNOVA', other:'270 Board Co' };
+
+  start = () => this.setState({ phase:'quiz', step:0 });
+  restart = () => this.setState({ phase:'intro', step:0, answers:{} });
+  back = () => { if (this.state.step === 0) this.setState({ phase:'intro' }); else this.setState(s => ({ step:s.step - 1 })); };
+  select = (id) => {
+    const key = this.STEPS[this.state.step].key;
+    const answers = Object.assign({}, this.state.answers, { [key]: id });
+    const last = this.state.step === this.STEPS.length - 1;
+    this.setState({ answers });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => {
+      if (last) this.setState({ phase:'results' });
+      else this.setState(s => ({ step:s.step + 1 }));
+    }, last ? 620 : 360);
+  };
+  componentWillUnmount() { clearTimeout(this._t); }
+
+  // generic additive scorer for the battery group
+  scoreList(list, keys) {
+    const a = this.state.answers;
+    const answered = keys.filter(k => a[k]);
+    const maxSoFar = answered.length * 10;
+    return list.map((b, i) => {
+      let score = 0;
+      answered.forEach(k => { score += ((b.w[k] || {})[a[k]] || 0); });
+      const pct = maxSoFar > 0 ? Math.min(100, Math.round((score / maxSoFar) * 100)) : 0;
+      return Object.assign({}, b, { order:i, score, pct });
+    });
+  }
+
+  // tracks: 4P is the default winner; 2P only wins for an advanced rider who explicitly
+  // wants a peak-performance build (and accepts the 2P-battery-only limitation)
+  goes2P() { const a = this.state.answers; return a.build === 'perf' && a.experience === 'adv'; }
+  scoreTracks() {
+    const a = this.state.answers;
+    const decided = !!(a.build || a.experience);
+    const want2P = this.goes2P();
+    return this.TRACKS.map((t, i) => {
+      let pct = 0, score = 0;
+      if (decided) {
+        const winner = want2P ? 't2' : 't4';
+        if (t.id === winner) { pct = 100; score = 100; }
+        else {
+          // loser keeps a partial bar that reflects how close it is
+          if (t.id === 't2') { pct = (a.build === 'perf' ? 64 : 30); }
+          else { pct = (a.build === 'perf' && a.experience !== 'adv') ? 72 : 48; }
+          score = pct;
+        }
+      }
+      return Object.assign({}, t, { order:i, score, pct });
+    });
+  }
+
+  makeRows(scored, anyAnswered) {
+    const slot = 96;
+    const ranked = scored.slice().sort((x, y) => y.score - x.score || x.order - y.order);
+    const rankById = {};
+    ranked.forEach((b, idx) => { rankById[b.id] = idx; });
+    const rows = scored.map(b => {
+      const rk = rankById[b.id];
+      const leader = anyAnswered && rk === 0;
+      return {
+        name: b.name, sub: b.sub,
+        ty: (rk * slot) + 'px',
+        rank: anyAnswered ? String(rk + 1) : '–',
+        pctLabel: anyAnswered ? (b.pct + '%') : '—',
+        barW: (anyAnswered ? b.pct : 0) + '%',
+        border: leader ? '#111' : '#e6e2d9',
+        shadow: leader ? '0 12px 30px -16px rgba(0,0,0,.4)' : '0 1px 2px rgba(0,0,0,.04)',
+        rankBg: leader ? '#111' : '#f0ede6',
+        rankColor: leader ? '#fff' : '#888',
+        pctColor: leader ? '#111' : 'rgba(17,17,17,.55)',
+        barColor: leader ? '#111' : '#c9c3b6'
+      };
+    });
+    return { rows, ranked };
+  }
+
+  renderVals() {
+    const hover = (cb) => (e) => cb(e.currentTarget);
+    const { phase, step, answers } = this.state;
+    const cur = this.STEPS[step] || this.STEPS[0];
+    const total = this.STEPS.length;
+
+    const trackScored = this.scoreTracks();
+    const trackAnswered = !!(answers.build || answers.experience);
+    const battAnswered = ['mode','conditions','weight','session','experience'].some(k => answers[k]);
+    // 2P tracks only accept the 2P battery — lock the battery ranking to 2P when 2P tracks win
+    const lock2P = trackAnswered && this.goes2P();
+    let battScored = this.scoreList(this.BATTERIES, ['mode','conditions','weight','session','experience']);
+    if (lock2P) {
+      battScored = battScored.map(b => b.id === '2p'
+        ? Object.assign({}, b, { score: 1000, pct: 100 })
+        : Object.assign({}, b, { score: -1, pct: 0, sub: b.sub.replace(/ · needs 4P tracks$/, '') + ' · needs 4P tracks' }));
+    }
+
+    const battBoard = this.makeRows(battScored, battAnswered);
+    const trackBoard = this.makeRows(trackScored, trackAnswered);
+
+    const groups = [
+      { title:'RIIFT Tracks', hint: trackAnswered ? 'Live ranking' : 'Answer to begin', height:(2 * 96 - 12) + 'px', rows: trackBoard.rows },
+      { title:'Battery Kit', hint: battAnswered ? 'Live ranking' : 'Answer to begin', height:(3 * 96 - 12) + 'px', rows: battBoard.rows }
+    ];
+
+    const options = cur.options.map(o => {
+      const sel = answers[cur.key] === o.id;
+      return {
+        label:o.label, desc:o.desc || '', hasDesc:!!o.desc,
+        onClick: () => this.select(o.id),
+        bg: sel ? 'rgba(17,17,17,.05)' : '#fff',
+        ring: sel ? '#111' : '#e2ded6',
+        check: sel ? '✓' : '',
+        checkRing: sel ? '#111' : '#d4d0c7',
+        checkFill: sel ? '#111' : 'transparent',
+        enter: hover(el => { if (!sel) el.style.borderColor = '#bbb'; el.style.transform = 'translateY(-2px)'; }),
+        leave: hover(el => { el.style.borderColor = sel ? '#111' : '#e2ded6'; el.style.transform = 'none'; })
+      };
+    });
+
+    let rec = {};
+    if (phase === 'results') {
+      const trackTop = trackBoard.ranked[0];
+      let battTop = battBoard.ranked[0];
+      const is2PTracks = trackTop.id === 't2';
+      // 2P tracks only accept the 2P battery — force it
+      if (is2PTracks) battTop = battScored.find(b => b.id === '2p');
+      const pack = this.PACKS[battTop.pack];
+      const shaper = this.SHAPERS[answers.region] || this.SHAPERS.other;
+      rec = {
+        headline: trackTop.short + ' + ' + battTop.short,
+        matchLine: 'Tracks ' + trackTop.pct + '% · Battery ' + battTop.pct + '% match',
+        blurb: is2PTracks
+          ? 'As an advanced rider chasing a peak-performance build, 2P Tracks give you the lightest, stiffest setup possible — paired with the 2P Battery Kit.'
+          : '4P Tracks are the versatile choice: they accept every PowerPack, so you can change battery size any time without a new board. We\u2019ve matched the Battery Kit to your riding.',
+        trackLine: trackTop.name + ' · ' + trackTop.price,
+        packLine: pack.name + ' · ' + pack.wh + ' · ' + pack.price,
+        shaper,
+        run: pack.run + ' efoil at ~20 km/h',
+        showWarn: is2PTracks,
+        warn: '2P Tracks are sized for the 2P battery only — you won\u2019t be able to fit a 3P or 4P PowerPack later without re-tracking the board.'
+      };
+    }
+
+    const progress = phase === 'results' ? 100 : phase === 'quiz' ? Math.round((step / total) * 100) : 0;
+
+    return {
+      screenIntro: phase === 'intro',
+      screenQuiz: phase === 'quiz',
+      screenResults: phase === 'results',
+      progressPct: progress + '%',
+      topStatus: phase === 'results' ? 'Ranking locked' : (phase === 'quiz' ? ('Question ' + (step + 1) + ' / ' + total) : 'Ready'),
+      groups,
+      stepKey: cur.key,
+      stepEyebrow: cur.eyebrow,
+      stepTitle: cur.title,
+      stepCounter: 'Question ' + (step + 1) + ' of ' + total,
+      options,
+      rec,
+      onStart: this.start, onBack: this.back, onRestart: this.restart,
+      liftEnter: hover(el => { el.style.transform = 'translateY(-2px)'; el.style.boxShadow = '0 14px 30px -16px rgba(0,0,0,.4)'; }),
+      liftLeave: hover(el => { el.style.transform = 'none'; el.style.boxShadow = 'none'; }),
+      ghostEnter: hover(el => { el.style.borderColor = '#111'; }),
+      ghostLeave: hover(el => { el.style.borderColor = '#ccc'; }),
+      darkEnter: hover(el => { el.style.background = '#333'; }),
+      darkLeave: hover(el => { el.style.background = '#111'; })
+    };
+  }
+}
+</script>
+</body>
+</html>

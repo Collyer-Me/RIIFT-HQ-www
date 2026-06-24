@@ -1,0 +1,31 @@
+{% comment %}
+  Renders a RIIFT button or link.
+
+  @param {string} variant - pill | solid | link (default: pill)
+  @param {string} label - Button text
+  @param {string} url - Link href (optional for solid button type="submit")
+  @param {string} class - Extra classes
+  @param {boolean} new_tab
+{% endcomment %}
+
+{% liquid
+  assign btn_variant = variant | default: 'pill'
+  assign btn_label = label | default: 'Learn more'
+  assign btn_url = url | default: '#'
+  assign extra_class = class | default: ''
+%}
+
+{% if btn_variant == 'link' %}
+  <a href="{{ btn_url }}" class="riift-link-arrow {{ extra_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>
+    {{ btn_label }}
+    <span aria-hidden="true">→</span>
+  </a>
+{% elsif btn_variant == 'solid' %}
+  {% if url != blank %}
+    <a href="{{ btn_url }}" class="riift-btn riift-btn--solid {{ extra_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ btn_label }}</a>
+  {% else %}
+    <button type="submit" class="riift-btn riift-btn--solid {{ extra_class }}">{{ btn_label }}</button>
+  {% endif %}
+{% else %}
+  <a href="{{ btn_url }}" class="riift-btn riift-btn--pill {{ extra_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ btn_label }}</a>
+{% endif %}

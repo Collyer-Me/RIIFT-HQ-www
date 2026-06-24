@@ -1,0 +1,66 @@
+<div class="riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% endif %}" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner" style="max-width: 720px;">
+    {% if section.settings.heading != blank %}
+      <h2 class="riift-h2" style="margin-bottom: 24px;" data-reveal>{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div data-reveal>
+      {% for block in section.blocks %}
+        {% render 'riift-spec-row', label: block.settings.label, value: block.settings.value %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Spec table",
+  "class": "riift-spec-table-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Specifications"
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" }
+      ],
+      "default": "off-white"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Spec row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Label"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Value"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Spec table",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Weight", "value": "12.4 kg" } },
+        { "type": "row", "settings": { "label": "Range", "value": "45–90 min" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

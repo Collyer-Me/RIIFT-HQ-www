@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;color:#111}
+  ::selection{background:#111;color:#fff}
+  a{text-decoration:none;color:inherit}
+  @keyframes riift-kenburns{from{transform:scale(1.06)}to{transform:scale(1.15)}}
+</style>
+</helmet>
+
+<div style="background:#fff;color:#111;min-height:100vh">
+
+  <dc-import name="Nav" active="shapers" hint-size="100%,68px"></dc-import>
+
+  <header style="position:relative;height:clamp(420px,56vh,560px);min-height:360px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center">
+    <div style="position:absolute;inset:0;background-image:url('assets/photos/6.jpg');background-size:cover;background-position:center;animation:riift-kenburns 16s ease-out forwards"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,13,.5),rgba(13,13,13,.6))"></div>
+    <div style="position:relative;z-index:2;color:#fff;padding:0 24px;max-width:780px">
+      <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:18px">Built by shapers</p>
+      <h1 style="font-family:'Poppins';font-weight:800;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1;letter-spacing:-.02em;text-transform:uppercase">Shapers</h1>
+      <p style="font-family:'Inter';font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6;color:rgba(255,255,255,.88);margin-top:20px;max-width:54ch;margin-left:auto;margin-right:auto">The RIIFT system relies on shapers building RIIFT-enabled boards. Meet the network — and join it.</p>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <section style="padding:clamp(64px,9vw,120px) clamp(20px,4vw,56px);max-width:880px;margin:0 auto;text-align:center">
+    <div data-reveal>
+      <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:24px">Collaboration at the core</h2>
+      <p style="font-family:'Inter';font-size:1.05rem;line-height:1.75;color:rgba(17,17,17,.7);max-width:60ch;margin:0 auto">We partner with leading shapers around the world to create the ideal platform for every rider. RIIFT Tracks are laid into the board before lamination for a full carbon deck-to-baseplate connection — then sold and fulfilled through the shaper's usual channels.</p>
+    </div>
+  </section>
+
+  <!-- AUTHORISED SHAPERS -->
+  <section style="background:#f2f1ee;padding:clamp(56px,8vw,100px) clamp(20px,4vw,56px)">
+    <div style="max-width:1200px;margin:0 auto">
+      <h2 data-reveal style="font-family:'Poppins';font-weight:800;font-size:clamp(1.4rem,3vw,2.1rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:clamp(28px,3.5vw,44px)">Authorised RIIFT shapers</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+        <sc-for list="{{ shapers }}" as="s" hint-placeholder-count="7">
+          <div data-reveal data-card style="background:#fff;border:1px solid #e4e2dc;padding:26px 24px;transition:transform 300ms ease,box-shadow 300ms ease;min-width:180px" onmouseenter="{{ cardEnter }}" onmouseleave="{{ cardLeave }}">
+            <h3 style="font-family:'Poppins';font-weight:700;font-size:1.1rem;letter-spacing:.01em;margin-bottom:6px">{{ s.name }}</h3>
+            <p style="font-family:'Inter';font-size:.9rem;color:#999">{{ s.region }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE -->
+  <section style="padding:clamp(64px,9vw,120px) clamp(20px,4vw,56px);max-width:1200px;margin:0 auto">
+    <div data-reveal style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px);align-items:center">
+      <div style="aspect-ratio:4/3;background:repeating-linear-gradient(135deg,#1a1a1a,#1a1a1a 12px,#161616 12px,#161616 24px);display:flex;align-items:center;justify-content:center;min-width:260px;order:2">
+        <span style="font-family:'Poppins';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#666">[ Shapers Marketplace ]</span>
+      </div>
+      <div style="min-width:280px;order:1">
+        <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#999;margin-bottom:16px">RIIFT Shapers Marketplace</p>
+        <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.2vw,2.4rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:18px">Sell production boards, direct</h2>
+        <p style="font-family:'Inter';font-size:1.05rem;line-height:1.75;color:rgba(17,17,17,.7)">Authorised shapers can sell production-sized RIIFT-enabled boards through the RIIFT Shapers Marketplace. Fulfilment is direct from the shaper, with boards typically RRP for AUD 2,500 incl. GST.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BECOME A SHAPER -->
+  <section data-reveal style="position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:url('assets/photos/1.jpg');background-size:cover;background-position:center"></div>
+    <div style="position:absolute;inset:0;background:rgba(13,13,13,.78)"></div>
+    <div style="position:relative;z-index:2;max-width:680px;margin:0 auto;padding:clamp(56px,8vw,110px) clamp(20px,4vw,56px);text-align:center;color:#fff">
+      <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:16px">Become a RIIFT shaper</h2>
+      <p style="font-family:'Inter';font-size:1.05rem;line-height:1.6;color:rgba(255,255,255,.82);max-width:48ch;margin:0 auto 30px">Want to build RIIFT-enabled boards? Join our growing global network and add the system riders are asking for.</p>
+      <a href="Contact.dc.html" style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#111;background:#fff;padding:16px 36px;border-radius:999px;display:inline-block;transition:transform 200ms ease" onmouseenter="{{ pillEnter }}" onmouseleave="{{ pillLeave }}">Apply to partner</a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      els.forEach(e => { e.style.opacity='0'; e.style.transform='translateY(26px)'; e.style.transition='opacity 700ms cubic-bezier(.2,.7,.3,1), transform 700ms cubic-bezier(.2,.7,.3,1)'; });
+      if (!('IntersectionObserver' in window)) { els.forEach(e => { e.style.opacity='1'; e.style.transform='none'; }); return; }
+      const io = new IntersectionObserver(es => { es.forEach(x => { if (x.isIntersecting) { x.target.style.opacity='1'; x.target.style.transform='none'; io.unobserve(x.target); } }); }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+      els.forEach(e => io.observe(e));
+    });
+  }
+  renderVals() {
+    const hover = (cb) => (e) => cb(e.currentTarget);
+    return {
+      shapers: [
+        { name:'Jarrod Snow Designs', region:'Australia' },
+        { name:'KT Boards', region:'Maui' },
+        { name:'Kalama', region:'Maui' },
+        { name:'AppleTree', region:'Portugal' },
+        { name:'270 Board Co', region:'USA' },
+        { name:'SUNOVA', region:'Thailand / Australia' },
+        { name:'Stinger', region:'Canada' }
+      ],
+      cardEnter: hover(el => { el.style.transform='translateY(-4px)'; el.style.boxShadow='0 18px 44px -22px rgba(0,0,0,.28)'; }),
+      cardLeave: hover(el => { el.style.transform='none'; el.style.boxShadow='none'; }),
+      pillEnter: hover(el => { el.style.transform='translateY(-2px)'; }),
+      pillLeave: hover(el => { el.style.transform='none'; })
+    };
+  }
+}
+</script>
+</body>
+</html>

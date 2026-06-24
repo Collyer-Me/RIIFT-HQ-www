@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "riift-page-content",
+      "settings": {
+        "layout": "full_bleed",
+        "show_hero": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

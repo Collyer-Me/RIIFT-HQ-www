@@ -1,0 +1,92 @@
+<div class="riift-page riift-band riift-band--off-white" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner">
+    <div class="riift-styleguide__section" data-reveal>
+      <p class="riift-eyebrow">RIIFT Styleguide</p>
+      <h1 class="riift-h1">Component library</h1>
+      <p class="riift-body">Hidden QA page — tokens, type, buttons, cards, and patterns.</p>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Colour tokens</h2>
+      <div class="riift-styleguide__grid riift-styleguide__grid--colors">
+        <div><div class="riift-styleguide__swatch" style="background: var(--riift-ink);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-ink #111</p></div>
+        <div><div class="riift-styleguide__swatch" style="background: var(--riift-footer-black);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-footer-black</p></div>
+        <div><div class="riift-styleguide__swatch" style="background: var(--riift-white);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-white</p></div>
+        <div><div class="riift-styleguide__swatch" style="background: var(--riift-off-white);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-off-white</p></div>
+        <div><div class="riift-styleguide__swatch" style="background: var(--riift-label);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-label</p></div>
+        <div><div class="riift-styleguide__swatch" style="background: var(--riift-border);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-border</p></div>
+      </div>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Typography</h2>
+      <div class="riift-styleguide__grid riift-styleguide__grid--type">
+        <p class="riift-h1">Heading one specimen</p>
+        <p class="riift-h2">Heading two specimen</p>
+        <p class="riift-h3">Heading three specimen</p>
+        <p class="riift-eyebrow">Eyebrow label</p>
+        <p class="riift-body">Body copy specimen. The battery's centre of mass sits directly over the foil's centre of lift.</p>
+        <p class="riift-caption">Caption text for labels and metadata.</p>
+        <p class="riift-pullquote">"Pull-quote specimen — Poppins 500 italic."</p>
+      </div>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Buttons</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
+        {% render 'riift-button', variant: 'pill', label: 'Pill · light', url: '#' %}
+        {% render 'riift-button', variant: 'solid', label: 'Solid · dark', url: '#' %}
+        {% render 'riift-button', variant: 'link', label: 'Text link', url: '#' %}
+      </div>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Cards</h2>
+      <div class="riift-card-grid">
+        {% render 'riift-card', eyebrow: 'Eyebrow', title: 'Card title', body: 'White surface, optional hairline border, image on top.', reveal: false %}
+        {% render 'riift-card', eyebrow: 'Eyebrow', title: 'Card with reveal', body: 'Scroll reveal enabled on this card.', reveal: true %}
+      </div>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Spec rows</h2>
+      {% render 'riift-spec-row', label: 'Weight', value: '12.4 kg' %}
+      {% render 'riift-spec-row', label: 'Range', value: '45–90 min' %}
+      {% render 'riift-spec-row', label: 'Charge time', value: '2.5 hours' %}
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Stat column</h2>
+      <div class="riift-stat-column" style="max-width: 320px;">
+        <p class="riift-h3">Drag Free</p>
+        <p class="riift-body">Recess-integrated tracks eliminate bolt-on drag.</p>
+      </div>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Form input</h2>
+      <form class="riift-input-row" style="max-width: 400px;">
+        <input type="email" class="riift-input" placeholder="Enter your email">
+        {% render 'riift-button', variant: 'solid', label: '→' %}
+      </form>
+    </div>
+
+    <div class="riift-styleguide__section" data-reveal>
+      <h2 class="riift-h2" style="margin-bottom: 24px;">Page hero</h2>
+      {% render 'riift-page-hero', eyebrow: 'Interior', title: 'Page title', body: 'Optional intro copy for interior pages.' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Styleguide",
+  "class": "riift-styleguide-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "RIIFT Styleguide"
+    }
+  ]
+}
+{% endschema %}

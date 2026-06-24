@@ -1,0 +1,21 @@
+{% comment %}
+  Interior page header band.
+
+  @param {string} eyebrow
+  @param {string} title
+  @param {string} body
+{% endcomment %}
+
+<div class="riift-page-hero">
+  <div class="riift-page-hero__inner" data-reveal>
+    {% if eyebrow != blank %}
+      {% render 'riift-eyebrow', text: eyebrow %}
+    {% endif %}
+    {% if title != blank %}
+      <h1 class="riift-h1">{{ title }}</h1>
+    {% endif %}
+    {% if body != blank %}
+      <p class="riift-body" style="margin-top: 16px; max-width: 60ch;">{{ body }}</p>
+    {% endif %}
+  </div>
+</div>

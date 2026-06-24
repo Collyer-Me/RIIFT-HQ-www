@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;color:#111}
+  ::selection{background:#111;color:#fff}
+  a{text-decoration:none;color:inherit}
+  @keyframes riift-kenburns{from{transform:scale(1.06)}to{transform:scale(1.15)}}
+</style>
+</helmet>
+
+<div style="background:#fff;color:#111;min-height:100vh">
+
+  <dc-import name="Nav" active="customers" hint-size="100%,68px"></dc-import>
+
+  <header style="position:relative;height:clamp(420px,56vh,560px);min-height:360px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center">
+    <div style="position:absolute;inset:0;background-image:url('assets/photos/10.jpg');background-size:cover;background-position:center;animation:riift-kenburns 16s ease-out forwards"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,13,.5),rgba(13,13,13,.6))"></div>
+    <div style="position:relative;z-index:2;color:#fff;padding:0 24px;max-width:780px">
+      <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:18px">From the water</p>
+      <h1 style="font-family:'Poppins';font-weight:800;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1;letter-spacing:-.02em;text-transform:uppercase">Customers</h1>
+      <p style="font-family:'Inter';font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.6;color:rgba(255,255,255,.88);margin-top:20px;max-width:54ch;margin-left:auto;margin-right:auto">Riders putting RIIFT through its paces — prone, assist and efoil, all over the world.</p>
+    </div>
+  </header>
+
+  <!-- TESTIMONIALS -->
+  <section style="padding:clamp(64px,9vw,120px) clamp(20px,4vw,56px);max-width:1200px;margin:0 auto">
+    <h2 data-reveal style="font-family:'Poppins';font-weight:800;font-size:clamp(1.4rem,3vw,2.1rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:clamp(28px,3.5vw,44px)">What riders say</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <sc-for list="{{ quotes }}" as="q" hint-placeholder-count="3">
+        <div data-reveal data-card style="background:#f2f1ee;padding:32px 28px;display:flex;flex-direction:column;transition:transform 300ms ease,box-shadow 300ms ease;min-width:240px" onmouseenter="{{ cardEnter }}" onmouseleave="{{ cardLeave }}">
+          <p style="font-family:'Poppins';font-weight:500;font-style:italic;font-size:1.15rem;line-height:1.5;letter-spacing:-.01em;margin-bottom:24px;flex:1">&ldquo;{{ q.text }}&rdquo;</p>
+          <div>
+            <p style="font-family:'Poppins';font-weight:700;font-size:.98rem">{{ q.name }}</p>
+            <p style="font-family:'Inter';font-size:.88rem;color:#999;margin-top:3px">{{ q.detail }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <p data-reveal style="font-family:'Inter';font-size:.85rem;color:#999;margin-top:20px">Quotes are placeholders — send real customer testimonials and I'll swap them in.</p>
+  </section>
+
+  <!-- GALLERY -->
+  <section style="background:#f2f1ee;padding:clamp(56px,8vw,100px) clamp(20px,4vw,56px)">
+    <div style="max-width:1200px;margin:0 auto">
+      <h2 data-reveal style="font-family:'Poppins';font-weight:800;font-size:clamp(1.4rem,3vw,2.1rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:clamp(28px,3.5vw,40px)">In the wild</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+        <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="8">
+          <div data-reveal data-tile style="position:relative;aspect-ratio:1/1;overflow:hidden;background:#222;min-width:140px">
+            <div data-tileimg style="position:absolute;inset:0;background-image:{{ g }};background-size:cover;background-position:center;transition:transform 600ms cubic-bezier(.2,.7,.3,1)"></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:clamp(64px,9vw,120px) clamp(20px,4vw,56px);max-width:760px;margin:0 auto;text-align:center">
+    <div data-reveal>
+      <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.4rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:16px">Share your session</h2>
+      <p style="font-family:'Inter';font-size:1.05rem;line-height:1.6;color:rgba(17,17,17,.66);max-width:48ch;margin:0 auto 30px">Riding RIIFT? Tag us and you might feature here. We love seeing where the system takes you.</p>
+      <a href="#" style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#111;padding:16px 36px;border-radius:999px;display:inline-block;transition:background 200ms ease" onmouseenter="{{ darkEnter }}" onmouseleave="{{ darkLeave }}">Follow @riift</a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      els.forEach(e => { e.style.opacity='0'; e.style.transform='translateY(26px)'; e.style.transition='opacity 700ms cubic-bezier(.2,.7,.3,1), transform 700ms cubic-bezier(.2,.7,.3,1)'; });
+      if (!('IntersectionObserver' in window)) { els.forEach(e => { e.style.opacity='1'; e.style.transform='none'; }); return; }
+      const io = new IntersectionObserver(es => { es.forEach(x => { if (x.isIntersecting) { x.target.style.opacity='1'; x.target.style.transform='none'; io.unobserve(x.target); } }); }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+      els.forEach(e => io.observe(e));
+    });
+  }
+  renderVals() {
+    const hover = (cb) => (e) => cb(e.currentTarget);
+    return {
+      quotes: [
+        { text:'It disappears underfoot. The balance is unlike anything I\u2019ve ridden.', name:'[ Customer name ]', detail:'Prone · Australia' },
+        { text:'Sixty seconds and I\u2019ve gone from surfing to efoiling. No tools, no fuss.', name:'[ Customer name ]', detail:'Foil Assist · Portugal' },
+        { text:'No waves, no wind, no problem. The 4P gets me a full session every time.', name:'[ Customer name ]', detail:'Efoil · USA' }
+      ],
+      gallery: [
+        "url('assets/photos/1.jpg')", "url('assets/photos/8.jpg')", "url('assets/photos/12.jpg')", "url('assets/photos/16.jpg')",
+        "url('assets/photos/3.jpg')", "url('assets/photos/11.jpg')", "url('assets/photos/13.jpg')", "url('assets/photos/20.jpg')"
+      ],
+      cardEnter: hover(el => { el.style.transform='translateY(-4px)'; el.style.boxShadow='0 18px 44px -22px rgba(0,0,0,.28)'; }),
+      cardLeave: hover(el => { el.style.transform='none'; el.style.boxShadow='none'; }),
+      darkEnter: hover(el => { el.style.background='#333'; }),
+      darkLeave: hover(el => { el.style.background='#111'; })
+    };
+  }
+}
+</script>
+</body>
+</html>

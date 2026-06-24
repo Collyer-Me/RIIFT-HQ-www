@@ -1,0 +1,204 @@
+<footer class="riift-footer" data-section-id="{{ section.id }}">
+  <div class="riift-footer__grid">
+    <div class="riift-footer__brand">
+      <div class="riift-footer__logo">
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 200
+            | image_tag: alt: shop.name, loading: 'lazy'
+          }}
+        {% else %}
+          <img
+            src="{{ 'riift-logo-white.png' | asset_url }}"
+            alt="{{ shop.name }}"
+            width="80"
+            height="24"
+            loading="lazy"
+          >
+        {% endif %}
+      </div>
+      {% if section.settings.tagline != blank %}
+        <p class="riift-footer__tagline">{{ section.settings.tagline }}</p>
+      {% endif %}
+      {% if section.settings.instagram_url != blank %}
+        <a href="{{ section.settings.instagram_url }}" class="riift-footer__link" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    {% for block in section.blocks %}
+      {% if block.type == 'column' %}
+        <div class="riift-footer__column" {{ block.shopify_attributes }}>
+          <p class="riift-footer__column-title">{{ block.settings.title }}</p>
+          <div class="riift-footer__links">
+            {% if block.settings.link_1_label != blank %}
+              <a href="{{ block.settings.link_1_url }}" class="riift-footer__link">{{ block.settings.link_1_label }}</a>
+            {% endif %}
+            {% if block.settings.link_2_label != blank %}
+              <a href="{{ block.settings.link_2_url }}" class="riift-footer__link">{{ block.settings.link_2_label }}</a>
+            {% endif %}
+            {% if block.settings.link_3_label != blank %}
+              <a href="{{ block.settings.link_3_url }}" class="riift-footer__link">{{ block.settings.link_3_label }}</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <div class="riift-footer__newsletter">
+      <p class="riift-footer__column-title">{{ section.settings.newsletter_title }}</p>
+      {% if section.settings.newsletter_text != blank %}
+        <p class="riift-footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
+      {% endif %}
+      {% if section.settings.klaviyo_embed != blank %}
+        <div class="riift-footer__klaviyo">{{ section.settings.klaviyo_embed }}</div>
+      {% else %}
+        <form class="riift-input-row" action="#" method="post">
+          <input type="email" class="riift-input" placeholder="Enter your email" aria-label="Email">
+          {% render 'riift-button', variant: 'solid', label: '→', url: '' %}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="riift-footer__bar">
+    <p class="riift-footer__copyright">{{ section.settings.copyright }}</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "RIIFT Footer",
+  "class": "riift-footer-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (white)"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Efoil propulsion, balanced over the foil. RIIFT Pty Ltd, Australia."
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter title",
+      "default": "Be the first"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "RIIFT launches September 2026, PowerPacks delivered from December 2026. Subscribe to find out when it's available near you."
+    },
+    {
+      "type": "html",
+      "id": "klaviyo_embed",
+      "label": "Klaviyo embed HTML"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright line",
+      "default": "© 2026 RIIFT · RIIFT Pty Ltd. Patented · Trademarked · Design Registered."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column title",
+          "default": "Explore"
+        },
+        {
+          "type": "text",
+          "id": "link_1_label",
+          "label": "Link 1 label"
+        },
+        {
+          "type": "url",
+          "id": "link_1_url",
+          "label": "Link 1 URL"
+        },
+        {
+          "type": "text",
+          "id": "link_2_label",
+          "label": "Link 2 label"
+        },
+        {
+          "type": "url",
+          "id": "link_2_url",
+          "label": "Link 2 URL"
+        },
+        {
+          "type": "text",
+          "id": "link_3_label",
+          "label": "Link 3 label"
+        },
+        {
+          "type": "url",
+          "id": "link_3_url",
+          "label": "Link 3 URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Footer",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "title": "Explore",
+            "link_1_label": "Boards",
+            "link_1_url": "/pages/boards",
+            "link_2_label": "System",
+            "link_2_url": "/pages/system"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Network",
+            "link_1_label": "Shapers",
+            "link_1_url": "/pages/shapers",
+            "link_2_label": "Dealers",
+            "link_2_url": "/pages/dealers",
+            "link_3_label": "Customers",
+            "link_3_url": "/pages/customers"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "Company",
+            "link_1_label": "People",
+            "link_1_url": "/pages/people",
+            "link_2_label": "Contact",
+            "link_2_url": "/pages/contact"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

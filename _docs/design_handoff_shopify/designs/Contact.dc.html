@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;color:#111}
+  ::selection{background:#111;color:#fff}
+  a{text-decoration:none;color:inherit}
+  input,textarea,select{font-family:inherit}
+  @keyframes riift-kenburns{from{transform:scale(1.06)}to{transform:scale(1.15)}}
+</style>
+</helmet>
+
+<div style="background:#fff;color:#111;min-height:100vh">
+
+  <dc-import name="Nav" active="contact" hint-size="100%,68px"></dc-import>
+
+  <header style="position:relative;height:clamp(360px,46vh,460px);min-height:320px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center">
+    <div style="position:absolute;inset:0;background-image:url('assets/photos/13.jpg');background-size:cover;background-position:center;animation:riift-kenburns 16s ease-out forwards"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,13,.5),rgba(13,13,13,.62))"></div>
+    <div style="position:relative;z-index:2;color:#fff;padding:0 24px;max-width:780px">
+      <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:18px">Get in touch</p>
+      <h1 style="font-family:'Poppins';font-weight:800;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1;letter-spacing:-.02em;text-transform:uppercase">Contact</h1>
+    </div>
+  </header>
+
+  <!-- CONTACT BODY -->
+  <section style="padding:clamp(56px,8vw,110px) clamp(20px,4vw,56px);max-width:1100px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(32px,5vw,72px);align-items:start">
+
+      <!-- FORM -->
+      <div data-reveal style="min-width:280px">
+        <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:24px">Send us a message</h2>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <input type="text" placeholder="Name" style="font-size:.95rem;color:#111;background:#fff;border:1px solid #ccc;padding:14px 16px;outline:none" />
+            <input type="email" placeholder="Email" style="font-size:.95rem;color:#111;background:#fff;border:1px solid #ccc;padding:14px 16px;outline:none" />
+          </div>
+          <input type="text" placeholder="Phone (optional)" style="font-size:.95rem;color:#111;background:#fff;border:1px solid #ccc;padding:14px 16px;outline:none" />
+          <select style="font-size:.95rem;color:#555;background:#fff;border:1px solid #ccc;padding:14px 16px;outline:none">
+            <option>What's your enquiry about?</option>
+            <option>Buying a RIIFT Power System</option>
+            <option>Finding a RIIFT-enabled board</option>
+            <option>Becoming a shaper partner</option>
+            <option>Becoming a dealer</option>
+            <option>Media &amp; partnerships</option>
+            <option>Something else</option>
+          </select>
+          <textarea placeholder="Your message" rows="5" style="font-size:.95rem;color:#111;background:#fff;border:1px solid #ccc;padding:14px 16px;outline:none;resize:vertical"></textarea>
+          <button style="align-self:flex-start;font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#111;border:none;padding:16px 38px;cursor:pointer;transition:background 200ms ease" onmouseenter="{{ darkEnter }}" onmouseleave="{{ darkLeave }}">Send message</button>
+        </div>
+      </div>
+
+      <!-- DETAILS -->
+      <div data-reveal style="min-width:240px">
+        <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:24px">Details</h2>
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <sc-for list="{{ details }}" as="d" hint-placeholder-count="3">
+            <div style="border-top:2px solid #111;padding-top:16px">
+              <p style="font-family:'Poppins';font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:8px">{{ d.label }}</p>
+              <p style="font-family:'Inter';font-size:1rem;line-height:1.6;color:rgba(17,17,17,.8)">{{ d.value }}</p>
+            </div>
+          </sc-for>
+          <div style="border-top:2px solid #111;padding-top:16px">
+            <p style="font-family:'Poppins';font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:10px">Follow</p>
+            <a href="#" style="display:inline-flex;color:#111">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4.5"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"></circle></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      els.forEach(e => { e.style.opacity='0'; e.style.transform='translateY(26px)'; e.style.transition='opacity 700ms cubic-bezier(.2,.7,.3,1), transform 700ms cubic-bezier(.2,.7,.3,1)'; });
+      if (!('IntersectionObserver' in window)) { els.forEach(e => { e.style.opacity='1'; e.style.transform='none'; }); return; }
+      const io = new IntersectionObserver(es => { es.forEach(x => { if (x.isIntersecting) { x.target.style.opacity='1'; x.target.style.transform='none'; io.unobserve(x.target); } }); }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+      els.forEach(e => io.observe(e));
+    });
+  }
+  renderVals() {
+    const hover = (cb) => (e) => cb(e.currentTarget);
+    return {
+      details: [
+        { label:'General', value:'hello@riift.com' },
+        { label:'Based in', value:'RIIFT Pty Ltd, Australia' },
+        { label:'Shapers & dealers', value:'partners@riift.com' }
+      ],
+      darkEnter: hover(el => { el.style.background='#333'; }),
+      darkLeave: hover(el => { el.style.background='#111'; })
+    };
+  }
+}
+</script>
+</body>
+</html>

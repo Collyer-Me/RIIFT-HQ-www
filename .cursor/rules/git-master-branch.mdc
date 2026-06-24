@@ -1,0 +1,11 @@
+﻿---
+description: Git branch convention for this repo
+alwaysApply: true
+---
+
+# Git default branch
+
+This repository uses **`master`** as the default branch on GitHub (`origin/master`).
+
+Do not rename to `main` or assume `main` unless the user explicitly requests it.
+Use `git push`, `git pull`, and PR base branch `master`.
