@@ -1,10 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "home_hero": {
       "type": "riift-hero",
       "settings": {
+        "image_1": "shopify://shop_images/hero-1.jpg",
+        "image_2": "shopify://shop_images/hero-2.jpg",
+        "image_3": "shopify://shop_images/hero-3.jpg",
+        "eyebrow": "",
+        "headline_mode": "rotating",
         "phrases": "Recess Integrated\nDrag Free.\nTool-less.",
+        "static_headline": "Recess Integrated",
         "subtitle": "No Drag. No Tools. No Compromise.",
+        "show_button": true,
         "button_label": "Learn more",
         "button_url": "#core",
         "alignment": "center",
@@ -16,54 +32,65 @@
       "type": "riift-text-band",
       "settings": {
         "anchor_id": "core",
+        "eyebrow": "",
         "heading": "The core of the board",
         "body": "<p>RIIFT tracks integrate seamlessly with your existing shaper and any foil kit. No drag, no compromise. Ride it unpowered, as a perfectly balanced foil-assist, or transform your existing setup into the world's best e-foil.</p><p>One board. Every discipline. RIIFT does it all.</p>",
         "band_style": "none",
-        "alignment": "center"
+        "alignment": "center",
+        "button_label": "",
+        "button_url": "",
+        "button_style": "link"
       }
     },
     "home_video": {
       "type": "riift-media-band",
       "settings": {
-        "button_label": "Watch"
+        "button_label": "Watch",
+        "video_url": ""
       }
     },
     "home_system": {
       "type": "riift-text-band",
       "settings": {
+        "anchor_id": "",
+        "eyebrow": "",
         "heading": "One system. Infinite possibilities.",
         "body": "<p>Have RIIFT Tracks engineered into your next board and you've instantly got a full carbon deck-to-baseplate connection like nothing you've ever felt.</p><p>Then power up when you're ready: the RIIFT Power System delivers an intuitive assist for uncatchable waves and downwind voyages, or a full e-foil for any flat day.</p>",
         "band_style": "none",
-        "alignment": "center"
+        "alignment": "center",
+        "button_label": "",
+        "button_url": "",
+        "button_style": "link"
       }
     },
     "home_modes": {
       "type": "riift-card-grid",
-      "settings": {
-        "heading": "Three ways to ride. One board.",
-        "band_style": "off-white",
-        "columns": "3"
-      },
       "blocks": {
         "mode_surf": {
           "type": "card",
           "settings": {
+            "eyebrow": "",
             "title": "Surf",
-            "body": "Pure prone foiling with recess-integrated tracks and zero bolt-on drag."
+            "body": "Pure prone foiling with recess-integrated tracks and zero bolt-on drag.",
+            "url": ""
           }
         },
         "mode_assist": {
           "type": "card",
           "settings": {
+            "eyebrow": "",
             "title": "Foil assist",
-            "body": "Perfectly balanced assist for uncatchable waves and long sessions."
+            "body": "Perfectly balanced assist for uncatchable waves and long sessions.",
+            "url": ""
           }
         },
         "mode_efoil": {
           "type": "card",
           "settings": {
+            "eyebrow": "",
             "title": "E-foil",
-            "body": "Clip in the PowerPack for flat days — no waves, no wind, no excuses."
+            "body": "Clip in the PowerPack for flat days — no waves, no wind, no excuses.",
+            "url": ""
           }
         }
       },
@@ -71,15 +98,26 @@
         "mode_surf",
         "mode_assist",
         "mode_efoil"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Three ways to ride. One board.",
+        "columns": "3",
+        "band_style": "off-white"
+      }
     },
     "home_powerpack": {
       "type": "riift-text-band",
       "settings": {
+        "anchor_id": "",
+        "eyebrow": "",
         "heading": "The RIIFT PowerPack",
         "body": "<p>Battery, computer and propulsion in one clip-in unit. Choose your range — every pack shares the same 4P tracks, so you can size up any time.</p>",
         "band_style": "dark",
-        "alignment": "left"
+        "alignment": "left",
+        "button_label": "",
+        "button_url": "",
+        "button_style": "link"
       }
     },
     "home_balance": {
@@ -90,14 +128,12 @@
         "body": "<p>The centre of mass of the battery sits directly over the centre of lift of the main foil. This is the heart of RIIFT — and what makes it so good to ride.</p>",
         "quote": "[ Kane De Wilde quote on the balance goes here ]",
         "attribution": "Kane De Wilde",
-        "button_label": "Watch the balance explained"
+        "button_label": "Watch the balance explained",
+        "button_url": ""
       }
     },
     "home_stats": {
       "type": "riift-stat-grid",
-      "settings": {
-        "heading": "Engineered to ride"
-      },
       "blocks": {
         "stat_drag": {
           "type": "stat",
@@ -125,12 +161,17 @@
         "stat_drag",
         "stat_toolless",
         "stat_balance"
-      ]
+      ],
+      "settings": {
+        "heading": "Engineered to ride",
+        "columns": "3"
+      }
     },
     "home_klaviyo": {
       "type": "riift-klaviyo-embed",
       "settings": {
         "heading": "Be the first",
+        "embed_html": "",
         "band_style": "off-white"
       }
     }

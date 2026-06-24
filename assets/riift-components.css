@@ -604,6 +604,12 @@
   transform: translateY(0);
 }
 
+/* Theme Editor hot-reloads sections without re-running riift.js — keep content visible */
+.shopify-design-mode [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
 /* —— Styleguide helpers —— */
 .riift-styleguide__swatch {
   aspect-ratio: 3 / 2;

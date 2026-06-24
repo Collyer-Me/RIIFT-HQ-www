@@ -65,6 +65,10 @@
     document.querySelectorAll('[data-riift-hero]').forEach(initHero);
   }
 
+  document.addEventListener('shopify:section:load', function (event) {
+    event.target.querySelectorAll('[data-riift-hero]').forEach(initHero);
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

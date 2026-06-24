@@ -38,23 +38,33 @@
   assign phrases_lines = section.settings.phrases | newline_to_br | split: '<br />'
   assign phrases_json = ''
   assign phrase_count = 0
-  for line in phrases_lines
-    assign trimmed = line | strip
-    if trimmed != blank
-      if phrase_count > 0
-        assign phrases_json = phrases_json | append: ','
+  if section.settings.headline_mode == 'rotating'
+    assign use_rotating_headline = true
+    for line in phrases_lines
+      assign trimmed = line | strip
+      if trimmed != blank
+        if phrase_count > 0
+          assign phrases_json = phrases_json | append: ','
+        endif
+        assign phrases_json = phrases_json | append: '"' | append: trimmed | append: '"'
+        assign phrase_count = phrase_count | plus: 1
       endif
-      assign phrases_json = phrases_json | append: '"' | append: trimmed | append: '"'
-      assign phrase_count = phrase_count | plus: 1
-    endif
-  endfor
+    endfor
+  else
+    assign use_rotating_headline = false
+  endif
+
+  assign static_headline_text = section.settings.static_headline
+  if static_headline_text == blank and section.settings.fallback_headline != blank
+    assign static_headline_text = section.settings.fallback_headline
+  endif
 %}
 
 <div
   class="riift-full-bleed"
   data-riift-hero
   {% if slide_count > 0 %}data-slides='[{{ slides }}]'{% endif %}
-  {% if phrase_count > 0 %}data-phrases='[{{ phrases_json }}]'{% endif %}
+  {% if use_rotating_headline and phrase_count > 0 %}data-phrases='[{{ phrases_json }}]'{% endif %}
   data-slide-interval="{{ section.settings.slide_interval | times: 1000 }}"
   data-phrase-interval="{{ section.settings.phrase_interval | times: 1000 }}"
   data-section-id="{{ section.id }}"
@@ -70,14 +80,16 @@
       <p class="riift-eyebrow" style="color: rgba(255,255,255,0.55); margin-bottom: 16px;">{{ section.settings.eyebrow }}</p>
     {% endif %}
     <div class="riift-hero__headline">
-      {% if phrase_count == 0 and section.settings.fallback_headline != blank %}
-        <span class="riift-hero__phrase riift-h1 is-active">{{ section.settings.fallback_headline }}</span>
-      {% endif %}
+      {% unless use_rotating_headline %}
+        {% if static_headline_text != blank %}
+          <span class="riift-hero__phrase riift-h1 is-active">{{ static_headline_text }}</span>
+        {% endif %}
+      {% endunless %}
     </div>
     {% if section.settings.subtitle != blank %}
       <p class="riift-hero__subtitle">{{ section.settings.subtitle }}</p>
     {% endif %}
-    {% if section.settings.button_label != blank %}
+    {% if section.settings.show_button and section.settings.button_label != blank %}
       {% render 'riift-button',
         variant: 'pill',
         label: section.settings.button_label,
@@ -127,18 +139,29 @@
       "label": "Eyebrow"
     },
     {
+      "type": "select",
+      "id": "headline_mode",
+      "label": "Headline style",
+      "options": [
+        { "value": "rotating", "label": "Rotating phrases" },
+        { "value": "static", "label": "Static headline" }
+      ],
+      "default": "rotating"
+    },
+    {
       "type": "textarea",
       "id": "phrases",
       "label": "Rotating headlines",
       "info": "One phrase per line. Cycles with kinetic fade.",
-      "default": "Recess Integrated\nDrag Free.\nTool-less."
+      "default": "Recess Integrated\nDrag Free.\nTool-less.",
+      "visible_if": "{{ section.settings.headline_mode == 'rotating' }}"
     },
     {
       "type": "text",
-      "id": "fallback_headline",
+      "id": "static_headline",
       "label": "Static headline",
-      "info": "Used when rotating phrases is empty",
-      "default": "Recess Integrated"
+      "default": "Recess Integrated",
+      "visible_if": "{{ section.settings.headline_mode == 'static' }}"
     },
     {
       "type": "text",
@@ -147,15 +170,23 @@
       "default": "No Drag. No Tools. No Compromise."
     },
     {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Learn more"
+      "default": "Learn more",
+      "visible_if": "{{ section.settings.show_button }}"
     },
     {
       "type": "url",
       "id": "button_url",
-      "label": "Button link"
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button }}"
     },
     {
       "type": "select",
@@ -187,7 +218,8 @@
       "min": 2,
       "max": 6,
       "step": 1,
-      "default": 3
+      "default": 3,
+      "visible_if": "{{ section.settings.headline_mode == 'rotating' }}"
     }
   ],
   "blocks": [
@@ -205,7 +237,21 @@
   ],
   "presets": [
     {
-      "name": "RIIFT Hero"
+      "name": "RIIFT Hero",
+      "settings": {
+        "headline_mode": "rotating",
+        "show_button": true
+      }
+    },
+    {
+      "name": "RIIFT Page hero",
+      "settings": {
+        "headline_mode": "static",
+        "static_headline": "Page title",
+        "phrases": "",
+        "show_button": false,
+        "subtitle": ""
+      }
     }
   ]
 }

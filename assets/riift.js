@@ -15,9 +15,17 @@
     window.addEventListener('scroll', update, { passive: true });
   }
 
-  function initReveal() {
-    var items = document.querySelectorAll('[data-reveal]');
+  function initReveal(root) {
+    var scope = root || document;
+    var items = scope.querySelectorAll('[data-reveal]:not(.is-revealed)');
     if (!items.length) return;
+
+    if (window.Shopify && window.Shopify.designMode) {
+      items.forEach(function (el) {
+        el.classList.add('is-revealed');
+      });
+      return;
+    }
 
     if (!('IntersectionObserver' in window)) {
       items.forEach(function (el) {
@@ -59,6 +67,10 @@
     initReveal();
     initMobileNav();
   }
+
+  document.addEventListener('shopify:section:load', function (event) {
+    initReveal(event.target);
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

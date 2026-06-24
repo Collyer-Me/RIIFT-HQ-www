@@ -1,5 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
+    "riift_hero_UaUzWL": {
+      "type": "riift-hero",
+      "name": "RIIFT Hero",
+      "settings": {
+        "image_1": "shopify://shop_images/11.jpg",
+        "eyebrow": "Riift Enabled",
+        "headline_mode": "static",
+        "phrases": "Boards",
+        "static_headline": "Recess Integrated",
+        "subtitle": "RIIFT-enabled foilboards, built by the world's best shapers with carbon RIIFT Tracks laid in before lamination.",
+        "show_button": true,
+        "button_label": "Learn more",
+        "button_url": "",
+        "alignment": "center",
+        "slide_interval": 8,
+        "phrase_interval": 3
+      }
+    },
     "main": {
       "type": "riift-page-content",
       "settings": {
@@ -9,6 +36,7 @@
     }
   },
   "order": [
+    "riift_hero_UaUzWL",
     "main"
   ]
 }
