@@ -1,0 +1,6 @@
+﻿# Shopify CLI theme environments — https://shopify.dev/docs/storefronts/themes/tools/cli/environments
+
+[environments.default]
+store = "riift-hq.myshopify.com"
+theme = "162909520093"
+allow-live = true
