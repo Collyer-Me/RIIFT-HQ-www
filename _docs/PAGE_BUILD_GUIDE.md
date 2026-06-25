@@ -13,7 +13,7 @@ We use **one visual system** and **two authoring tools**:
 
 | Tool | Best for |
 |------|----------|
-| **Claude** (+ Shopify connector) | Marketing copy, layout HTML, interior pages, homepage body content |
+| **Claude** (+ Shopify connector) | Marketing copy, layout HTML, interior pages |
 | **Cursor** (+ Shopify CLI) | Theme foundation, commerce templates, dynamic sections, global JS/CSS |
 | **Theme Editor** (Shopify Admin) | Sections above/below embedded HTML, live product bands, reordering |
 
@@ -41,21 +41,24 @@ Consistency comes from shared **`riift-*` CSS classes** and **theme JavaScript**
 
 ---
 
-## 3. The sandwich template (homepage + interior pages)
+## 3. Page templates (homepage + interior pages)
 
 ### Homepage (`/`)
 
-Uses **`templates/index.json`**. Theme Editor controls the full section stack. One section embeds Claude HTML from a separate Page.
+Uses **`templates/index.json`**. The full homepage is a **stack of `riift-*` Theme Editor sections** — hero, text bands, card grid, wizard launcher, Klaviyo embed, etc. Merchants edit copy, images, and section order in Theme Customize; no Claude Page HTML embed.
 
-| Layer | Section type | Edited via |
-|-------|--------------|------------|
-| Above | e.g. `riift-powerpack-strip` (metafields) | Theme Editor |
-| **Middle** | **`riift-page-embed`** → Page `home-content` | Claude → Pages admin |
-| Below | e.g. `riift-klaviyo-band` | Theme Editor |
+| Section (examples) | Edited via |
+|--------------------|------------|
+| `riift-hero` | Theme Editor |
+| `riift-text-band`, `riift-card-grid`, `riift-quote-band` | Theme Editor |
+| `riift-wizard-launcher` | Theme Editor |
+| `riift-klaviyo-embed` | Theme Editor |
 
-The Page `home-content` is a **content store** — Claude updates its HTML body. Visitors see `/` through the theme template, not `/pages/home-content`.
+New section types are added in Cursor, then configured in Theme Editor after deploy.
 
-### Interior pages (Boards, System, Shapers, etc.)
+> **Alternate path (not in use):** `riift-page-embed` + a Page `home-content` body lets Claude own homepage HTML. See `_docs/home-content-test.html`. We chose native sections for easier merchant editing.
+
+### Interior pages (Boards, System, Shapers, etc.) — sandwich template
 
 Uses **`templates/page.riift.json`**:
 
@@ -134,7 +137,7 @@ Build once in the theme. Use everywhere.
 
 | Page / surface | Body content | Dynamic bands | Commerce |
 |----------------|--------------|---------------|----------|
-| **Homepage** | Claude → Page `home-content` | Theme Editor above/below embed | — |
+| **Homepage** | Theme Editor (`riift-*` sections in `index.json`) | — | — |
 | **Boards, System, Shapers, Dealers, People, Customers, Contact** | Claude → each Page | Optional sections | — |
 | **Wizard** | Claude HTML or section markup | — | Outcome links → `/products/...` (v1) |
 | **Product / collection / cart** | — | — | Cursor theme templates |
@@ -175,11 +178,10 @@ Compatibility rules (must hold in UI and copy):
 5. Preview on dev store; adjust in Claude or Admin
 6. If live product data needed → add Theme Editor section above/below in `page.riift.json` (Cursor, one-time)
 
-### B. Homepage body update
+### B. Homepage content update
 
-1. Claude updates Page **`home-content`** HTML
-2. Theme Editor sections above/below unchanged unless intentionally edited
-3. Push theme only if CSS/JS/section structure changed (Cursor)
+1. Edit section settings in **Theme Customize** (copy, images, band order)
+2. Push theme only if section structure or new section types changed (Cursor)
 
 ### C. New dynamic band on homepage
 
@@ -222,7 +224,7 @@ Compatibility rules (must hold in UI and copy):
 | Doc | Purpose |
 |-----|---------|
 | [`design_handoff_shopify/README.md`](design_handoff_shopify/README.md) | Design specs, catalog model, page list |
-| [`claude-page-html-guide.md`](claude-page-html-guide.md) | Component cookbook for Claude (to be built) |
+| [`claude-page-html-guide.md`](claude-page-html-guide.md) | Component cookbook for Claude |
 | `.cursor/plans/` | Full implementation plan and todos |
 
 ---
@@ -231,7 +233,7 @@ Compatibility rules (must hold in UI and copy):
 
 | Decision | Choice |
 |----------|--------|
-| Homepage structure | **Sandwich template** — Theme Editor + `riift-page-embed` + Claude HTML |
+| Homepage structure | **Theme Editor sections** — `riift-*` stack in `index.json` (not page embed) |
 | Interior pages | **riift** template — Claude HTML middle, optional dynamic sections |
 | Motion / interactivity | Claude markup + theme JS (`data-*` hooks) |
 | Email | **Klaviyo** embed |

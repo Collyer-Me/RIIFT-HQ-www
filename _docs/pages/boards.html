@@ -2,26 +2,32 @@
 <!-- Title: Boards · Handle: boards · Template: riift -->
 <!-- URL after publish: /pages/boards -->
 <!--
-  Optional hero photo: upload a board shot to Content → Files, then add:
-  data-slides='["https://cdn.shopify.com/s/files/1/.../your-photo.jpg"]'
-  on the div below (inside the opening tag).
+  Optional hero photo: set background-image on .riift-hero__slide below.
+  For multiple slides, duplicate .riift-hero__slide + matching .riift-hero__copy-set pairs.
 -->
 
 <div
-  class="riift-hero riift-full-bleed"
+  class="riift-full-bleed"
   data-riift-hero
+  data-height="interior"
   data-slide-interval="8000"
 >
-  <div class="riift-hero__slides"></div>
+  <div class="riift-hero__slides">
+    <div class="riift-hero__slide is-active"></div>
+  </div>
   <div class="riift-hero__scrim"></div>
   <div class="riift-hero__content riift-hero__content--center">
-    <p class="riift-eyebrow" style="color: rgba(255,255,255,0.8);">RIIFT Enabled</p>
-    <div class="riift-hero__headline">
-      <span class="riift-hero__phrase riift-h1 is-active">Boards</span>
+    <p class="riift-eyebrow riift-hero__eyebrow">RIIFT Enabled</p>
+    <div class="riift-hero__copy">
+      <div class="riift-hero__copy-set is-active">
+        <div class="riift-hero__headline">
+          <span class="riift-hero__phrase riift-h1">Boards</span>
+        </div>
+        <p class="riift-hero__subtitle">
+          RIIFT-enabled foilboards, built by the world's best shapers with carbon RIIFT Tracks laid in before lamination.
+        </p>
+      </div>
     </div>
-    <p class="riift-hero__subtitle">
-      RIIFT-enabled foilboards, built by the world's best shapers with carbon RIIFT Tracks laid in before lamination.
-    </p>
   </div>
 </div>
 

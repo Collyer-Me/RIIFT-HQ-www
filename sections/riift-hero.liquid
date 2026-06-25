@@ -1,94 +1,85 @@
 {% liquid
-  assign slides = ''
   assign slide_count = 0
-
-  if section.settings.image_1 != blank
-    assign image_url = section.settings.image_1 | image_url: width: 2400
-    assign slides = slides | append: '"' | append: image_url | append: '"'
-    assign slide_count = slide_count | plus: 1
-  endif
-  if section.settings.image_2 != blank
-    assign image_url = section.settings.image_2 | image_url: width: 2400
-    if slide_count > 0
-      assign slides = slides | append: ','
-    endif
-    assign slides = slides | append: '"' | append: image_url | append: '"'
-    assign slide_count = slide_count | plus: 1
-  endif
-  if section.settings.image_3 != blank
-    assign image_url = section.settings.image_3 | image_url: width: 2400
-    if slide_count > 0
-      assign slides = slides | append: ','
-    endif
-    assign slides = slides | append: '"' | append: image_url | append: '"'
-    assign slide_count = slide_count | plus: 1
-  endif
-
   for block in section.blocks
-    if block.type == 'slide' and block.settings.image != blank
-      assign image_url = block.settings.image | image_url: width: 2400
-      if slide_count > 0
-        assign slides = slides | append: ','
-      endif
-      assign slides = slides | append: '"' | append: image_url | append: '"'
+    if block.type == 'slide'
       assign slide_count = slide_count | plus: 1
     endif
   endfor
 
-  assign phrases_lines = section.settings.phrases | newline_to_br | split: '<br />'
-  assign phrases_json = ''
-  assign phrase_count = 0
-  if section.settings.headline_mode == 'rotating'
-    assign use_rotating_headline = true
-    for line in phrases_lines
-      assign trimmed = line | strip
-      if trimmed != blank
-        if phrase_count > 0
-          assign phrases_json = phrases_json | append: ','
-        endif
-        assign phrases_json = phrases_json | append: '"' | append: trimmed | append: '"'
-        assign phrase_count = phrase_count | plus: 1
-      endif
-    endfor
-  else
-    assign use_rotating_headline = false
-  endif
-
-  assign static_headline_text = section.settings.static_headline
-  if static_headline_text == blank and section.settings.fallback_headline != blank
-    assign static_headline_text = section.settings.fallback_headline
-  endif
+  assign height_mode = section.settings.height | default: 'viewport'
 %}
 
 <div
   class="riift-full-bleed"
   data-riift-hero
-  {% if slide_count > 0 %}data-slides='[{{ slides }}]'{% endif %}
-  {% if use_rotating_headline and phrase_count > 0 %}data-phrases='[{{ phrases_json }}]'{% endif %}
+  data-height="{{ height_mode }}"
   data-slide-interval="{{ section.settings.slide_interval | times: 1000 }}"
-  data-phrase-interval="{{ section.settings.phrase_interval | times: 1000 }}"
   data-section-id="{{ section.id }}"
 >
   <div class="riift-hero__slides">
     {% if slide_count == 0 %}
       <div class="riift-hero__slide is-active" style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #2a3a4a 100%);"></div>
+    {% else %}
+      {% assign slide_index = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'slide' %}
+          <div
+            class="riift-hero__slide{% if slide_index == 0 %} is-active{% endif %}"
+            {% if block.settings.image != blank %}
+              style="background-image: url('{{ block.settings.image | image_url: width: 2400 }}');"
+            {% else %}
+              style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #2a3a4a 100%);"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          ></div>
+          {% assign slide_index = slide_index | plus: 1 %}
+        {% endif %}
+      {% endfor %}
     {% endif %}
   </div>
+
   <div class="riift-hero__scrim"></div>
+
   <div class="riift-hero__content{% if section.settings.alignment == 'center' %} riift-hero__content--center{% endif %}">
     {% if section.settings.eyebrow != blank %}
-      <p class="riift-eyebrow" style="color: rgba(255,255,255,0.55); margin-bottom: 16px;">{{ section.settings.eyebrow }}</p>
+      <p class="riift-eyebrow riift-hero__eyebrow">{{ section.settings.eyebrow }}</p>
     {% endif %}
-    <div class="riift-hero__headline">
-      {% unless use_rotating_headline %}
-        {% if static_headline_text != blank %}
-          <span class="riift-hero__phrase riift-h1 is-active">{{ static_headline_text }}</span>
-        {% endif %}
-      {% endunless %}
+
+    <div class="riift-hero__copy">
+      {% if slide_count == 0 %}
+        <div class="riift-hero__copy-set is-active">
+          {% if section.settings.fallback_title != blank %}
+            <div class="riift-hero__headline">
+              <span class="riift-hero__phrase riift-h1">{{ section.settings.fallback_title }}</span>
+            </div>
+          {% endif %}
+          {% if section.settings.fallback_subtitle != blank %}
+            <p class="riift-hero__subtitle">{{ section.settings.fallback_subtitle }}</p>
+          {% endif %}
+        </div>
+      {% else %}
+        {% assign copy_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'slide' %}
+            <div class="riift-hero__copy-set{% if copy_index == 0 %} is-active{% endif %}" {{ block.shopify_attributes }}>
+              {% if block.settings.eyebrow != blank %}
+                <p class="riift-eyebrow riift-hero__slide-eyebrow">{{ block.settings.eyebrow }}</p>
+              {% endif %}
+              {% if block.settings.title != blank %}
+                <div class="riift-hero__headline">
+                  <span class="riift-hero__phrase riift-h1">{{ block.settings.title }}</span>
+                </div>
+              {% endif %}
+              {% if block.settings.subtitle != blank %}
+                <p class="riift-hero__subtitle">{{ block.settings.subtitle }}</p>
+              {% endif %}
+            </div>
+            {% assign copy_index = copy_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     </div>
-    {% if section.settings.subtitle != blank %}
-      <p class="riift-hero__subtitle">{{ section.settings.subtitle }}</p>
-    {% endif %}
+
     {% if section.settings.show_button and section.settings.button_label != blank %}
       {% render 'riift-button',
         variant: 'pill',
@@ -107,27 +98,14 @@
   "max_blocks": 5,
   "settings": [
     {
-      "type": "header",
-      "content": "Background images"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_1",
-      "label": "Hero image 1"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_2",
-      "label": "Hero image 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_3",
-      "label": "Hero image 3"
-    },
-    {
-      "type": "paragraph",
-      "content": "Add 1–3 images for crossfade rotation. Leave empty for a dark placeholder."
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "viewport", "label": "Full viewport (home)" },
+        { "value": "interior", "label": "Interior (fixed band)" }
+      ],
+      "default": "viewport"
     },
     {
       "type": "header",
@@ -136,37 +114,20 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow"
-    },
-    {
-      "type": "select",
-      "id": "headline_mode",
-      "label": "Headline style",
-      "options": [
-        { "value": "rotating", "label": "Rotating phrases" },
-        { "value": "static", "label": "Static headline" }
-      ],
-      "default": "rotating"
-    },
-    {
-      "type": "textarea",
-      "id": "phrases",
-      "label": "Rotating headlines",
-      "info": "One phrase per line. Cycles with kinetic fade.",
-      "default": "Recess Integrated\nDrag Free.\nTool-less.",
-      "visible_if": "{{ section.settings.headline_mode == 'rotating' }}"
+      "label": "Eyebrow",
+      "info": "Shown above all slides (optional)."
     },
     {
       "type": "text",
-      "id": "static_headline",
-      "label": "Static headline",
-      "default": "Recess Integrated",
-      "visible_if": "{{ section.settings.headline_mode == 'static' }}"
+      "id": "fallback_title",
+      "label": "Fallback title",
+      "info": "Used only when no slide blocks are added.",
+      "default": "Recess Integrated"
     },
     {
       "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
+      "id": "fallback_subtitle",
+      "label": "Fallback subtitle",
       "default": "No Drag. No Tools. No Compromise."
     },
     {
@@ -206,31 +167,40 @@
       "type": "range",
       "id": "slide_interval",
       "label": "Slide interval (seconds)",
-      "min": 4,
+      "min": 2,
       "max": 16,
       "step": 1,
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "phrase_interval",
-      "label": "Phrase interval (seconds)",
-      "min": 2,
-      "max": 6,
-      "step": 1,
       "default": 3,
-      "visible_if": "{{ section.settings.headline_mode == 'rotating' }}"
+      "info": "Image, title, and subtitle crossfade together. Ignored when only one slide."
     }
   ],
   "blocks": [
     {
       "type": "slide",
-      "name": "Extra hero slide",
+      "name": "Slide",
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
           "label": "Background image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "info": "Optional — overrides section eyebrow for this slide only."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Recess Integrated"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "No Drag. No Tools. No Compromise."
         }
       ]
     }
@@ -239,19 +209,52 @@
     {
       "name": "RIIFT Hero",
       "settings": {
-        "headline_mode": "rotating",
-        "show_button": true
-      }
+        "height": "viewport",
+        "show_button": true,
+        "slide_interval": 3
+      },
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Recess Integrated",
+            "subtitle": "No Drag. No Tools. No Compromise."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Perfectly Balanced",
+            "subtitle": "Unpowered. Foil Assist. E-Foil. Adapts to your ride."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Pure Performance",
+            "subtitle": "Your Shaper. Your Foil. Your Vision."
+          }
+        }
+      ]
     },
     {
       "name": "RIIFT Page hero",
       "settings": {
-        "headline_mode": "static",
-        "static_headline": "Page title",
-        "phrases": "",
+        "height": "interior",
+        "eyebrow": "RIIFT Enabled",
         "show_button": false,
-        "subtitle": ""
-      }
+        "alignment": "center",
+        "slide_interval": 8
+      },
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Page title",
+            "subtitle": "Optional intro line for this page."
+          }
+        }
+      ]
     }
   ]
 }

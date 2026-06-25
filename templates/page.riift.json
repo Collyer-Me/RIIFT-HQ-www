@@ -12,19 +12,25 @@
     "riift_hero_UaUzWL": {
       "type": "riift-hero",
       "name": "RIIFT Hero",
+      "blocks": {
+        "slide_boards": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/11.jpg",
+            "title": "Boards",
+            "subtitle": "RIIFT-enabled foilboards, built by the world's best shapers with carbon RIIFT Tracks laid in before lamination."
+          }
+        }
+      },
+      "block_order": [
+        "slide_boards"
+      ],
       "settings": {
-        "image_1": "shopify://shop_images/11.jpg",
-        "eyebrow": "Riift Enabled",
-        "headline_mode": "static",
-        "phrases": "Boards",
-        "static_headline": "Boards",
-        "subtitle": "RIIFT-enabled foilboards, built by the world's best shapers with carbon RIIFT Tracks laid in before lamination.",
+        "height": "interior",
+        "eyebrow": "RIIFT Enabled",
         "show_button": false,
-        "button_label": "Learn more",
-        "button_url": "",
         "alignment": "center",
-        "slide_interval": 8,
-        "phrase_interval": 3
+        "slide_interval": 8
       }
     },
     "main": {

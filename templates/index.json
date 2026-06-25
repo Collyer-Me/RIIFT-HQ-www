@@ -11,21 +11,45 @@
   "sections": {
     "home_hero": {
       "type": "riift-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hero-1.jpg",
+            "title": "Recess Integrated",
+            "subtitle": "No Drag. No Tools. No Compromise."
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hero-2.jpg",
+            "title": "Perfectly Balanced",
+            "subtitle": "Unpowered. Foil Assist. E-Foil. Adapts to your ride."
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hero-3.jpg",
+            "title": "Pure Performance",
+            "subtitle": "Your Shaper. Your Foil. Your Vision."
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
       "settings": {
-        "image_1": "shopify://shop_images/hero-1.jpg",
-        "image_2": "shopify://shop_images/hero-2.jpg",
-        "image_3": "shopify://shop_images/hero-3.jpg",
+        "height": "viewport",
         "eyebrow": "",
-        "headline_mode": "rotating",
-        "phrases": "Recess Integrated\nDrag Free.\nTool-less.",
-        "static_headline": "Recess Integrated",
-        "subtitle": "No Drag. No Tools. No Compromise.",
         "show_button": true,
         "button_label": "Learn more",
         "button_url": "#core",
         "alignment": "center",
-        "slide_interval": 8,
-        "phrase_interval": 3
+        "slide_interval": 3
       }
     },
     "home_core": {
