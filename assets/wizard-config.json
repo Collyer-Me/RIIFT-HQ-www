@@ -82,6 +82,20 @@
       ]
     }
   ],
+  "buy": {
+    "productHandle": null,
+    "options": {
+      "tracks": {
+        "t2": "2P Tracks",
+        "t4": "4P Tracks"
+      },
+      "battery": {
+        "2p": "2P",
+        "3p": "3P",
+        "4p": "4P"
+      }
+    }
+  },
   "tracks": [
     {
       "id": "t2",

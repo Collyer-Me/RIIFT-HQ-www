@@ -155,7 +155,7 @@ Do not use Shopify’s native marketing signup for RIIFT forms.
 - **Config:** `assets/wizard-config.json` (fallback) or Shopify **Metaobjects** — see [`_docs/wizard/admin-setup.md`](wizard/admin-setup.md)
 - **Logic:** `assets/riift-wizard.js` (live ranking, compatibility rules, add-to-cart)
 - **Modal:** `riift-wizard-modal` snippet + `riift-wizard-launcher` section on homepage
-- **Buy now:** `/cart/add.js` → redirect `/cart` (link PowerPack products by handle)
+- **Buy now:** opens the product page with the recommended variant selected (`/products/{handle}?variant={id}`)
 
 Compatibility rules (must hold in UI and copy):
 

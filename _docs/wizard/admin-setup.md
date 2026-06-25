@@ -70,7 +70,9 @@ Create products (or set handles in JSON config):
 
 Link each in the matching `wizard_candidate` entry, or set `productHandle` / `variantId` in `wizard-config.json`.
 
-**Buy now** calls `/cart/add.js` with the recommended battery variant, then redirects to `/cart`.
+**Buy now** opens the recommended product page with the matching variant selected (`/products/{handle}?variant={id}`).
+
+By default each battery candidate links to its own product (`riift-powerpack-2p`, etc.). If you use **one product** with Tracks + PowerPack variant options, set `buy.productHandle` in `wizard-config.json` (or add a theme metaobject later) and map option values under `buy.options` to match your Admin variant labels exactly.
 
 ---
 

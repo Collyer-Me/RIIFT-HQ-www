@@ -65,12 +65,10 @@
   <div class="riift-wizard__layout">
     <section class="riift-wizard__panel-main">
       <div class="riift-wizard__screen riift-wizard__screen--intro" data-wz-intro>
-        <p class="riift-eyebrow">{{ intro_eyebrow }}</p>
-        <h1 class="riift-h1">{{ intro_title }}</h1>
-        <p class="riift-body" style="margin-top: 22px; max-width: 46ch;">
-          {{ intro_body }}
-        </p>
-        <button type="button" class="riift-btn riift-btn--solid" style="margin-top: 36px;" data-wz-start>
+        <p class="riift-wizard__eyebrow">{{ intro_eyebrow }}</p>
+        <h1 class="riift-wizard__title">{{ intro_title }}</h1>
+        <p class="riift-wizard__lede">{{ intro_body }}</p>
+        <button type="button" class="riift-btn riift-btn--solid riift-wizard__cta" data-wz-start>
           {{ start_label }}
         </button>
       </div>

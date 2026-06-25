@@ -56,7 +56,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px clamp(16px, 4vw, 48px);
+  padding: 18px clamp(20px, 4vw, 48px);
   background: #0d0d0d;
   color: #fff;
   min-height: 56px;
@@ -65,7 +65,7 @@
 .riift-wizard__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   min-width: 0;
   flex: 1;
 }
@@ -80,11 +80,11 @@
 .riift-wizard__brand-label {
   font-family: var(--riift-font-display, 'Poppins', sans-serif);
   font-weight: 600;
-  font-size: clamp(10px, 2.5vw, 12px);
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.7);
-  padding-left: 12px;
+  padding-left: 14px;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   white-space: nowrap;
   overflow: hidden;
@@ -93,7 +93,7 @@
 
 .riift-wizard__status {
   font-family: var(--riift-font-body, 'Inter', sans-serif);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   color: rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
   text-align: right;
@@ -122,7 +122,7 @@
 }
 
 .riift-wizard__panel-main {
-  padding: clamp(20px, 4vw, 64px);
+  padding: clamp(28px, 4vw, 64px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -132,16 +132,38 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   border-right: 1px solid #e6e2d9;
+  scrollbar-width: thin;
+  scrollbar-color: #d4d0c7 transparent;
+}
+
+.riift-wizard__panel-main::-webkit-scrollbar {
+  width: 6px;
+}
+
+.riift-wizard__panel-main::-webkit-scrollbar-thumb {
+  background: #d4d0c7;
+  border-radius: 999px;
 }
 
 .riift-wizard__panel-rank {
-  padding: clamp(20px, 4vw, 52px) clamp(16px, 3vw, 48px);
+  padding: clamp(28px, 4vw, 52px) clamp(20px, 3vw, 48px);
   background: #efece4;
   min-width: 0;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #d4d0c7 transparent;
+}
+
+.riift-wizard__panel-rank::-webkit-scrollbar {
+  width: 6px;
+}
+
+.riift-wizard__panel-rank::-webkit-scrollbar-thumb {
+  background: #d4d0c7;
+  border-radius: 999px;
 }
 
 .riift-wizard__screen {
@@ -151,6 +173,114 @@
 
 .riift-wizard__screen--intro {
   max-width: 46ch;
+}
+
+/* —— Wizard typography (scoped; overrides Horizon h1/h2) —— */
+.riift-wizard h1.riift-wizard__title,
+.riift-wizard h2.riift-wizard__title {
+  font-family: var(--riift-font-display, 'Poppins', sans-serif);
+  font-weight: 800;
+  font-style: normal;
+  text-transform: uppercase;
+  color: #111;
+  margin: 0;
+}
+
+.riift-wizard h1.riift-wizard__title {
+  letter-spacing: -0.02em;
+  line-height: 1.03;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.riift-wizard h2.riift-wizard__title--quiz {
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: clamp(22px, 3vw, 32px);
+}
+
+.riift-wizard h2.riift-wizard__title--results {
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+[data-wz-quiz-inner],
+[data-wz-results-inner] {
+  width: 100%;
+  max-width: 520px;
+}
+
+[data-wz-quiz-inner] .riift-wizard__eyebrow,
+[data-wz-results-inner] .riift-wizard__eyebrow {
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+}
+
+.riift-wizard__eyebrow {
+  font-family: var(--riift-font-display, 'Poppins', sans-serif);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #999;
+  margin: 0 0 18px;
+}
+
+.riift-wizard__screen--intro .riift-wizard__eyebrow {
+  margin-bottom: 18px;
+}
+
+.riift-wizard__lede {
+  font-family: var(--riift-font-body, 'Inter', sans-serif);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: rgba(17, 17, 17, 0.66);
+  margin: 0;
+  max-width: 46ch;
+}
+
+.riift-wizard__title + .riift-wizard__lede {
+  margin-top: 22px;
+}
+
+.riift-wizard__match-line + .riift-wizard__lede {
+  margin-top: 18px;
+}
+
+.riift-wizard__match-line {
+  font-family: var(--riift-font-display, 'Poppins', sans-serif);
+  font-weight: 500;
+  font-size: 1rem;
+  color: #111;
+  margin: 8px 0 0;
+}
+
+.riift-wizard__step-counter {
+  font-family: var(--riift-font-body, 'Inter', sans-serif);
+  font-size: 0.88rem;
+  color: rgba(17, 17, 17, 0.5);
+}
+
+.riift-wizard__warn-text {
+  font-family: var(--riift-font-body, 'Inter', sans-serif);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(17, 17, 17, 0.78);
+  margin: 0;
+}
+
+.riift-wizard .riift-btn--solid {
+  border-radius: 999px;
+  padding: 17px 40px;
+}
+
+.riift-wizard__cta {
+  margin-top: 36px;
+}
+
+.riift-wizard__actions .riift-btn--solid {
+  padding: 15px 32px;
 }
 
 .riift-wizard__screen[hidden] {
@@ -186,7 +316,7 @@
   background: #fff;
   border: 1.5px solid #e2ded6;
   border-radius: 8px;
-  padding: 16px 18px;
+  padding: 18px 20px;
   transition:
     border-color 160ms ease,
     background 160ms ease,
@@ -194,7 +324,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
   font: inherit;
   color: inherit;
@@ -216,14 +346,14 @@
   display: block;
   font-family: var(--riift-font-display, 'Poppins', sans-serif);
   font-weight: 600;
-  font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+  font-size: 1.08rem;
   color: #111;
 }
 
 .riift-wizard__option-desc {
   display: block;
   font-family: var(--riift-font-body, 'Inter', sans-serif);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.45;
   color: rgba(17, 17, 17, 0.58);
   margin-top: 4px;
@@ -252,15 +382,21 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 28px;
   flex-wrap: wrap;
+}
+
+.riift-wizard__nav .riift-btn--pill {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 12px 24px;
 }
 
 .riift-wizard__result-card {
   background: #fff;
   border: 1px solid #e6e2d9;
   border-radius: 10px;
-  padding: 18px 20px;
+  padding: 20px 22px;
   margin-top: 24px;
   display: flex;
   flex-direction: column;
@@ -291,7 +427,7 @@
 .riift-wizard__result-value {
   font-family: var(--riift-font-body, 'Inter', sans-serif);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   text-align: right;
 }
 
@@ -332,7 +468,7 @@
 }
 
 .riift-wizard__group {
-  margin-bottom: clamp(20px, 3vw, 38px);
+  margin-bottom: clamp(26px, 3vw, 38px);
 }
 
 .riift-wizard__group:last-child {
@@ -378,10 +514,10 @@
   background: #fff;
   border: 1.5px solid #e6e2d9;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 13px 18px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
@@ -392,8 +528,8 @@
 
 .riift-wizard__rank {
   flex: none;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
   background: #f0ede6;
   color: #888;
@@ -402,7 +538,7 @@
   justify-content: center;
   font-family: var(--riift-font-display, 'Poppins', sans-serif);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13px;
   transition: background 400ms ease;
 }
 
@@ -426,7 +562,7 @@
 .riift-wizard__row-name {
   font-family: var(--riift-font-display, 'Poppins', sans-serif);
   font-weight: 600;
-  font-size: clamp(0.88rem, 2.2vw, 1rem);
+  font-size: 1rem;
   color: #111;
   white-space: nowrap;
   overflow: hidden;
@@ -436,7 +572,7 @@
 .riift-wizard__row-pct {
   font-family: var(--riift-font-display, 'Poppins', sans-serif);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   flex: none;
   color: rgba(17, 17, 17, 0.55);
 }
@@ -447,16 +583,16 @@
 
 .riift-wizard__row-sub {
   font-family: var(--riift-font-body, 'Inter', sans-serif);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: rgba(17, 17, 17, 0.55);
-  margin: 2px 0 6px;
+  margin: 2px 0 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .riift-wizard__row-bar {
-  height: 5px;
+  height: 6px;
   border-radius: 999px;
   background: #e2ded4;
   overflow: hidden;
@@ -524,16 +660,16 @@
 
 .riift-wizard-modal__close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
   z-index: 5;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 999px;
-  background: rgba(13, 13, 13, 0.55);
+  background: transparent;
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   cursor: pointer;
   line-height: 1;
   display: flex;
@@ -541,8 +677,12 @@
   justify-content: center;
 }
 
+.riift-wizard-modal .riift-wizard__topbar {
+  padding-right: 48px;
+}
+
 .riift-wizard-modal__close:hover {
-  background: rgba(13, 13, 13, 0.75);
+  opacity: 0.75;
 }
 
 body.riift-wizard-modal-open {
@@ -583,6 +723,25 @@ body.riift-wizard-modal-open {
   .riift-wizard {
     --riift-wz-row-slot: 76px;
     --riift-wz-row-height: 68px;
+  }
+
+  .riift-wizard h1.riift-wizard__title {
+    font-size: clamp(1.75rem, 7vw, 2.2rem);
+  }
+
+  .riift-wizard h2.riift-wizard__title--quiz {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    margin-bottom: clamp(18px, 4vw, 28px);
+  }
+
+  .riift-wizard h2.riift-wizard__title--results {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .riift-wizard__rank {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
   }
 
   .riift-wizard__topbar {

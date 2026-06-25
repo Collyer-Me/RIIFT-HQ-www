@@ -235,6 +235,7 @@
       run: pack.run + ' efoil at ~20 km/h',
       showWarn: is2PTracks,
       warn: '2P Tracks are sized for the 2P battery only — you won\u2019t be able to fit a 3P or 4P PowerPack later without re-tracking the board.',
+      trackId: trackTop.id,
       batteryId: battTop.id
     };
   };
@@ -298,8 +299,8 @@
     var answers = this.state.answers;
     var self = this;
     var html = '';
-    html += '<p class="riift-eyebrow">' + esc(cur.eyebrow) + '</p>';
-    html += '<h2 class="riift-h2" style="margin-bottom:clamp(22px,3vw,32px)">' + esc(cur.title) + '</h2>';
+    html += '<p class="riift-wizard__eyebrow">' + esc(cur.eyebrow) + '</p>';
+    html += '<h2 class="riift-wizard__title riift-wizard__title--quiz">' + esc(cur.title) + '</h2>';
     html += '<div class="riift-wizard__options">';
     cur.options.forEach(function (o) {
       var sel = answers[cur.key] === o.id;
@@ -321,7 +322,7 @@
     html += '<div class="riift-wizard__nav">';
     html += '<button type="button" class="riift-btn riift-btn--pill" data-wz-back>← Back</button>';
     html +=
-      '<span class="riift-caption">Question ' +
+      '<span class="riift-wizard__step-counter">Question ' +
       (this.state.step + 1) +
       ' of ' +
       steps.length +
@@ -344,45 +345,109 @@
     });
   };
 
-  RiiftWizard.prototype.resolveVariantId = function (battery) {
-    if (battery.variantId) return Promise.resolve(battery.variantId);
-    if (!battery.productHandle) return Promise.resolve(null);
-    return fetch('/products/' + encodeURIComponent(battery.productHandle) + '.js')
-      .then(function (r) {
-        if (!r.ok) return null;
-        return r.json();
-      })
-      .then(function (product) {
-        if (!product || !product.variants || !product.variants.length) return null;
-        return product.variants[0].id;
-      })
-      .catch(function () {
-        return null;
-      });
+  RiiftWizard.prototype.fetchProduct = function (handle) {
+    return fetch('/products/' + encodeURIComponent(handle) + '.js').then(function (r) {
+      if (!r.ok) throw new Error('Product not found');
+      return r.json();
+    });
   };
 
-  RiiftWizard.prototype.addToCart = function (batteryId) {
+  RiiftWizard.prototype.findSetupVariant = function (product, trackId, batteryId) {
+    var buy = this.config.buy || {};
+    if (!buy.options || !product.variants) return null;
+
+    var want = [];
+    if (buy.options.tracks && buy.options.tracks[trackId]) {
+      want.push(buy.options.tracks[trackId]);
+    }
+    if (buy.options.battery && buy.options.battery[batteryId]) {
+      want.push(buy.options.battery[batteryId]);
+    }
+    if (!want.length) return null;
+
+    var optionValues = [];
+    if (product.options) {
+      product.options.forEach(function (opt) {
+        if (opt.values) optionValues = optionValues.concat(opt.values);
+      });
+    }
+    var targets = want.filter(function (label) {
+      return optionValues.indexOf(label) !== -1;
+    });
+    if (!targets.length) return null;
+
+    return product.variants.find(function (v) {
+      var vals = [v.option1, v.option2, v.option3].filter(Boolean);
+      return targets.every(function (label) {
+        return vals.indexOf(label) !== -1;
+      });
+    });
+  };
+
+  RiiftWizard.prototype.resolveVariantId = function (battery, trackId) {
     var self = this;
+    var buy = this.config.buy || {};
+
+    if (buy.productHandle) {
+      return this.fetchProduct(buy.productHandle).then(function (product) {
+        var variant = self.findSetupVariant(product, trackId, battery.id);
+        if (!variant) return null;
+        return { product: product, variant: variant };
+      });
+    }
+
+    if (battery.variantId) {
+      return Promise.resolve({
+        product: { handle: battery.productHandle },
+        variant: { id: battery.variantId }
+      });
+    }
+
+    if (!battery.productHandle) return Promise.resolve(null);
+
+    return this.fetchProduct(battery.productHandle).then(function (product) {
+      var variant = self.findSetupVariant(product, trackId, battery.id);
+      if (!variant && product.variants && product.variants.length) {
+        variant = product.variants[0];
+      }
+      if (!variant) return null;
+      return { product: product, variant: variant };
+    });
+  };
+
+  RiiftWizard.prototype.buildProductUrl = function (batteryId, trackId) {
+    var self = this;
+    var buy = this.config.buy || {};
     var battery = this.config.batteries.find(function (b) {
       return b.id === batteryId;
     });
-    if (!battery) return Promise.reject(new Error('No battery'));
-    return this.resolveVariantId(battery).then(function (variantId) {
-      if (!variantId) {
+    if (!battery) return Promise.reject(new Error('No matching product'));
+
+    return this.resolveVariantId(battery, trackId).then(function (resolved) {
+      if (!resolved || !resolved.variant || !resolved.variant.id) {
+        var handle = buy.productHandle || battery.productHandle || '';
         throw new Error(
           'Product not found. Create product handle "' +
-            (battery.productHandle || '') +
+            handle +
             '" or set variantId in wizard config.'
         );
       }
-      return fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
-      }).then(function (r) {
-        if (!r.ok) throw new Error('Add to cart failed');
-        return r.json();
-      });
+
+      var handle = resolved.product.handle || buy.productHandle || battery.productHandle;
+      var url =
+        '/products/' +
+        encodeURIComponent(handle) +
+        '?variant=' +
+        encodeURIComponent(resolved.variant.id);
+
+      if (trackId) {
+        url += '&riift_track=' + encodeURIComponent(trackId);
+      }
+      if (batteryId) {
+        url += '&riift_battery=' + encodeURIComponent(batteryId);
+      }
+
+      return url;
     });
   };
 
@@ -390,10 +455,10 @@
     var rec = this.buildResult(boards);
     var self = this;
     var html = '';
-    html += '<p class="riift-eyebrow">Your recommended setup</p>';
-    html += '<h2 class="riift-h2">' + esc(rec.headline) + '</h2>';
-    html += '<p class="riift-h3" style="margin-top:8px">' + esc(rec.matchLine) + '</p>';
-    html += '<p class="riift-body" style="margin-top:18px">' + esc(rec.blurb) + '</p>';
+    html += '<p class="riift-wizard__eyebrow">Your recommended setup</p>';
+    html += '<h2 class="riift-wizard__title riift-wizard__title--results">' + esc(rec.headline) + '</h2>';
+    html += '<p class="riift-wizard__match-line">' + esc(rec.matchLine) + '</p>';
+    html += '<p class="riift-wizard__lede">' + esc(rec.blurb) + '</p>';
     html += '<div class="riift-wizard__result-card">';
     html +=
       '<div class="riift-wizard__result-row"><span class="riift-wizard__result-label">Tracks</span><span class="riift-wizard__result-value">' +
@@ -414,7 +479,7 @@
     html += '</div>';
     if (rec.showWarn) {
       html += '<div class="riift-wizard__warn"><span class="riift-wizard__warn-icon">!</span>';
-      html += '<p class="riift-body">' + esc(rec.warn) + '</p></div>';
+      html += '<p class="riift-wizard__warn-text">' + esc(rec.warn) + '</p></div>';
     }
     html += '<div class="riift-wizard__actions">';
     html += '<button type="button" class="riift-btn riift-btn--solid riift-wizard__buy" data-wz-buy>Buy now</button>';
@@ -436,14 +501,14 @@
       buyBtn.disabled = true;
       errEl.hidden = true;
       self
-        .addToCart(rec.batteryId)
-        .then(function () {
-          window.location.href = '/cart';
+        .buildProductUrl(rec.batteryId, rec.trackId)
+        .then(function (url) {
+          window.location.href = url;
         })
         .catch(function (err) {
           buyBtn.classList.remove('is-loading');
           buyBtn.disabled = false;
-          errEl.textContent = err.message || 'Could not add to cart.';
+          errEl.textContent = err.message || 'Could not open product page.';
           errEl.hidden = false;
         });
     });
