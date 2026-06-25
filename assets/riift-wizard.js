@@ -10,11 +10,38 @@
     return Number.isFinite(n) && n > 0 ? n : 96;
   }
 
+  function normalizeConfig(config) {
+    if (!config || typeof config !== 'object') return config;
+    if (Array.isArray(config.steps)) {
+      config.steps.forEach(function (step) {
+        if (typeof step.options === 'string') {
+          try {
+            step.options = JSON.parse(step.options);
+          } catch (e) {
+            step.options = [];
+          }
+        }
+      });
+    }
+    if (Array.isArray(config.batteries)) {
+      config.batteries.forEach(function (battery) {
+        if (typeof battery.w === 'string') {
+          try {
+            battery.w = JSON.parse(battery.w);
+          } catch (e) {
+            battery.w = {};
+          }
+        }
+      });
+    }
+    return config;
+  }
+
   function loadConfig(root) {
     var inline = root.querySelector('[data-riift-wizard-config]');
     if (inline && inline.textContent.trim()) {
       try {
-        return Promise.resolve(JSON.parse(inline.textContent));
+        return Promise.resolve(normalizeConfig(JSON.parse(inline.textContent)));
       } catch (e) {
         return Promise.reject(e);
       }

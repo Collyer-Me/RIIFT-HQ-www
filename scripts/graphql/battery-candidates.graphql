@@ -1,0 +1,12 @@
+query BatteryCandidates {
+  metaobjects(type: "wizard_candidate", first: 10) {
+    nodes {
+      id
+      handle
+      fields {
+        key
+        value
+      }
+    }
+  }
+}

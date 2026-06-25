@@ -1,0 +1,18 @@
+query ListMetaobjectDefinitions {
+  metaobjectDefinitions(first: 50) {
+    nodes {
+      type
+      name
+      access {
+        storefront
+      }
+      fieldDefinitions {
+        key
+        type {
+          name
+        }
+      }
+      metaobjectsCount
+    }
+  }
+}

@@ -1,0 +1,34 @@
+query {
+  steps: metaobjects(type: "wizard_step", first: 20) {
+    nodes {
+      id
+      handle
+      displayName
+      capabilities {
+        publishable {
+          status
+        }
+      }
+      fields {
+        key
+        value
+      }
+    }
+  }
+  candidates: metaobjects(type: "wizard_candidate", first: 20) {
+    nodes {
+      id
+      handle
+      displayName
+      capabilities {
+        publishable {
+          status
+        }
+      }
+      fields {
+        key
+        value
+      }
+    }
+  }
+}

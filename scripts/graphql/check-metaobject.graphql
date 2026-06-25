@@ -1,0 +1,27 @@
+query CheckWizardMetaobjects($type: String!) {
+  definition: metaobjectDefinitionByType(type: $type) {
+    type
+    name
+    access {
+      storefront
+    }
+    fieldDefinitions {
+      key
+      type {
+        name
+      }
+    }
+    metaobjects(first: 50) {
+      nodes {
+        handle
+      }
+    }
+  }
+  products: products(first: 10, query: "handle:riift-powerpack") {
+    nodes {
+      id
+      handle
+      title
+    }
+  }
+}

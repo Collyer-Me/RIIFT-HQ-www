@@ -44,7 +44,7 @@
           "key": {{ step.key.value | json }},
           "eyebrow": {{ step.eyebrow.value | json }},
           "title": {{ step.title.value | json }},
-          "options": {{ step.options_json.value }}
+          "options": {% if step.options_json.value != blank %}{{ step.options_json.value | json }}{% else %}[]{% endif %}
         }{% unless forloop.last %},{% endunless %}
       {% endfor %}
     ],
@@ -78,7 +78,7 @@
             "pack": {{ c.pack_index.value | default: 0 }},
             "productHandle": {% if linked %}{{ linked.handle | json }}{% else %}null{% endif %},
             "variantId": {% if linked %}{{ linked.selected_or_first_available_variant.id | json }}{% else %}null{% endif %},
-            "w": {{ c.score_weights.value }}
+            "w": {% if c.score_weights.value != blank %}{{ c.score_weights.value | json }}{% else %}{}{% endif %}
           }
           {% assign batt_first = false %}
         {% endif %}

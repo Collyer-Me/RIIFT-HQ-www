@@ -1,0 +1,75 @@
+query CheckWizardMetaobjects {
+  wizard_step: metaobjectDefinitionByType(type: "wizard_step") {
+    type
+    name
+    access {
+      storefront
+    }
+    fieldDefinitions {
+      key
+      type {
+        name
+      }
+    }
+    metaobjects(first: 20) {
+      nodes {
+        handle
+        fields {
+          key
+          value
+        }
+      }
+    }
+  }
+  wizard_candidate: metaobjectDefinitionByType(type: "wizard_candidate") {
+    type
+    name
+    access {
+      storefront
+    }
+    fieldDefinitions {
+      key
+      type {
+        name
+      }
+    }
+    metaobjects(first: 20) {
+      nodes {
+        handle
+        fields {
+          key
+          value
+        }
+      }
+    }
+  }
+  wizard_shaper_region: metaobjectDefinitionByType(type: "wizard_shaper_region") {
+    type
+    name
+    access {
+      storefront
+    }
+    fieldDefinitions {
+      key
+      type {
+        name
+      }
+    }
+    metaobjects(first: 20) {
+      nodes {
+        handle
+        fields {
+          key
+          value
+        }
+      }
+    }
+  }
+  products: products(first: 10, query: "handle:riift-powerpack") {
+    nodes {
+      id
+      handle
+      title
+    }
+  }
+}

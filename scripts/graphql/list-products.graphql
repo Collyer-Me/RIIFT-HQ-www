@@ -1,0 +1,9 @@
+query {
+  products(first: 25, query: "powerpack") {
+    nodes {
+      id
+      handle
+      title
+    }
+  }
+}

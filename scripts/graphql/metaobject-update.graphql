@@ -1,0 +1,11 @@
+mutation MetaobjectUpdate($id: ID!, $metaobject: MetaobjectUpdateInput!) {
+  metaobjectUpdate(id: $id, metaobject: $metaobject) {
+    metaobject {
+      handle
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

@@ -47,14 +47,24 @@ In **Shopify Admin → Content → Metaobjects → Add definition**, create:
 
 ## Seed data
 
-Copy values from [`seed-data.json`](seed-data.json) when creating entries, or run:
+Copy values from [`seed-data.json`](seed-data.json) when creating entries manually, or run the automated script:
 
 ```powershell
-# After shopify store auth (requires write_metaobjects scope):
-shopify store execute -s riift-hq.myshopify.com --query-file scripts/wizard-seed-metaobjects.graphql --allow-mutations
+# One-time: authorize CLI (opens browser)
+shopify store auth --store riift-hq.myshopify.com --scopes read_metaobject_definitions,write_metaobject_definitions,read_metaobjects,write_metaobjects,read_products
+
+# Validate definitions only
+node scripts/seed-wizard-metaobjects.mjs --check
+
+# Validate + create all missing entries (7 steps, 5 candidates, 5 shapers)
+node scripts/seed-wizard-metaobjects.mjs
 ```
 
-Until metaobjects exist, the theme uses `assets/wizard-config.json` automatically.
+The script checks field keys, types, storefront read access, links battery candidates to PowerPack products by handle, and skips entries that already exist.
+
+Until metaobjects exist **and are published (Active)**, the theme uses `assets/wizard-config.json` automatically.
+
+> **Important:** Metaobject entries must be **Active**, not **Draft**. The storefront only reads published entries. After editing in Admin, click **Save** and set status to **Active** (or use **Publish**). Draft copies of entries are invisible to the theme.
 
 ---
 
