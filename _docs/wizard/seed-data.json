@@ -1,0 +1,171 @@
+{
+  "wizard_steps": [
+    {
+      "handle": "step-mode",
+      "sort_order": 1,
+      "key": "mode",
+      "eyebrow": "01 · Discipline",
+      "title": "How do you want to ride?",
+      "options_json": [
+        { "id": "prone", "label": "Pure foiling", "desc": "Prone & SUP, unpowered." },
+        { "id": "assist", "label": "Foil assist", "desc": "A subtle push to catch more waves." },
+        { "id": "efoil", "label": "Efoil", "desc": "Ride with no waves and no wind." },
+        { "id": "everything", "label": "Everything", "desc": "One quiver, all three modes." }
+      ]
+    },
+    {
+      "handle": "step-build",
+      "sort_order": 2,
+      "key": "build",
+      "eyebrow": "02 · Board",
+      "title": "How should your board be set up?",
+      "options_json": [
+        { "id": "versatile", "label": "Versatile build", "desc": "Keep my options open — fit any battery size." },
+        { "id": "perf", "label": "Peak-performance build", "desc": "Lightest possible, optimised for one battery." },
+        { "id": "unsure", "label": "Not sure yet", "desc": "Recommend the right tracks for me." }
+      ]
+    },
+    {
+      "handle": "step-conditions",
+      "sort_order": 3,
+      "key": "conditions",
+      "eyebrow": "03 · Conditions",
+      "title": "Where do you ride most?",
+      "options_json": [
+        { "id": "waves", "label": "Ocean waves", "desc": "Reef and beach breaks." },
+        { "id": "downwind", "label": "Open ocean & downwind", "desc": "Bumps and long runs." },
+        { "id": "flat", "label": "Flat water & lakes", "desc": "Calm, glassy conditions." },
+        { "id": "mix", "label": "A bit of everything", "desc": "" }
+      ]
+    },
+    {
+      "handle": "step-weight",
+      "sort_order": 4,
+      "key": "weight",
+      "eyebrow": "04 · Rider",
+      "title": "Your riding weight?",
+      "options_json": [
+        { "id": "u70", "label": "Under 70 kg", "desc": "" },
+        { "id": "70-85", "label": "70 – 85 kg", "desc": "" },
+        { "id": "85-100", "label": "85 – 100 kg", "desc": "" },
+        { "id": "o100", "label": "Over 100 kg", "desc": "" }
+      ]
+    },
+    {
+      "handle": "step-session",
+      "sort_order": 5,
+      "key": "session",
+      "eyebrow": "05 · Range",
+      "title": "How long do you want to ride?",
+      "options_json": [
+        { "id": "short", "label": "Quick blasts", "desc": "Around 30 minutes." },
+        { "id": "medium", "label": "Half sessions", "desc": "Around 45 minutes." },
+        { "id": "long", "label": "Long sessions", "desc": "60 minutes or more." }
+      ]
+    },
+    {
+      "handle": "step-experience",
+      "sort_order": 6,
+      "key": "experience",
+      "eyebrow": "06 · Level",
+      "title": "Your foiling experience?",
+      "options_json": [
+        { "id": "new", "label": "New to foiling", "desc": "" },
+        { "id": "inter", "label": "Intermediate", "desc": "" },
+        { "id": "adv", "label": "Advanced", "desc": "" }
+      ]
+    },
+    {
+      "handle": "step-region",
+      "sort_order": 7,
+      "key": "region",
+      "eyebrow": "07 · Location",
+      "title": "Where are you based?",
+      "options_json": [
+        { "id": "aus", "label": "Australia / NZ", "desc": "" },
+        { "id": "eu", "label": "Europe / UK", "desc": "" },
+        { "id": "na", "label": "North America", "desc": "" },
+        { "id": "apac", "label": "Asia-Pacific", "desc": "" },
+        { "id": "other", "label": "Elsewhere", "desc": "" }
+      ]
+    }
+  ],
+  "wizard_candidates": [
+    {
+      "handle": "track-2p",
+      "candidate_id": "t2",
+      "candidate_type": "track",
+      "name": "RIIFT 2P Tracks",
+      "short_label": "2P Tracks",
+      "subtitle": "Compact layup · 2P battery only",
+      "price_label": "~$2,200"
+    },
+    {
+      "handle": "track-4p",
+      "candidate_id": "t4",
+      "candidate_type": "track",
+      "name": "RIIFT 4P Tracks",
+      "short_label": "4P Tracks",
+      "subtitle": "Full-length · fits every battery",
+      "price_label": "~$2,500"
+    },
+    {
+      "handle": "battery-2p",
+      "candidate_id": "2p",
+      "candidate_type": "battery",
+      "name": "RIIFT Battery Kit · 2P",
+      "short_label": "2P Kit",
+      "subtitle": "Entry · 518 Wh · ~30 min",
+      "pack_index": 0,
+      "product_handle": "riift-powerpack-2p",
+      "score_weights": {
+        "mode": { "prone": 10, "assist": 6, "everything": 2, "efoil": 2 },
+        "conditions": { "waves": 7, "flat": 4, "mix": 3 },
+        "weight": { "u70": 10, "70-85": 5 },
+        "session": { "short": 10, "medium": 4 },
+        "experience": { "new": 8, "inter": 4 }
+      }
+    },
+    {
+      "handle": "battery-3p",
+      "candidate_id": "3p",
+      "candidate_type": "battery",
+      "name": "RIIFT Battery Kit · 3P",
+      "short_label": "3P Kit",
+      "subtitle": "All-day · 778 Wh · ~45 min",
+      "pack_index": 1,
+      "product_handle": "riift-powerpack-3p",
+      "score_weights": {
+        "mode": { "assist": 8, "efoil": 7, "everything": 6, "prone": 3 },
+        "conditions": { "flat": 8, "mix": 7, "waves": 6, "downwind": 5 },
+        "weight": { "70-85": 9, "85-100": 7, "u70": 5 },
+        "session": { "medium": 10, "long": 6, "short": 5 },
+        "experience": { "inter": 9, "new": 6, "adv": 6 }
+      }
+    },
+    {
+      "handle": "battery-4p",
+      "candidate_id": "4p",
+      "candidate_type": "battery",
+      "name": "RIIFT Battery Kit · 4P",
+      "short_label": "4P Kit",
+      "subtitle": "Flagship · 1,036 Wh · ~60 min",
+      "pack_index": 2,
+      "product_handle": "riift-powerpack-4p",
+      "score_weights": {
+        "mode": { "everything": 10, "efoil": 9, "assist": 5 },
+        "conditions": { "downwind": 10, "mix": 6, "flat": 4, "waves": 3 },
+        "weight": { "o100": 10, "85-100": 9, "70-85": 5 },
+        "session": { "long": 10, "medium": 5 },
+        "experience": { "adv": 10, "inter": 5 }
+      }
+    }
+  ],
+  "wizard_shaper_regions": [
+    { "handle": "region-aus", "region_id": "aus", "shaper_name": "Jarrod Snow Designs" },
+    { "handle": "region-eu", "region_id": "eu", "shaper_name": "AppleTree Surfboards" },
+    { "handle": "region-na", "region_id": "na", "shaper_name": "KT Boards" },
+    { "handle": "region-apac", "region_id": "apac", "shaper_name": "SUNOVA" },
+    { "handle": "region-other", "region_id": "other", "shaper_name": "270 Board Co" }
+  ]
+}

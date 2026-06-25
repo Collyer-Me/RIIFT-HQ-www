@@ -1,0 +1,89 @@
+{% liquid
+  assign wizard_config_url = config_url
+  if wizard_config_url == blank
+    assign wizard_config_url = 'wizard-config.json' | asset_url
+  endif
+
+  assign topbar_label = 'Setup Finder'
+  assign intro_eyebrow = 'Live match finder'
+  assign intro_title = 'Watch the right setup rise to the top.'
+  assign intro_body = 'Answer a few quick questions. Your RIIFT Tracks and Battery Kit are scored against your riding in real time — both rankings on the right re-sort with each answer until clear winners emerge.'
+  assign start_label = 'Start RIIFT Wizard'
+
+  if section.settings
+    if section.settings.topbar_label != blank
+      assign topbar_label = section.settings.topbar_label
+    endif
+    if section.settings.intro_eyebrow != blank
+      assign intro_eyebrow = section.settings.intro_eyebrow
+    endif
+    if section.settings.intro_title != blank
+      assign intro_title = section.settings.intro_title
+    endif
+    if section.settings.intro_body != blank
+      assign intro_body = section.settings.intro_body
+    endif
+    if section.settings.start_label != blank
+      assign start_label = section.settings.start_label
+    endif
+  endif
+%}
+
+<div
+  class="riift-wizard{% if embedded %} riift-wizard--embedded{% else %} riift-wizard--standalone{% endif %}"
+  data-riift-wizard
+  data-config-url="{{ wizard_config_url }}"
+  data-section-id="{{ section.id | default: 'wizard' }}"
+>
+  {% render 'riift-wizard-config', section: section %}
+
+  <header class="riift-wizard__topbar">
+    <div class="riift-wizard__brand">
+      <a href="{{ routes.root_url }}" class="riift-wizard__logo-link">
+        {% if section.settings and section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width: 200 | image_tag: alt: shop.name, class: 'riift-wizard__logo' }}
+        {% else %}
+          <img
+            src="{{ 'riift-logo-white.png' | asset_url }}"
+            alt="{{ shop.name }}"
+            class="riift-wizard__logo"
+            width="120"
+            height="20"
+            loading="eager"
+          >
+        {% endif %}
+      </a>
+      <span class="riift-wizard__brand-label">{{ topbar_label }}</span>
+    </div>
+    <span class="riift-wizard__status" data-wz-status>Ready</span>
+  </header>
+
+  <div class="riift-wizard__progress" aria-hidden="true">
+    <div class="riift-wizard__progress-bar" data-wz-progress style="width: 0;"></div>
+  </div>
+
+  <div class="riift-wizard__layout">
+    <section class="riift-wizard__panel-main">
+      <div class="riift-wizard__screen riift-wizard__screen--intro" data-wz-intro>
+        <p class="riift-eyebrow">{{ intro_eyebrow }}</p>
+        <h1 class="riift-h1">{{ intro_title }}</h1>
+        <p class="riift-body" style="margin-top: 22px; max-width: 46ch;">
+          {{ intro_body }}
+        </p>
+        <button type="button" class="riift-btn riift-btn--solid" style="margin-top: 36px;" data-wz-start>
+          {{ start_label }}
+        </button>
+      </div>
+
+      <div class="riift-wizard__screen" data-wz-quiz hidden>
+        <div data-wz-quiz-inner></div>
+      </div>
+
+      <div class="riift-wizard__screen" data-wz-results hidden>
+        <div data-wz-results-inner></div>
+      </div>
+    </section>
+
+    <section class="riift-wizard__panel-rank" data-wz-boards aria-live="polite"></section>
+  </div>
+</div>

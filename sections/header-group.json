@@ -46,11 +46,19 @@
             "label": "Contact",
             "url": "shopify://pages/contact"
           }
+        },
+        "link_wizard": {
+          "type": "link",
+          "settings": {
+            "label": "Wizard",
+            "url": "shopify://pages/wizard"
+          }
         }
       },
       "block_order": [
         "link_boards",
         "link_system",
+        "link_wizard",
         "link_shapers",
         "link_dealers",
         "link_people",

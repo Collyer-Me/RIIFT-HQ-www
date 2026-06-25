@@ -1,0 +1,24 @@
+{% comment %}
+  Homepage / global modal entry for RIIFT Wizard.
+  Trigger with: data-riift-wizard-open="riift-wizard-modal"
+{% endcomment %}
+
+<div
+  id="riift-wizard-modal"
+  class="riift-wizard-modal"
+  data-riift-wizard-modal
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="RIIFT Setup Finder"
+>
+  <div class="riift-wizard-modal__backdrop" data-wz-modal-close aria-hidden="true"></div>
+  <div class="riift-wizard-modal__dialog" role="document">
+    <button type="button" class="riift-wizard-modal__close" data-wz-modal-close-btn aria-label="Close">×</button>
+    {% assign wizard_config_url = 'wizard-config.json' | asset_url %}
+    {% render 'riift-wizard-shell',
+      embedded: true,
+      config_url: wizard_config_url
+    %}
+  </div>
+</div>

@@ -167,6 +167,16 @@
         "columns": "3"
       }
     },
+    "home_wizard": {
+      "type": "riift-wizard-launcher",
+      "settings": {
+        "heading": "Find your RIIFT setup",
+        "body": "Answer a few questions and watch the right Tracks and Battery Kit rise to the top.",
+        "button_label": "Start RIIFT Wizard",
+        "open_modal": true,
+        "band_style": "off-white"
+      }
+    },
     "home_klaviyo": {
       "type": "riift-klaviyo-embed",
       "settings": {
@@ -185,6 +195,7 @@
     "home_powerpack",
     "home_balance",
     "home_stats",
+    "home_wizard",
     "home_klaviyo"
   ]
 }

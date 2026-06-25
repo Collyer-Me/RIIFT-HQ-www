@@ -1,0 +1,163 @@
+{
+  "intro": {
+    "eyebrow": "Live match finder",
+    "title": "Watch the right setup rise to the top.",
+    "body": "Answer a few quick questions. Your RIIFT Tracks and Battery Kit are scored against your riding in real time — both rankings on the right re-sort with each answer until clear winners emerge.",
+    "startLabel": "Start RIIFT Wizard"
+  },
+  "steps": [
+    {
+      "key": "mode",
+      "eyebrow": "01 · Discipline",
+      "title": "How do you want to ride?",
+      "options": [
+        { "id": "prone", "label": "Pure foiling", "desc": "Prone & SUP, unpowered." },
+        { "id": "assist", "label": "Foil assist", "desc": "A subtle push to catch more waves." },
+        { "id": "efoil", "label": "Efoil", "desc": "Ride with no waves and no wind." },
+        { "id": "everything", "label": "Everything", "desc": "One quiver, all three modes." }
+      ]
+    },
+    {
+      "key": "build",
+      "eyebrow": "02 · Board",
+      "title": "How should your board be set up?",
+      "options": [
+        { "id": "versatile", "label": "Versatile build", "desc": "Keep my options open — fit any battery size." },
+        { "id": "perf", "label": "Peak-performance build", "desc": "Lightest possible, optimised for one battery." },
+        { "id": "unsure", "label": "Not sure yet", "desc": "Recommend the right tracks for me." }
+      ]
+    },
+    {
+      "key": "conditions",
+      "eyebrow": "03 · Conditions",
+      "title": "Where do you ride most?",
+      "options": [
+        { "id": "waves", "label": "Ocean waves", "desc": "Reef and beach breaks." },
+        { "id": "downwind", "label": "Open ocean & downwind", "desc": "Bumps and long runs." },
+        { "id": "flat", "label": "Flat water & lakes", "desc": "Calm, glassy conditions." },
+        { "id": "mix", "label": "A bit of everything", "desc": "" }
+      ]
+    },
+    {
+      "key": "weight",
+      "eyebrow": "04 · Rider",
+      "title": "Your riding weight?",
+      "options": [
+        { "id": "u70", "label": "Under 70 kg", "desc": "" },
+        { "id": "70-85", "label": "70 – 85 kg", "desc": "" },
+        { "id": "85-100", "label": "85 – 100 kg", "desc": "" },
+        { "id": "o100", "label": "Over 100 kg", "desc": "" }
+      ]
+    },
+    {
+      "key": "session",
+      "eyebrow": "05 · Range",
+      "title": "How long do you want to ride?",
+      "options": [
+        { "id": "short", "label": "Quick blasts", "desc": "Around 30 minutes." },
+        { "id": "medium", "label": "Half sessions", "desc": "Around 45 minutes." },
+        { "id": "long", "label": "Long sessions", "desc": "60 minutes or more." }
+      ]
+    },
+    {
+      "key": "experience",
+      "eyebrow": "06 · Level",
+      "title": "Your foiling experience?",
+      "options": [
+        { "id": "new", "label": "New to foiling", "desc": "" },
+        { "id": "inter", "label": "Intermediate", "desc": "" },
+        { "id": "adv", "label": "Advanced", "desc": "" }
+      ]
+    },
+    {
+      "key": "region",
+      "eyebrow": "07 · Location",
+      "title": "Where are you based?",
+      "options": [
+        { "id": "aus", "label": "Australia / NZ", "desc": "" },
+        { "id": "eu", "label": "Europe / UK", "desc": "" },
+        { "id": "na", "label": "North America", "desc": "" },
+        { "id": "apac", "label": "Asia-Pacific", "desc": "" },
+        { "id": "other", "label": "Elsewhere", "desc": "" }
+      ]
+    }
+  ],
+  "tracks": [
+    {
+      "id": "t2",
+      "name": "RIIFT 2P Tracks",
+      "short": "2P Tracks",
+      "sub": "Compact layup · 2P battery only",
+      "price": "~$2,200"
+    },
+    {
+      "id": "t4",
+      "name": "RIIFT 4P Tracks",
+      "short": "4P Tracks",
+      "sub": "Full-length · fits every battery",
+      "price": "~$2,500"
+    }
+  ],
+  "batteries": [
+    {
+      "id": "2p",
+      "name": "RIIFT Battery Kit · 2P",
+      "short": "2P Kit",
+      "sub": "Entry · 518 Wh · ~30 min",
+      "pack": 0,
+      "productHandle": "riift-powerpack-2p",
+      "variantId": null,
+      "w": {
+        "mode": { "prone": 10, "assist": 6, "everything": 2, "efoil": 2 },
+        "conditions": { "waves": 7, "flat": 4, "mix": 3 },
+        "weight": { "u70": 10, "70-85": 5 },
+        "session": { "short": 10, "medium": 4 },
+        "experience": { "new": 8, "inter": 4 }
+      }
+    },
+    {
+      "id": "3p",
+      "name": "RIIFT Battery Kit · 3P",
+      "short": "3P Kit",
+      "sub": "All-day · 778 Wh · ~45 min",
+      "pack": 1,
+      "productHandle": "riift-powerpack-3p",
+      "variantId": null,
+      "w": {
+        "mode": { "assist": 8, "efoil": 7, "everything": 6, "prone": 3 },
+        "conditions": { "flat": 8, "mix": 7, "waves": 6, "downwind": 5 },
+        "weight": { "70-85": 9, "85-100": 7, "u70": 5 },
+        "session": { "medium": 10, "long": 6, "short": 5 },
+        "experience": { "inter": 9, "new": 6, "adv": 6 }
+      }
+    },
+    {
+      "id": "4p",
+      "name": "RIIFT Battery Kit · 4P",
+      "short": "4P Kit",
+      "sub": "Flagship · 1,036 Wh · ~60 min",
+      "pack": 2,
+      "productHandle": "riift-powerpack-4p",
+      "variantId": null,
+      "w": {
+        "mode": { "everything": 10, "efoil": 9, "assist": 5 },
+        "conditions": { "downwind": 10, "mix": 6, "flat": 4, "waves": 3 },
+        "weight": { "o100": 10, "85-100": 9, "70-85": 5 },
+        "session": { "long": 10, "medium": 5 },
+        "experience": { "adv": 10, "inter": 5 }
+      }
+    }
+  ],
+  "packs": [
+    { "name": "2P", "wh": "518 Wh", "run": "~30 min", "price": "$7,000" },
+    { "name": "3P", "wh": "778 Wh", "run": "~45 min", "price": "$8,500" },
+    { "name": "4P", "wh": "1,036 Wh", "run": "~60 min", "price": "$10,000" }
+  ],
+  "shapers": {
+    "aus": "Jarrod Snow Designs",
+    "eu": "AppleTree Surfboards",
+    "na": "KT Boards",
+    "apac": "SUNOVA",
+    "other": "270 Board Co"
+  }
+}

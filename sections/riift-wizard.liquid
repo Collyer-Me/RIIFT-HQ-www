@@ -1,0 +1,61 @@
+<div class="riift-wizard-section" data-section-id="{{ section.id }}">
+  {% assign wizard_config_url = 'wizard-config.json' | asset_url %}
+  {% render 'riift-wizard-shell',
+    embedded: false,
+    config_url: wizard_config_url,
+    section: section
+  %}
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Wizard",
+  "class": "riift-wizard-section-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Top bar logo (optional)"
+    },
+    {
+      "type": "text",
+      "id": "topbar_label",
+      "label": "Top bar label",
+      "default": "Setup Finder"
+    },
+    {
+      "type": "header",
+      "content": "Intro screen"
+    },
+    {
+      "type": "text",
+      "id": "intro_eyebrow",
+      "label": "Intro eyebrow",
+      "default": "Live match finder"
+    },
+    {
+      "type": "text",
+      "id": "intro_title",
+      "label": "Intro title",
+      "default": "Watch the right setup rise to the top."
+    },
+    {
+      "type": "textarea",
+      "id": "intro_body",
+      "label": "Intro body",
+      "default": "Answer a few quick questions. Your RIIFT Tracks and Battery Kit are scored against your riding in real time — both rankings on the right re-sort with each answer until clear winners emerge."
+    },
+    {
+      "type": "text",
+      "id": "start_label",
+      "label": "Start button label",
+      "default": "Start RIIFT Wizard"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Wizard"
+    }
+  ]
+}
+{% endschema %}

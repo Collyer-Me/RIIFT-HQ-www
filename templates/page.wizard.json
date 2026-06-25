@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "wizard_main": {
+      "type": "riift-wizard",
+      "settings": {
+        "topbar_label": "Setup Finder",
+        "intro_eyebrow": "Live match finder",
+        "intro_title": "Watch the right setup rise to the top.",
+        "intro_body": "Answer a few quick questions. Your RIIFT Tracks and Battery Kit are scored against your riding in real time — both rankings on the right re-sort with each answer until clear winners emerge.",
+        "start_label": "Start RIIFT Wizard"
+      }
+    }
+  },
+  "order": [
+    "wizard_main"
+  ]
+}

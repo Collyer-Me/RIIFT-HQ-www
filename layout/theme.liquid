@@ -39,7 +39,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if template.name == 'page' and template.suffix == 'wizard' %} riift-page-wizard{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
@@ -144,5 +144,8 @@
 
     <script src="{{ 'riift.js' | asset_url }}" defer></script>
     <script src="{{ 'riift-hero.js' | asset_url }}" defer></script>
+    {{ 'riift-wizard.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'riift-wizard.js' | asset_url }}" defer></script>
+    {% render 'riift-wizard-modal' %}
   </body>
 </html>

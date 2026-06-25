@@ -1,0 +1,100 @@
+{% liquid
+  assign intro_eyebrow_cfg = 'Live match finder'
+  assign intro_title_cfg = 'Watch the right setup rise to the top.'
+  assign intro_body_cfg = ''
+  assign start_label_cfg = 'Start RIIFT Wizard'
+
+  if section.settings
+    if section.settings.intro_eyebrow != blank
+      assign intro_eyebrow_cfg = section.settings.intro_eyebrow
+    endif
+    if section.settings.intro_title != blank
+      assign intro_title_cfg = section.settings.intro_title
+    endif
+    if section.settings.intro_body != blank
+      assign intro_body_cfg = section.settings.intro_body
+    endif
+    if section.settings.start_label != blank
+      assign start_label_cfg = section.settings.start_label
+    endif
+  endif
+
+  assign step_entries = shop.metaobjects.wizard_step.values
+  assign candidate_entries = shop.metaobjects.wizard_candidate.values
+  assign shaper_entries = shop.metaobjects.wizard_shaper_region.values
+  assign use_metaobjects = false
+  if step_entries.size > 0 and candidate_entries.size > 0
+    assign use_metaobjects = true
+  endif
+%}
+
+{% if use_metaobjects %}
+  {% capture wizard_json %}
+  {
+    "intro": {
+      "eyebrow": {{ intro_eyebrow_cfg | json }},
+      "title": {{ intro_title_cfg | json }},
+      "body": {{ intro_body_cfg | json }},
+      "startLabel": {{ start_label_cfg | json }}
+    },
+    "steps": [
+      {% assign sorted_steps = step_entries | sort: 'sort_order' %}
+      {% for step in sorted_steps %}
+        {
+          "key": {{ step.key.value | json }},
+          "eyebrow": {{ step.eyebrow.value | json }},
+          "title": {{ step.title.value | json }},
+          "options": {{ step.options_json.value }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ],
+    "tracks": [
+      {% assign track_first = true %}
+      {% for c in candidate_entries %}
+        {% if c.candidate_type.value == 'track' %}
+          {% unless track_first %},{% endunless %}
+          {
+            "id": {{ c.candidate_id.value | json }},
+            "name": {{ c.name.value | json }},
+            "short": {{ c.short_label.value | json }},
+            "sub": {{ c.subtitle.value | json }},
+            "price": {{ c.price_label.value | json }}
+          }
+          {% assign track_first = false %}
+        {% endif %}
+      {% endfor %}
+    ],
+    "batteries": [
+      {% assign batt_first = true %}
+      {% for c in candidate_entries %}
+        {% if c.candidate_type.value == 'battery' %}
+          {% unless batt_first %},{% endunless %}
+          {% assign linked = c.product.value %}
+          {
+            "id": {{ c.candidate_id.value | json }},
+            "name": {{ c.name.value | json }},
+            "short": {{ c.short_label.value | json }},
+            "sub": {{ c.subtitle.value | json }},
+            "pack": {{ c.pack_index.value | default: 0 }},
+            "productHandle": {% if linked %}{{ linked.handle | json }}{% else %}null{% endif %},
+            "variantId": {% if linked %}{{ linked.selected_or_first_available_variant.id | json }}{% else %}null{% endif %},
+            "w": {{ c.score_weights.value }}
+          }
+          {% assign batt_first = false %}
+        {% endif %}
+      {% endfor %}
+    ],
+    "packs": [
+      { "name": "2P", "wh": "518 Wh", "run": "~30 min", "price": "$7,000" },
+      { "name": "3P", "wh": "778 Wh", "run": "~45 min", "price": "$8,500" },
+      { "name": "4P", "wh": "1,036 Wh", "run": "~60 min", "price": "$10,000" }
+    ],
+    "shapers": {
+      {% for s in shaper_entries %}
+        {{ s.region_id.value | json }}: {{ s.shaper_name.value | json }}{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    }
+  }
+  {% endcapture %}
+  <script type="application/json" data-riift-wizard-config>{{ wizard_json | strip }}</script>
+{% endif %}

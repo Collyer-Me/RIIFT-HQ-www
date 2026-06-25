@@ -1,0 +1,7 @@
+# Wizard metaobject seeding
+#
+# Metaobject definitions must be created in Admin first — see _docs/wizard/admin-setup.md
+# Entry payloads: _docs/wizard/seed-data.json
+#
+# After: shopify store auth --store riift-hq.myshopify.com --scopes read_metaobjects,write_metaobjects
+# Use Admin GraphQL metaobjectCreate mutations per entry (see Shopify metaobjects docs).

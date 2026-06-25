@@ -149,12 +149,13 @@ Do not use Shopify’s native marketing signup for RIIFT forms.
 
 ---
 
-## 8. Wizard (v1)
+## 8. Wizard
 
-- **Logic:** static JS in `assets/riift-wizard.js` (ported from prototype, not pasted into Page)
-- **Markup:** Claude HTML with `data-riift-wizard` or theme section
-- **Outcomes:** map to product page URLs — no cart API required for v1
-- **Entry points:** `/pages/wizard`, nav link, optional homepage modal (later)
+- **Section:** `riift-wizard` on template `page.wizard` → `/pages/wizard`
+- **Config:** `assets/wizard-config.json` (fallback) or Shopify **Metaobjects** — see [`_docs/wizard/admin-setup.md`](wizard/admin-setup.md)
+- **Logic:** `assets/riift-wizard.js` (live ranking, compatibility rules, add-to-cart)
+- **Modal:** `riift-wizard-modal` snippet + `riift-wizard-launcher` section on homepage
+- **Buy now:** `/cart/add.js` → redirect `/cart` (link PowerPack products by handle)
 
 Compatibility rules (must hold in UI and copy):
 
