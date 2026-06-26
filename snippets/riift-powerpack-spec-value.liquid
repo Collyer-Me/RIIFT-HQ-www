@@ -1,79 +1,39 @@
 {% doc %}
-  Resolves a PowerPack tier spec from variant metafields with README fallbacks.
+  Resolves a variant spec from riift metafields only (no theme fallbacks).
 
   @param {variant} variant
-  @param {string} key - tier_label, usable_energy, efoil_run_time, pack_weight, track_compat_line, track_compat_table, battery_config, cell, nominal_voltage, capacity, peak_thrust, battery_weight, system_weight, recharge_time
+  @param {string} key
 {% enddoc %}
 
 {% liquid
-  assign tier_code = variant.option1 | default: '' | strip | upcase
-  if tier_code == blank
-    assign tier_code = variant.title | strip | upcase
-  endif
-
-  assign metafield_value = blank
-
   case key
     when 'tier_label'
-      assign metafield_value = variant.metafields.riift.tier_label.value
+      echo variant.metafields.riift.tier_label.value
     when 'usable_energy'
-      assign metafield_value = variant.metafields.riift.usable_energy.value
+      echo variant.metafields.riift.usable_energy.value
     when 'efoil_run_time'
-      assign metafield_value = variant.metafields.riift.efoil_run_time.value
+      echo variant.metafields.riift.efoil_run_time.value
     when 'pack_weight'
-      assign metafield_value = variant.metafields.riift.pack_weight.value
+      echo variant.metafields.riift.pack_weight.value
     when 'track_compat_line'
-      assign metafield_value = variant.metafields.riift.track_compat_line.value
+      echo variant.metafields.riift.track_compat_line.value
     when 'track_compat_table'
-      assign metafield_value = variant.metafields.riift.track_compat_table.value
+      echo variant.metafields.riift.track_compat_table.value
     when 'battery_config'
-      assign metafield_value = variant.metafields.riift.battery_config.value
+      echo variant.metafields.riift.battery_config.value
     when 'cell'
-      assign metafield_value = variant.metafields.riift.cell.value
+      echo variant.metafields.riift.cell.value
     when 'nominal_voltage'
-      assign metafield_value = variant.metafields.riift.nominal_voltage.value
+      echo variant.metafields.riift.nominal_voltage.value
     when 'capacity'
-      assign metafield_value = variant.metafields.riift.capacity.value
+      echo variant.metafields.riift.capacity.value
     when 'peak_thrust'
-      assign metafield_value = variant.metafields.riift.peak_thrust.value
+      echo variant.metafields.riift.peak_thrust.value
     when 'battery_weight'
-      assign metafield_value = variant.metafields.riift.battery_weight.value
+      echo variant.metafields.riift.battery_weight.value
     when 'system_weight'
-      assign metafield_value = variant.metafields.riift.system_weight.value
+      echo variant.metafields.riift.system_weight.value
     when 'recharge_time'
-      assign metafield_value = variant.metafields.riift.recharge_time.value
+      echo variant.metafields.riift.recharge_time.value
   endcase
 %}
-
-{% if metafield_value != blank %}
-  {{- metafield_value -}}
-{% else %}
-  {% case key %}
-    {% when 'tier_label' %}
-      {% case tier_code %}
-        {% when '2P' %}Entry{% when '3P' %}All-day{% else %}Flagship{% endcase %}
-    {% when 'usable_energy' %}
-      {% case tier_code %}{% when '2P' %}518 Wh{% when '3P' %}778 Wh{% else %}1,036 Wh{% endcase %}
-    {% when 'efoil_run_time' %}
-      {% case tier_code %}{% when '2P' %}~30 min{% when '3P' %}~45 min{% else %}~60 min{% endcase %}
-    {% when 'pack_weight' %}
-      {% case tier_code %}{% when '2P' %}3.2 kg{% when '3P' %}4.5 kg{% else %}5.8 kg{% endcase %}
-    {% when 'track_compat_line' %}
-      {% if tier_code == '2P' %}Fits both 2P and 4P RIIFT Tracks.{% else %}Fits 4P RIIFT Tracks.{% endif %}
-    {% when 'track_compat_table' %}
-      {% if tier_code == '2P' %}2P &amp; 4P{% else %}4P{% endif %}
-    {% when 'battery_config' %}
-      {% case tier_code %}{% when '2P' %}12S2P{% when '3P' %}12S3P{% else %}12S4P{% endcase %}
-    {% when 'cell' %}21700 · 6,000 mAh
-    {% when 'nominal_voltage' %}43.2 V
-    {% when 'capacity' %}
-      {% case tier_code %}{% when '2P' %}12 Ah{% when '3P' %}18 Ah{% else %}24 Ah{% endcase %}
-    {% when 'peak_thrust' %}28 kg
-    {% when 'battery_weight' %}
-      {% case tier_code %}{% when '2P' %}2.5 kg{% when '3P' %}3.5 kg{% else %}4.5 kg{% endcase %}
-    {% when 'system_weight' %}
-      {% case tier_code %}{% when '2P' %}4.4 kg{% when '3P' %}5.7 kg{% else %}7.0 kg{% endcase %}
-    {% when 'recharge_time' %}
-      {% case tier_code %}{% when '2P' %}~48 min{% when '3P' %}~72 min{% else %}~96 min{% endcase %}
-  {% endcase %}
-{% endif %}

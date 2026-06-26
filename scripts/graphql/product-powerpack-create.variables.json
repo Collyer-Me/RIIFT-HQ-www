@@ -1,0 +1,37 @@
+{
+  "input": {
+    "title": "RIIFT PowerPack",
+    "descriptionHtml": "Battery, onboard computer and propulsion in one balanced, tool-less, clip-in kit. Choose your range — every pack shares the same pod, remote and case.",
+    "vendor": "RIIFT",
+    "productType": "Power System",
+    "status": "ACTIVE",
+    "templateSuffix": "powerpack",
+    "productOptions": [
+      {
+        "name": "Pack",
+        "values": [
+          { "name": "2P" },
+          { "name": "3P" },
+          { "name": "4P" }
+        ]
+      }
+    ],
+    "variants": [
+      {
+        "optionValues": [{ "optionName": "Pack", "name": "2P" }],
+        "price": "7000.00",
+        "sku": "RIIFT-PP-2P"
+      },
+      {
+        "optionValues": [{ "optionName": "Pack", "name": "3P" }],
+        "price": "8500.00",
+        "sku": "RIIFT-PP-3P"
+      },
+      {
+        "optionValues": [{ "optionName": "Pack", "name": "4P" }],
+        "price": "10000.00",
+        "sku": "RIIFT-PP-4P"
+      }
+    ]
+  }
+}

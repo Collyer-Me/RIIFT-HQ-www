@@ -1,0 +1,53 @@
+{% doc %}
+  Outputs a product metafield value from namespace riift.
+
+  @param {product} product
+  @param {string} key
+{% enddoc %}
+
+{% liquid
+  case key
+    when 'eyebrow'
+      echo product.metafields.riift.eyebrow.value
+    when 'tier_heading'
+      echo product.metafields.riift.tier_heading.value
+    when 'price_note'
+      echo product.metafields.riift.price_note.value
+    when 'footnote'
+      echo product.metafields.riift.footnote.value
+    when 'gallery_label'
+      echo product.metafields.riift.gallery_label.value
+    when 'default_tier'
+      echo product.metafields.riift.default_tier.value
+    when 'wizard_url'
+      echo product.metafields.riift.wizard_url.value
+    when 'spec_heading'
+      echo product.metafields.riift.spec_heading.value
+    when 'spec_footnote'
+      echo product.metafields.riift.spec_footnote.value
+    when 'kit_heading'
+      echo product.metafields.riift.kit_heading.value
+    when 'kit_intro'
+      echo product.metafields.riift.kit_intro.value
+    when 'propulsion_eyebrow'
+      echo product.metafields.riift.propulsion_eyebrow.value
+    when 'propulsion_heading'
+      echo product.metafields.riift.propulsion_heading.value
+    when 'compare_heading'
+      echo product.metafields.riift.compare_heading.value
+    when 'compare_intro'
+      echo product.metafields.riift.compare_intro.value
+    when 'compare_column_1_label'
+      echo product.metafields.riift.compare_column_1_label.value
+    when 'compare_column_2_label'
+      echo product.metafields.riift.compare_column_2_label.value
+    when 'cta_heading'
+      echo product.metafields.riift.cta_heading.value
+    when 'cta_body'
+      echo product.metafields.riift.cta_body.value
+    when 'cta_button_label'
+      echo product.metafields.riift.cta_button_label.value
+    when 'cta_button_url'
+      echo product.metafields.riift.cta_button_url.value
+  endcase
+%}

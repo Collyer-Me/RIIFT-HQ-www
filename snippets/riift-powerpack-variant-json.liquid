@@ -2,9 +2,11 @@
   JSON payload for one PowerPack variant (tier selector + buy block).
 
   @param {variant} variant
+  @param {product} [product]
 {% enddoc %}
 
 {% liquid
+  assign p = product | default: variant.product
   assign tier_code = variant.option1 | default: '' | strip | upcase
   if tier_code == blank
     assign tier_code = variant.title | strip | upcase
@@ -30,7 +32,7 @@
     render 'riift-powerpack-spec-value', variant: variant, key: 'track_compat_line'
   endcapture
 
-  assign variant_image = variant.featured_image | default: product.featured_image
+  assign variant_image = variant.featured_image | default: p.featured_image
   if variant_image != blank
     assign image_url = variant_image | image_url: width: 1600
   else
@@ -49,5 +51,5 @@
   "packWeight": {{ pack_weight | strip | json }},
   "trackCompat": {{ track_compat_line | strip | json }},
   "imageUrl": {{ image_url | json }},
-  "imageAlt": {{ variant_image.alt | default: product.title | json }}
+  "imageAlt": {{ variant_image.alt | default: p.title | json }}
 }

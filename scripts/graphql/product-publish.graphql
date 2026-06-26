@@ -1,0 +1,15 @@
+mutation PublishPowerpack($id: ID!, $publicationId: ID!) {
+  publishablePublish(id: $id, input: { publicationId: $publicationId }) {
+    publishable {
+      ... on Product {
+        id
+        handle
+        onlineStoreUrl
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{% liquid
+  assign current_product = product
+  if section.settings.product != blank
+    assign current_product = section.settings.product
+  endif
+
+  assign kit_items = current_product.metafields.riift.kit_items.value
+%}
+
+{% if kit_items != blank %}
+  <div class="riift-page riift-product-kit-section" data-section-id="{{ section.id }}">
+    <div class="riift-band riift-band--off-white">
+      <div class="riift-band__inner">
+        {% capture kit_heading %}
+          {% render 'riift-product-mf', product: current_product, key: 'kit_heading' %}
+        {% endcapture %}
+        {% capture kit_intro %}
+          {% render 'riift-product-mf', product: current_product, key: 'kit_intro' %}
+        {% endcapture %}
+
+        {% if kit_heading != blank or kit_intro != blank %}
+          <div style="max-width: 62ch; margin-bottom: clamp(28px, 3.5vw, 44px);" data-reveal>
+            {% if kit_heading != blank %}
+              <h2 class="riift-h2">{{ kit_heading | strip }}</h2>
+            {% endif %}
+            {% if kit_intro != blank %}
+              <p class="riift-body" style="margin-top: 14px;">{{ kit_intro | strip }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <div class="riift-card-grid riift-card-grid--3">
+          {% for item in kit_items %}
+            {% render 'riift-card',
+              variant: 'text',
+              eyebrow: item.eyebrow,
+              title: item.title,
+              body: item.body,
+              reveal: true
+            %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "RIIFT Product kit",
+  "class": "riift-product-kit-section",
+  "tag": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Kit content from product metafield riift.kit_items (JSON) in Admin."
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Product kit"
+    }
+  ]
+}
+{% endschema %}

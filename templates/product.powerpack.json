@@ -2,169 +2,27 @@
   "sections": {
     "buy": {
       "type": "riift-product-buy",
-      "settings": {
-        "eyebrow": "RIIFT Power System",
-        "description": "Battery, onboard computer and propulsion in one balanced, tool-less, clip-in kit. Choose your range — every pack shares the same pod, remote and case.",
-        "tier_heading": "Choose your pack",
-        "default_tier": "4P",
-        "price_note": "AUD incl. GST",
-        "buy_label": "Buy now",
-        "wizard_label": "Help me choose",
-        "wizard_url": "/pages/wizard",
-        "footnote": "Launches September 2026 · PowerPack delivery from December 2026.",
-        "gallery_label": "RIIFT Power System",
-        "thumb_labels": "PowerPack|Propulsion Unit|Remote|Hard Case"
-      }
+      "settings": {}
     },
     "kit": {
-      "type": "riift-card-grid",
-      "settings": {
-        "heading": "What's in the kit",
-        "intro": "Everything you need to ride, in one case. The kit clips into the RIIFT Tracks your shaper builds into the board.",
-        "columns": "3",
-        "band_style": "off-white"
-      },
-      "blocks": {
-        "kit_01": {
-          "type": "card",
-          "settings": {
-            "eyebrow": "01",
-            "title": "PowerPack",
-            "body": "The battery and onboard computer — the brain and power source of the system. 2P, 3P or 4P."
-          }
-        },
-        "kit_02": {
-          "type": "card",
-          "settings": {
-            "eyebrow": "02",
-            "title": "Propulsion Unit",
-            "body": "Motor, 49.5 mm pod, hub, blades and cable. Compact, efficient and low-drag."
-          }
-        },
-        "kit_03": {
-          "type": "card",
-          "settings": {
-            "eyebrow": "03",
-            "title": "Remote",
-            "body": "Wireless throttle control, intuitive from the first ride."
-          }
-        },
-        "kit_04": {
-          "type": "card",
-          "settings": {
-            "eyebrow": "04",
-            "title": "Charger",
-            "body": "Recharge your PowerPacks between sessions and stay on the water longer."
-          }
-        },
-        "kit_05": {
-          "type": "card",
-          "settings": {
-            "eyebrow": "05",
-            "title": "Hard Case",
-            "body": "A protective travel and storage case sized for the full kit."
-          }
-        }
-      },
-      "block_order": ["kit_01", "kit_02", "kit_03", "kit_04", "kit_05"]
+      "type": "riift-product-kit",
+      "settings": {}
     },
     "specs": {
       "type": "riift-product-spec-table",
-      "settings": {
-        "heading": "Full specifications",
-        "footnote": "*80 kg rider, flat water, continuous at ~20 km/h. Heavier riders and harder riding reduce run time; surfing roughly doubles it. †PowerPack + Propulsion Unit installed. ‡0–100% at 15 A, nominal. Prices AUD incl. GST."
-      }
+      "settings": {}
     },
     "propulsion": {
       "type": "riift-product-propulsion",
-      "settings": {
-        "eyebrow": "The propulsion unit",
-        "heading": "A thinner pod cuts drag at every speed"
-      },
-      "blocks": {
-        "stat_1": {
-          "type": "stat",
-          "settings": {
-            "value": "49.5",
-            "unit": "mm",
-            "label": "Pod diameter — vs a 63 mm industry standard."
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "value": "38",
-            "unit": "%",
-            "label": "Less drag than the industry-standard pod."
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "value": "150",
-            "unit": "W/kg",
-            "label": "Up to, in 4P — power-to-weight at the top of the class."
-          }
-        }
-      },
-      "block_order": ["stat_1", "stat_2", "stat_3"]
+      "settings": {}
     },
     "compare": {
       "type": "riift-product-compare",
-      "settings": {
-        "show_comparison": true,
-        "heading": "How it compares",
-        "body": "RIIFT 4P against the comparable FoilDrive Fusion. Manufacturer-published figures.",
-        "column_1_label": "RIIFT 4P",
-        "column_2_label": "FoilDrive Fusion"
-      },
-      "blocks": {
-        "row_1": {
-          "type": "row",
-          "settings": {
-            "label": "Usable energy",
-            "riift_value": "1,036 Wh",
-            "compare_value": "860 Wh"
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "label": "Complete weight",
-            "riift_value": "7.0 kg",
-            "compare_value": "7.9 kg"
-          }
-        },
-        "row_3": {
-          "type": "row",
-          "settings": {
-            "label": "Peak thrust",
-            "riift_value": "28 kg",
-            "compare_value": "34 kg"
-          }
-        },
-        "row_4": {
-          "type": "row",
-          "settings": {
-            "label": "RRP incl. tax",
-            "riift_value": "$10,000",
-            "compare_value": "$11,600"
-          }
-        }
-      },
-      "block_order": ["row_1", "row_2", "row_3", "row_4"]
+      "settings": {}
     },
     "cta": {
-      "type": "riift-text-band",
-      "settings": {
-        "heading": "Not sure which pack?",
-        "body": "<p>Answer a few questions and we'll rank the right tracks and battery for how you ride.</p>",
-        "band_style": "dark",
-        "alignment": "center",
-        "button_label": "Start RIIFT Wizard",
-        "button_url": "/pages/wizard",
-        "button_style": "pill"
-      }
+      "type": "riift-product-cta",
+      "settings": {}
     }
   },
   "order": ["buy", "kit", "specs", "propulsion", "compare", "cta"]

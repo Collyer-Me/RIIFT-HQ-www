@@ -1,42 +1,61 @@
-<div class="riift-page riift-product-propulsion-section" data-section-id="{{ section.id }}">
-  <section class="riift-product-propulsion" data-reveal>
-    {% if section.settings.image != blank %}
-      {{
-        section.settings.image
-        | image_url: width: 2400
-        | image_tag: class: 'riift-product-propulsion__image', loading: 'lazy', alt: ''
-      }}
-    {% else %}
-      <div class="riift-product-propulsion__placeholder"></div>
-    {% endif %}
-    <div class="riift-product-propulsion__scrim"></div>
+{% liquid
+  assign current_product = product
+  if section.settings.product != blank
+    assign current_product = section.settings.product
+  endif
 
-    <div class="riift-product-propulsion__content">
-      {% if section.settings.eyebrow != blank %}
-        <p class="riift-eyebrow riift-product-propulsion__eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
-      {% endif %}
-      {% if section.settings.heading != blank %}
-        <h2 class="riift-h2 riift-product-propulsion__heading" data-reveal>{{ section.settings.heading }}</h2>
-      {% endif %}
+  assign propulsion_stats = current_product.metafields.riift.propulsion_stats.value
+  assign propulsion_image = current_product.metafields.riift.propulsion_image.value
+%}
 
-      <div class="riift-product-propulsion__stats">
-        {% for block in section.blocks %}
-          <div class="riift-product-propulsion__stat" data-reveal {{ block.shopify_attributes }}>
-            <p class="riift-product-propulsion__stat-value">
-              {{ block.settings.value -}}
-              {%- if block.settings.unit != blank -%}
-                <span class="riift-product-propulsion__stat-unit">{{ block.settings.unit }}</span>
-              {%- endif %}
-            </p>
-            {% if block.settings.label != blank %}
-              <p class="riift-body riift-product-propulsion__stat-label">{{ block.settings.label }}</p>
-            {% endif %}
-          </div>
-        {% endfor %}
+{% if propulsion_stats != blank %}
+  <div class="riift-page riift-product-propulsion-section" data-section-id="{{ section.id }}">
+    <section class="riift-product-propulsion" data-reveal>
+      {% if propulsion_image != blank %}
+        {{
+          propulsion_image
+          | image_url: width: 2400
+          | image_tag: class: 'riift-product-propulsion__image', loading: 'lazy', alt: ''
+        }}
+      {% else %}
+        <div class="riift-product-propulsion__placeholder"></div>
+      {% endif %}
+      <div class="riift-product-propulsion__scrim"></div>
+
+      <div class="riift-product-propulsion__content">
+        {% capture propulsion_eyebrow %}
+          {% render 'riift-product-mf', product: current_product, key: 'propulsion_eyebrow' %}
+        {% endcapture %}
+        {% if propulsion_eyebrow != blank %}
+          <p class="riift-eyebrow riift-product-propulsion__eyebrow" data-reveal>{{ propulsion_eyebrow | strip }}</p>
+        {% endif %}
+
+        {% capture propulsion_heading %}
+          {% render 'riift-product-mf', product: current_product, key: 'propulsion_heading' %}
+        {% endcapture %}
+        {% if propulsion_heading != blank %}
+          <h2 class="riift-h2 riift-product-propulsion__heading" data-reveal>{{ propulsion_heading | strip }}</h2>
+        {% endif %}
+
+        <div class="riift-product-propulsion__stats">
+          {% for stat in propulsion_stats %}
+            <div class="riift-product-propulsion__stat" data-reveal>
+              <p class="riift-product-propulsion__stat-value">
+                {{ stat.value -}}
+                {%- if stat.unit != blank -%}
+                  <span class="riift-product-propulsion__stat-unit">{{ stat.unit }}</span>
+                {%- endif %}
+              </p>
+              {% if stat.label != blank %}
+                <p class="riift-body riift-product-propulsion__stat-label">{{ stat.label }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
+  </div>
+{% endif %}
 
 {% schema %}
 {
@@ -48,78 +67,15 @@
   },
   "settings": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Background image"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "The propulsion unit"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "A thinner pod cuts drag at every speed"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "stat",
-      "name": "Stat",
-      "settings": [
-        {
-          "type": "text",
-          "id": "value",
-          "label": "Value",
-          "default": "49.5"
-        },
-        {
-          "type": "text",
-          "id": "unit",
-          "label": "Unit",
-          "default": "mm"
-        },
-        {
-          "type": "textarea",
-          "id": "label",
-          "label": "Label",
-          "default": "Pod diameter — vs a 63 mm industry standard."
-        }
-      ]
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Propulsion band from product metafields riift.propulsion_* in Admin."
     }
   ],
   "presets": [
     {
-      "name": "RIIFT Product propulsion",
-      "blocks": [
-        {
-          "type": "stat",
-          "settings": {
-            "value": "49.5",
-            "unit": "mm",
-            "label": "Pod diameter — vs a 63 mm industry standard."
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "value": "38",
-            "unit": "%",
-            "label": "Less drag than the industry-standard pod."
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "value": "150",
-            "unit": "W/kg",
-            "label": "Up to, in 4P — power-to-weight at the top of the class."
-          }
-        }
-      ]
+      "name": "RIIFT Product propulsion"
     }
   ]
 }

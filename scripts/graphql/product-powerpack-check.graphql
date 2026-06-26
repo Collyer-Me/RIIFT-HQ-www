@@ -1,0 +1,31 @@
+query ProductPowerpackCheck {
+  productByHandle(handle: "riift-powerpack") {
+    id
+    handle
+    title
+    status
+    templateSuffix
+    onlineStoreUrl
+    variants(first: 10) {
+      nodes {
+        id
+        title
+        price
+        selectedOptions {
+          name
+          value
+        }
+        sku
+      }
+    }
+  }
+  products(first: 10, query: "title:PowerPack") {
+    nodes {
+      id
+      handle
+      title
+      status
+      templateSuffix
+    }
+  }
+}

@@ -1,0 +1,27 @@
+mutation ProductPowerpackCreate($input: ProductSetInput!) {
+  productSet(synchronous: true, input: $input) {
+    product {
+      id
+      handle
+      title
+      templateSuffix
+      onlineStoreUrl
+      variants(first: 10) {
+        nodes {
+          id
+          title
+          price
+          sku
+          selectedOptions {
+            name
+            value
+          }
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

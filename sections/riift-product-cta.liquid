@@ -1,0 +1,65 @@
+{% liquid
+  assign current_product = product
+  if section.settings.product != blank
+    assign current_product = section.settings.product
+  endif
+%}
+
+{% capture cta_heading %}
+  {% render 'riift-product-mf', product: current_product, key: 'cta_heading' %}
+{% endcapture %}
+{% capture cta_body %}
+  {% render 'riift-product-mf', product: current_product, key: 'cta_body' %}
+{% endcapture %}
+{% capture cta_button_label %}
+  {% render 'riift-product-mf', product: current_product, key: 'cta_button_label' %}
+{% endcapture %}
+{% capture cta_button_url %}
+  {% render 'riift-product-mf', product: current_product, key: 'cta_button_url' %}
+{% endcapture %}
+
+{% if cta_heading != blank %}
+  <div class="riift-page riift-product-cta-section" data-section-id="{{ section.id }}">
+    <div class="riift-band riift-band--dark">
+      <div class="riift-band__inner riift-text-band riift-text-band--center" data-reveal>
+        <h2 class="riift-h2 riift-text-band__heading">{{ cta_heading | strip }}</h2>
+        {% if cta_body != blank %}
+          <div class="riift-body riift-text-band__body">{{ cta_body | strip }}</div>
+        {% endif %}
+        {% if cta_button_label != blank %}
+          <div class="riift-text-band__cta">
+            {% render 'riift-button',
+              variant: 'pill',
+              label: cta_button_label | strip,
+              url: cta_button_url | strip | default: '/pages/wizard'
+            %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "RIIFT Product CTA",
+  "class": "riift-product-cta-section",
+  "tag": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "CTA band from product metafields riift.cta_* in Admin."
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Product CTA"
+    }
+  ]
+}
+{% endschema %}

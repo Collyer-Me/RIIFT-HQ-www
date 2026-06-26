@@ -5,46 +5,62 @@
   endif
 
   assign variants_sorted = current_product.variants | sort: 'option1'
+  assign spec_rows = current_product.metafields.riift.spec_rows.value
 
-  assign spec_rows = 'battery_config::Battery configuration;;cell::Cell;;nominal_voltage::Nominal pack voltage;;capacity::Capacity;;usable_energy::Usable energy;;efoil_run_time::Efoil run time*;;peak_thrust::Peak thrust;;battery_weight::Battery weight;;pack_weight::PowerPack weight;;system_weight::System weight, installed†;;recharge_time::Recharge‡;;track_compat_table::Compatible tracks;;price::Price AUD incl. GST' | split: ';;'
+  if spec_rows == blank
+    assign spec_rows = 'battery_config::Battery configuration;;cell::Cell;;nominal_voltage::Nominal pack voltage;;capacity::Capacity;;usable_energy::Usable energy;;efoil_run_time::Efoil run time*;;peak_thrust::Peak thrust;;battery_weight::Battery weight;;pack_weight::PowerPack weight;;system_weight::System weight, installed†;;recharge_time::Recharge‡;;track_compat_table::Compatible tracks;;price::Price AUD incl. GST' | split: ';;'
+  endif
 %}
 
 <div class="riift-page riift-product-spec-section" data-section-id="{{ section.id }}">
   <section class="riift-product-spec">
-    {% if section.settings.heading != blank %}
-      <h2 class="riift-h2 riift-product-spec__heading" data-reveal>{{ section.settings.heading }}</h2>
+    {% capture spec_heading %}
+      {% render 'riift-product-mf', product: current_product, key: 'spec_heading' %}
+    {% endcapture %}
+    {% if spec_heading != blank %}
+      <h2 class="riift-h2 riift-product-spec__heading" data-reveal>{{ spec_heading | strip }}</h2>
     {% endif %}
 
-    <div class="riift-product-spec__table riift-product-spec__table--{{ variants_sorted.size }}" data-reveal>
-      <div class="riift-product-spec__row riift-product-spec__row--head">
-        <span class="riift-product-spec__label"></span>
-        {% for variant in variants_sorted %}
-          {% assign tier_code = variant.option1 | default: variant.title | strip | upcase %}
-          <span class="riift-product-spec__tier">{{ tier_code }}</span>
-        {% endfor %}
-      </div>
-
-      {% for row in spec_rows %}
-        {% assign row_parts = row | split: '::' %}
-        {% assign row_key = row_parts[0] %}
-        {% assign row_label = row_parts[1] %}
-        <div class="riift-product-spec__row">
-          <span class="riift-product-spec__label">{{ row_label }}</span>
+    {% if variants_sorted.size > 0 %}
+      <div class="riift-product-spec__table riift-product-spec__table--{{ variants_sorted.size }}" data-reveal>
+        <div class="riift-product-spec__row riift-product-spec__row--head">
+          <span class="riift-product-spec__label"></span>
           {% for variant in variants_sorted %}
-            <span class="riift-product-spec__value">
-              {% if row_key == 'price' %}
-                {{ variant.price | money }}
-              {% else %}
-                {% render 'riift-powerpack-spec-value', variant: variant, key: row_key %}
-              {% endif %}
-            </span>
+            {% assign tier_code = variant.option1 | default: variant.title | strip | upcase %}
+            <span class="riift-product-spec__tier">{{ tier_code }}</span>
           {% endfor %}
         </div>
-      {% endfor %}
-    </div>
 
-    {% if section.settings.footnote != blank %}
-      <p class="riift-caption riift-product-spec__footnote" data-reveal>{{ section.settings.footnote }}</p>
+        {% for row in spec_rows %}
+          {% if row.label != blank %}
+            {% assign row_key = row.key %}
+            {% assign row_label = row.label %}
+          {% else %}
+            {% assign row_parts = row | split: '::' %}
+            {% assign row_key = row_parts[0] %}
+            {% assign row_label = row_parts[1] %}
+          {% endif %}
+          <div class="riift-product-spec__row">
+            <span class="riift-product-spec__label">{{ row_label }}</span>
+            {% for variant in variants_sorted %}
+              <span class="riift-product-spec__value">
+                {% if row_key == 'price' %}
+                  {{ variant.price | money }}
+                {% else %}
+                  {% render 'riift-powerpack-spec-value', variant: variant, key: row_key %}
+                {% endif %}
+              </span>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% capture spec_footnote %}
+      {% render 'riift-product-mf', product: current_product, key: 'spec_footnote' %}
+    {% endcapture %}
+    {% if spec_footnote != blank %}
+      <p class="riift-caption riift-product-spec__footnote" data-reveal>{{ spec_footnote | strip }}</p>
     {% endif %}
   </section>
 </div>
@@ -62,19 +78,7 @@
       "type": "product",
       "id": "product",
       "label": "Product",
-      "info": "Leave blank to use the current product page."
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Full specifications"
-    },
-    {
-      "type": "textarea",
-      "id": "footnote",
-      "label": "Footnote",
-      "default": "*80 kg rider, flat water, continuous at ~20 km/h. Heavier riders and harder riding reduce run time; surfing roughly doubles it. †PowerPack + Propulsion Unit installed. ‡0–100% at 15 A, nominal. Prices AUD incl. GST."
+      "info": "Specs from variant riift metafields. Heading/footnote from product metafields."
     }
   ],
   "presets": [

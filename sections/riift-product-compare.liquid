@@ -1,33 +1,56 @@
-{% unless section.settings.show_comparison == false %}
+{% liquid
+  assign current_product = product
+  if section.settings.product != blank
+    assign current_product = section.settings.product
+  endif
+
+  assign show_comparison = current_product.metafields.riift.show_comparison.value
+  assign compare_rows = current_product.metafields.riift.compare_rows.value
+%}
+
+{% if show_comparison != false and compare_rows != blank %}
   <div class="riift-page riift-product-compare-section" data-section-id="{{ section.id }}">
     <section class="riift-product-compare">
       <div class="riift-product-compare__intro" data-reveal>
-        {% if section.settings.heading != blank %}
-          <h2 class="riift-h2">{{ section.settings.heading }}</h2>
+        {% capture compare_heading %}
+          {% render 'riift-product-mf', product: current_product, key: 'compare_heading' %}
+        {% endcapture %}
+        {% if compare_heading != blank %}
+          <h2 class="riift-h2">{{ compare_heading | strip }}</h2>
         {% endif %}
-        {% if section.settings.body != blank %}
-          <p class="riift-body">{{ section.settings.body }}</p>
+
+        {% capture compare_intro %}
+          {% render 'riift-product-mf', product: current_product, key: 'compare_intro' %}
+        {% endcapture %}
+        {% if compare_intro != blank %}
+          <p class="riift-body">{{ compare_intro | strip }}</p>
         {% endif %}
       </div>
 
       <div class="riift-product-compare__table" data-reveal>
         <div class="riift-product-compare__row riift-product-compare__row--head">
           <span class="riift-product-compare__label"></span>
-          <span class="riift-product-compare__value riift-product-compare__value--primary">{{ section.settings.column_1_label }}</span>
-          <span class="riift-product-compare__value riift-product-compare__value--muted">{{ section.settings.column_2_label }}</span>
+          {% capture column_1 %}
+            {% render 'riift-product-mf', product: current_product, key: 'compare_column_1_label' %}
+          {% endcapture %}
+          {% capture column_2 %}
+            {% render 'riift-product-mf', product: current_product, key: 'compare_column_2_label' %}
+          {% endcapture %}
+          <span class="riift-product-compare__value riift-product-compare__value--primary">{{ column_1 | strip }}</span>
+          <span class="riift-product-compare__value riift-product-compare__value--muted">{{ column_2 | strip }}</span>
         </div>
 
-        {% for block in section.blocks %}
-          <div class="riift-product-compare__row" {{ block.shopify_attributes }}>
-            <span class="riift-product-compare__label">{{ block.settings.label }}</span>
-            <span class="riift-product-compare__value riift-product-compare__value--primary">{{ block.settings.riift_value }}</span>
-            <span class="riift-product-compare__value riift-product-compare__value--muted">{{ block.settings.compare_value }}</span>
+        {% for row in compare_rows %}
+          <div class="riift-product-compare__row">
+            <span class="riift-product-compare__label">{{ row.label }}</span>
+            <span class="riift-product-compare__value riift-product-compare__value--primary">{{ row.riift_value }}</span>
+            <span class="riift-product-compare__value riift-product-compare__value--muted">{{ row.compare_value }}</span>
           </div>
         {% endfor %}
       </div>
     </section>
   </div>
-{% endunless %}
+{% endif %}
 
 {% schema %}
 {
@@ -39,99 +62,15 @@
   },
   "settings": [
     {
-      "type": "checkbox",
-      "id": "show_comparison",
-      "label": "Show comparison table",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "How it compares"
-    },
-    {
-      "type": "textarea",
-      "id": "body",
-      "label": "Intro",
-      "default": "RIIFT 4P against the comparable FoilDrive Fusion. Manufacturer-published figures."
-    },
-    {
-      "type": "text",
-      "id": "column_1_label",
-      "label": "Primary column label",
-      "default": "RIIFT 4P"
-    },
-    {
-      "type": "text",
-      "id": "column_2_label",
-      "label": "Compare column label",
-      "default": "FoilDrive Fusion"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "row",
-      "name": "Comparison row",
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Usable energy"
-        },
-        {
-          "type": "text",
-          "id": "riift_value",
-          "label": "RIIFT value",
-          "default": "1,036 Wh"
-        },
-        {
-          "type": "text",
-          "id": "compare_value",
-          "label": "Compare value",
-          "default": "860 Wh"
-        }
-      ]
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Comparison table from product metafields riift.compare_* in Admin."
     }
   ],
   "presets": [
     {
-      "name": "RIIFT Product comparison",
-      "blocks": [
-        {
-          "type": "row",
-          "settings": {
-            "label": "Usable energy",
-            "riift_value": "1,036 Wh",
-            "compare_value": "860 Wh"
-          }
-        },
-        {
-          "type": "row",
-          "settings": {
-            "label": "Complete weight",
-            "riift_value": "7.0 kg",
-            "compare_value": "7.9 kg"
-          }
-        },
-        {
-          "type": "row",
-          "settings": {
-            "label": "Peak thrust",
-            "riift_value": "28 kg",
-            "compare_value": "34 kg"
-          }
-        },
-        {
-          "type": "row",
-          "settings": {
-            "label": "RRP incl. tax",
-            "riift_value": "$10,000",
-            "compare_value": "$11,600"
-          }
-        }
-      ]
+      "name": "RIIFT Product comparison"
     }
   ]
 }

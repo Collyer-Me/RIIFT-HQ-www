@@ -4,7 +4,11 @@
     assign current_product = section.settings.product
   endif
 
-  assign default_tier = section.settings.default_tier | default: '4P' | upcase
+  capture default_tier_raw
+    render 'riift-product-mf', product: current_product, key: 'default_tier'
+  endcapture
+  assign default_tier = default_tier_raw | strip | default: '4P' | upcase
+
   assign variants_sorted = current_product.variants | sort: 'option1'
   assign selected_variant = current_product.selected_or_first_available_variant
 
@@ -15,8 +19,12 @@
     endif
   endfor
 
-  assign hero_image = selected_variant.featured_image | default: current_product.featured_image | default: section.settings.fallback_image
-  assign wizard_url = section.settings.wizard_url | default: '/pages/wizard'
+  assign hero_image = selected_variant.featured_image | default: current_product.featured_image
+
+  capture wizard_url_raw
+    render 'riift-product-mf', product: current_product, key: 'wizard_url'
+  endcapture
+  assign wizard_url = wizard_url_raw | strip | default: '/pages/wizard'
 %}
 
 <div class="riift-page riift-product-buy-section" data-section-id="{{ section.id }}">
@@ -26,7 +34,7 @@
     data-default-tier="{{ default_tier }}"
   >
     <script type="application/json" data-riift-product-data>
-      [{% for variant in variants_sorted %}{% render 'riift-powerpack-variant-json', variant: variant %}{% unless forloop.last %},{% endunless %}{% endfor %}]
+      [{% for variant in variants_sorted %}{% render 'riift-powerpack-variant-json', variant: variant, product: current_product %}{% unless forloop.last %},{% endunless %}{% endfor %}]
     </script>
 
     <div class="riift-product-buy__grid">
@@ -45,8 +53,11 @@
           {% else %}
             <div class="riift-product-buy__hero-placeholder" data-product-hero-image></div>
           {% endif %}
-          {% if section.settings.gallery_label != blank %}
-            <span class="riift-product-buy__gallery-label">{{ section.settings.gallery_label }}</span>
+          {% capture gallery_label %}
+            {% render 'riift-product-mf', product: current_product, key: 'gallery_label' %}
+          {% endcapture %}
+          {% if gallery_label != blank %}
+            <span class="riift-product-buy__gallery-label">{{ gallery_label | strip }}</span>
           {% endif %}
         </div>
 
@@ -73,63 +84,67 @@
               </button>
             {% endfor %}
           </div>
-        {% elsif section.settings.thumb_labels != blank %}
-          <div class="riift-product-buy__thumbs riift-product-buy__thumbs--placeholders" role="list" aria-hidden="true">
-            {% assign thumb_labels = section.settings.thumb_labels | split: '|' %}
-            {% for label in thumb_labels limit: 4 %}
-              <div class="riift-product-buy__thumb riift-product-buy__thumb--placeholder" role="listitem">
-                <span class="riift-product-buy__thumb-label">{{ label | strip }}</span>
-              </div>
-            {% endfor %}
-          </div>
         {% endif %}
       </div>
 
       <div class="riift-product-buy__info">
-        {% if section.settings.eyebrow != blank %}
-          <p class="riift-eyebrow riift-product-buy__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% capture eyebrow %}
+          {% render 'riift-product-mf', product: current_product, key: 'eyebrow' %}
+        {% endcapture %}
+        {% if eyebrow != blank %}
+          <p class="riift-eyebrow riift-product-buy__eyebrow">{{ eyebrow | strip }}</p>
         {% endif %}
 
-        <h1 class="riift-h1 riift-product-buy__title">{{ section.settings.title | default: current_product.title }}</h1>
+        <h1 class="riift-h1 riift-product-buy__title">{{ current_product.title }}</h1>
 
-        {% if section.settings.description != blank %}
-          <p class="riift-body riift-product-buy__description">{{ section.settings.description }}</p>
-        {% elsif current_product.description != blank %}
+        {% if current_product.description != blank %}
           <div class="riift-body riift-product-buy__description">{{ current_product.description }}</div>
         {% endif %}
 
         {% if variants_sorted.size > 1 %}
-          <p class="riift-product-buy__tier-label">{{ section.settings.tier_heading }}</p>
-          <div class="riift-product-buy__tiers" role="group" aria-label="{{ section.settings.tier_heading }}">
-            {% for variant in variants_sorted %}
-              {% liquid
-                assign tier_code = variant.option1 | default: variant.title | strip | upcase
-                capture tier_label
-                  render 'riift-powerpack-spec-value', variant: variant, key: 'tier_label'
-                endcapture
-                assign is_selected = false
-                if variant.id == selected_variant.id
-                  assign is_selected = true
-                endif
-              %}
-              <button
-                type="button"
-                class="riift-product-buy__tier{% if is_selected %} is-selected{% endif %}"
-                data-tier-button
-                data-variant-id="{{ variant.id }}"
-                data-tier="{{ tier_code }}"
-                aria-pressed="{% if is_selected %}true{% else %}false{% endif %}"
-              >
-                <span class="riift-product-buy__tier-name">{{ tier_code }}</span>
-                <span class="riift-product-buy__tier-sub">{{ tier_label | strip }}</span>
-              </button>
-            {% endfor %}
-          </div>
+          {% capture tier_heading %}
+            {% render 'riift-product-mf', product: current_product, key: 'tier_heading' %}
+          {% endcapture %}
+          {% if tier_heading != blank %}
+            <p class="riift-product-buy__tier-label">{{ tier_heading | strip }}</p>
+            <div class="riift-product-buy__tiers" role="group" aria-label="{{ tier_heading | strip }}">
+              {% for variant in variants_sorted %}
+                {% liquid
+                  assign tier_code = variant.option1 | default: variant.title | strip | upcase
+                  capture tier_label
+                    render 'riift-powerpack-spec-value', variant: variant, key: 'tier_label'
+                  endcapture
+                  assign is_selected = false
+                  if variant.id == selected_variant.id
+                    assign is_selected = true
+                  endif
+                %}
+                <button
+                  type="button"
+                  class="riift-product-buy__tier{% if is_selected %} is-selected{% endif %}"
+                  data-tier-button
+                  data-variant-id="{{ variant.id }}"
+                  data-tier="{{ tier_code }}"
+                  aria-pressed="{% if is_selected %}true{% else %}false{% endif %}"
+                >
+                  <span class="riift-product-buy__tier-name">{{ tier_code }}</span>
+                  {% if tier_label != blank %}
+                    <span class="riift-product-buy__tier-sub">{{ tier_label | strip }}</span>
+                  {% endif %}
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
         {% endif %}
 
         <div class="riift-product-buy__price-row">
           <span class="riift-product-buy__price" data-product-price>{{ selected_variant.price | money }}</span>
-          <span class="riift-product-buy__price-note">{{ section.settings.price_note }}</span>
+          {% capture price_note %}
+            {% render 'riift-product-mf', product: current_product, key: 'price_note' %}
+          {% endcapture %}
+          {% if price_note != blank %}
+            <span class="riift-product-buy__price-note">{{ price_note | strip }}</span>
+          {% endif %}
         </div>
 
         <div class="riift-product-buy__key-specs">
@@ -174,14 +189,15 @@
               {% unless selected_variant.available %}disabled{% endunless %}
             >
               {% if selected_variant.available %}
-                {{ section.settings.buy_label }}
+                Buy now
               {% else %}
                 {{ 'products.product.sold_out' | t }}
               {% endif %}
             </button>
+            {% capture wizard_label %}Help me choose{% endcapture %}
             {% render 'riift-button',
               variant: 'ghost',
-              label: section.settings.wizard_label,
+              label: wizard_label,
               url: wizard_url,
               class: 'riift-btn--outline-dark'
             %}
@@ -189,8 +205,11 @@
           <p class="riift-caption riift-product-buy__footnote" data-product-error hidden></p>
         </form>
 
-        {% if section.settings.footnote != blank %}
-          <p class="riift-caption riift-product-buy__footnote">{{ section.settings.footnote }}</p>
+        {% capture footnote %}
+          {% render 'riift-product-mf', product: current_product, key: 'footnote' %}
+        {% endcapture %}
+        {% if footnote != blank %}
+          <p class="riift-caption riift-product-buy__footnote">{{ footnote | strip }}</p>
         {% endif %}
       </div>
     </div>
@@ -212,89 +231,7 @@
       "type": "product",
       "id": "product",
       "label": "Product",
-      "info": "Leave blank to use the current product page."
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "RIIFT Power System"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title override",
-      "info": "Leave blank to use the product title."
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Description override",
-      "default": "Battery, onboard computer and propulsion in one balanced, tool-less, clip-in kit. Choose your range — every pack shares the same pod, remote and case."
-    },
-    {
-      "type": "text",
-      "id": "tier_heading",
-      "label": "Tier selector label",
-      "default": "Choose your pack"
-    },
-    {
-      "type": "select",
-      "id": "default_tier",
-      "label": "Default tier",
-      "options": [
-        { "value": "2P", "label": "2P" },
-        { "value": "3P", "label": "3P" },
-        { "value": "4P", "label": "4P" }
-      ],
-      "default": "4P"
-    },
-    {
-      "type": "text",
-      "id": "price_note",
-      "label": "Price note",
-      "default": "AUD incl. GST"
-    },
-    {
-      "type": "text",
-      "id": "buy_label",
-      "label": "Buy button label",
-      "default": "Buy now"
-    },
-    {
-      "type": "text",
-      "id": "wizard_label",
-      "label": "Wizard button label",
-      "default": "Help me choose"
-    },
-    {
-      "type": "url",
-      "id": "wizard_url",
-      "label": "Wizard URL"
-    },
-    {
-      "type": "text",
-      "id": "footnote",
-      "label": "Footnote",
-      "default": "Launches September 2026 · PowerPack delivery from December 2026."
-    },
-    {
-      "type": "text",
-      "id": "gallery_label",
-      "label": "Gallery overlay label",
-      "default": "RIIFT Power System"
-    },
-    {
-      "type": "text",
-      "id": "thumb_labels",
-      "label": "Placeholder thumb labels",
-      "default": "PowerPack|Propulsion Unit|Remote|Hard Case",
-      "info": "Shown when the product has only one image. Pipe-separated."
-    },
-    {
-      "type": "image_picker",
-      "id": "fallback_image",
-      "label": "Fallback hero image"
+      "info": "Leave blank to use the current product page. Content comes from product fields and riift metafields in Admin."
     }
   ],
   "presets": [
