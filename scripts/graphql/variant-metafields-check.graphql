@@ -1,0 +1,13 @@
+query VariantMetafields($id: ID!) {
+  productVariant(id: $id) {
+    id
+    title
+    metafields(first: 20, namespace: "riift") {
+      nodes {
+        key
+        value
+        type
+      }
+    }
+  }
+}

@@ -8,6 +8,9 @@
 {% liquid
   assign p = product | default: variant.product
   assign tier_code = variant.option1 | default: '' | strip | upcase
+  if tier_code == blank and variant.selected_options.size > 0
+    assign tier_code = variant.selected_options[0].value | strip | upcase
+  endif
   if tier_code == blank
     assign tier_code = variant.title | strip | upcase
   endif

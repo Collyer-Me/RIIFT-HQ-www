@@ -1,0 +1,18 @@
+query RiiftMetafieldDefinitions {
+  productDefinitions: metafieldDefinitions(first: 50, namespace: "riift", ownerType: PRODUCT) {
+    nodes {
+      key
+      access {
+        storefront
+      }
+    }
+  }
+  variantDefinitions: metafieldDefinitions(first: 50, namespace: "riift", ownerType: PRODUCTVARIANT) {
+    nodes {
+      key
+      access {
+        storefront
+      }
+    }
+  }
+}

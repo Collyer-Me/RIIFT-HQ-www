@@ -125,6 +125,11 @@
                   data-tier-button
                   data-variant-id="{{ variant.id }}"
                   data-tier="{{ tier_code }}"
+                  data-price="{{ variant.price | money }}"
+                  data-usable-energy="{% render 'riift-powerpack-spec-value', variant: variant, key: 'usable_energy' %}"
+                  data-efoil-run="{% render 'riift-powerpack-spec-value', variant: variant, key: 'efoil_run_time' %}"
+                  data-pack-weight="{% render 'riift-powerpack-spec-value', variant: variant, key: 'pack_weight' %}"
+                  data-track-compat="{% render 'riift-powerpack-spec-value', variant: variant, key: 'track_compat_line' %}"
                   aria-pressed="{% if is_selected %}true{% else %}false{% endif %}"
                 >
                   <span class="riift-product-buy__tier-name">{{ tier_code }}</span>

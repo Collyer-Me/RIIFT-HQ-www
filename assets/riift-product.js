@@ -78,7 +78,22 @@
         var variant = variants.find(function (v) {
           return String(v.id) === String(id);
         });
-        if (variant) setSelected(variant);
+        if (variant) {
+          setSelected(variant);
+          return;
+        }
+        // Fallback: read per-variant specs from button data attributes (Liquid / metafields)
+        if (variantInput) variantInput.value = id;
+        if (priceEl && btn.dataset.price) priceEl.textContent = btn.dataset.price;
+        if (energyEl && btn.dataset.usableEnergy) energyEl.textContent = btn.dataset.usableEnergy;
+        if (runEl && btn.dataset.efoilRun) runEl.textContent = btn.dataset.efoilRun;
+        if (weightEl && btn.dataset.packWeight) weightEl.textContent = btn.dataset.packWeight;
+        if (compatEl && btn.dataset.trackCompat) compatEl.textContent = btn.dataset.trackCompat;
+        tierButtons.forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle('is-selected', active);
+          b.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
       });
     });
 

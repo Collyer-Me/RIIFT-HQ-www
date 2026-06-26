@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * Seed RIIFT PowerPack product + variant metafields (Admin source of truth).
+ * Ensures metafield definitions (storefront read) exist, then writes values.
  * Usage: node scripts/seed-powerpack-metafields.mjs
  */
 import { execFileSync } from 'node:child_process';
@@ -10,6 +11,12 @@ import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Ensure definitions with PUBLIC_READ exist before seeding values
+execFileSync('node', [join(__dirname, 'ensure-powerpack-metafield-definitions.mjs')], {
+  stdio: 'inherit',
+  shell: process.platform === 'win32',
+});
 const STORE = 'riift-hq.myshopify.com';
 const PRODUCT_HANDLE = 'riift-powerpack';
 
