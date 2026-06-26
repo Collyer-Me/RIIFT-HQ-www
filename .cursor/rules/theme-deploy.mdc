@@ -9,8 +9,8 @@ alwaysApply: true
 
 ## Routine workflow
 
-1. Edit theme files locally (or in Theme Editor while `shopify theme dev` is running — then pull/sync changes back into the repo).
-2. Preview: `shopify theme dev` → press `e` for Theme Editor, or browse `http://127.0.0.1:9292`.
+1. Edit theme files locally (or in Theme Editor while `.\scripts\theme-dev.ps1` is running — then pull/sync changes back into the repo).
+2. Preview: `.\scripts\theme-dev.ps1` → press `e` for Theme Editor, or browse `http://127.0.0.1:9292` (styleguide: `/pages/styleguide`).
 3. Ship: commit + push to `master` — GitHub Actions runs `theme check` then `shopify theme push` to live theme `162909520093`.
 
 Quick local command:

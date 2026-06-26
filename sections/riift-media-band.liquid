@@ -1,15 +1,29 @@
-<div class="riift-media-band riift-full-bleed" data-section-id="{{ section.id }}" data-reveal>
+<div
+  class="riift-media-band riift-full-bleed{% if section.settings.mode == 'caption' %} riift-media-band--caption{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-reveal
+>
   {% if section.settings.image != blank %}
     {{
       section.settings.image
       | image_url: width: 2400
-      | image_tag: class: 'riift-media-band__image', loading: 'lazy', alt: section.settings.button_label
+      | image_tag: class: 'riift-media-band__image', loading: 'lazy', alt: section.settings.caption | default: section.settings.button_label
     }}
   {% else %}
     <div class="riift-media-band__placeholder"></div>
   {% endif %}
   <div class="riift-media-band__scrim"></div>
-  {% if section.settings.button_label != blank %}
+
+  {% if section.settings.mode == 'caption' %}
+    <div class="riift-media-band__caption-wrap">
+      {% if section.settings.caption != blank %}
+        <p class="riift-media-band__caption">{{ section.settings.caption }}</p>
+      {% endif %}
+      {% if section.settings.caption_body != blank %}
+        <p class="riift-body riift-media-band__caption-body">{{ section.settings.caption_body }}</p>
+      {% endif %}
+    </div>
+  {% elsif section.settings.button_label != blank %}
     <div class="riift-media-band__content">
       {% if section.settings.video_url != blank %}
         <a href="{{ section.settings.video_url }}" class="riift-btn riift-btn--pill riift-media-band__play" target="_blank" rel="noopener">
@@ -32,6 +46,16 @@
   "class": "riift-media-band-section",
   "settings": [
     {
+      "type": "select",
+      "id": "mode",
+      "label": "Layout",
+      "options": [
+        { "value": "play", "label": "Play button (centred)" },
+        { "value": "caption", "label": "Caption overlay (top-left)" }
+      ],
+      "default": "play"
+    },
+    {
       "type": "image_picker",
       "id": "image",
       "label": "Background image"
@@ -40,12 +64,26 @@
       "type": "text",
       "id": "button_label",
       "label": "Play button label",
-      "default": "Watch"
+      "default": "Watch",
+      "visible_if": "{{ section.settings.mode == 'play' }}"
     },
     {
       "type": "url",
       "id": "video_url",
-      "label": "Video URL"
+      "label": "Video URL",
+      "visible_if": "{{ section.settings.mode == 'play' }}"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption label",
+      "visible_if": "{{ section.settings.mode == 'caption' }}"
+    },
+    {
+      "type": "textarea",
+      "id": "caption_body",
+      "label": "Caption body (optional)",
+      "visible_if": "{{ section.settings.mode == 'caption' }}"
     }
   ],
   "presets": [

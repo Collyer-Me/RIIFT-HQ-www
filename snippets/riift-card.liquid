@@ -1,4 +1,5 @@
 {% comment %}
+  @param {string} variant - default | text | compact | testimonial
   @param {string} eyebrow
   @param {string} title
   @param {string} body
@@ -8,38 +9,56 @@
   @param {string} attributes - e.g. block.shopify_attributes
 {% endcomment %}
 
+{% liquid
+  assign card_variant = variant | default: 'default'
+  assign card_classes = 'riift-card'
+  if card_variant == 'text'
+    assign card_classes = card_classes | append: ' riift-card--text'
+  elsif card_variant == 'compact'
+    assign card_classes = card_classes | append: ' riift-card--compact'
+  elsif card_variant == 'testimonial'
+    assign card_classes = card_classes | append: ' riift-card--testimonial'
+  endif
+%}
+
 {% if url != blank %}
   <a
     href="{{ url }}"
-    class="riift-card"
+    class="{{ card_classes }}"
     {% if reveal %}data-reveal{% endif %}
     {{ attributes }}
   >
 {% else %}
   <div
-    class="riift-card"
+    class="{{ card_classes }}"
     {% if reveal %}data-reveal{% endif %}
     {{ attributes }}
   >
 {% endif %}
-  <div class="riift-card__media">
-    {% if image != blank %}
-      {{
-        image
-        | image_url: width: 800
-        | image_tag: loading: 'lazy', alt: title | default: eyebrow
-      }}
-    {% endif %}
-  </div>
+  {% unless card_variant == 'text' or card_variant == 'testimonial' %}
+    <div class="riift-card__media">
+      {% if image != blank %}
+        {{
+          image
+          | image_url: width: 800
+          | image_tag: loading: 'lazy', alt: title | default: eyebrow
+        }}
+      {% endif %}
+    </div>
+  {% endunless %}
   <div class="riift-card__body">
     {% if eyebrow != blank %}
       {% render 'riift-eyebrow', text: eyebrow %}
     {% endif %}
     {% if title != blank %}
-      <p class="riift-h3 riift-card__title">{{ title }}</p>
+      {% if card_variant == 'testimonial' %}
+        <p class="riift-pullquote riift-card__quote">{{ title }}</p>
+      {% else %}
+        <p class="riift-h3 riift-card__title">{{ title }}</p>
+      {% endif %}
     {% endif %}
     {% if body != blank %}
-      <p class="riift-body">{{ body }}</p>
+      <p class="riift-body{% if card_variant == 'testimonial' %} riift-card__attribution{% endif %}">{{ body }}</p>
     {% endif %}
   </div>
 {% if url != blank %}

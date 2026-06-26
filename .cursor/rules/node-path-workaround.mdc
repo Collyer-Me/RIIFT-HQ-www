@@ -1,5 +1,5 @@
 ﻿---
-description: Node.js PATH workaround until user applies permanent fix
+description: Node.js PATH workaround — ALWAYS apply before node/npm/shopify commands
 alwaysApply: true
 ---
 
@@ -7,12 +7,24 @@ alwaysApply: true
 
 Node.js is installed at `C:\Program Files\nodejs\node.exe` (v24.x) but is **not** on the system/user PATH yet. The user will apply a permanent PATH fix later when admin access is available.
 
-**Before any terminal command that needs Node, npm, or Shopify CLI**, prefix the command with:
+**This is a known, recurring issue.** Do not suggest bare `shopify`, `node`, or `npm` commands without the workaround.
+
+## For the user (terminal)
+
+Prefer project scripts — they apply PATH automatically:
+
+```powershell
+.\scripts\theme-dev.ps1
+```
+
+## For the agent (every shell command)
+
+**Always** prefix Node/Shopify commands with:
 
 ```powershell
 $env:PATH += ";C:\Program Files\nodejs"
 ```
 
-Or run that line once at the start of each new shell session in this workspace.
+Or dot-source `scripts/_ensure-node.ps1` before running CLI tools.
 
-Do not assume `node`, `npm`, or `shopify` work without this prefix in a fresh terminal.
+Never assume `node`, `npm`, or `shopify` work in a fresh terminal without this.

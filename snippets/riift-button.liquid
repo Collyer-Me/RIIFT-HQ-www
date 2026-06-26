@@ -1,7 +1,7 @@
 {% comment %}
   Renders a RIIFT button or link.
 
-  @param {string} variant - pill | solid | link (default: pill)
+  @param {string} variant - pill | solid | ghost | link (default: pill)
   @param {string} label - Button text
   @param {string} url - Link href (optional for solid button type="submit")
   @param {string} class - Extra classes
@@ -25,6 +25,12 @@
     <a href="{{ btn_url }}" class="riift-btn riift-btn--solid {{ extra_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ btn_label }}</a>
   {% else %}
     <button type="submit" class="riift-btn riift-btn--solid {{ extra_class }}">{{ btn_label }}</button>
+  {% endif %}
+{% elsif btn_variant == 'ghost' %}
+  {% if url != blank %}
+    <a href="{{ btn_url }}" class="riift-btn riift-btn--ghost {{ extra_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ btn_label }}</a>
+  {% else %}
+    <button type="button" class="riift-btn riift-btn--ghost {{ extra_class }}">{{ btn_label }}</button>
   {% endif %}
 {% else %}
   <a href="{{ btn_url }}" class="riift-btn riift-btn--pill {{ extra_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ btn_label }}</a>

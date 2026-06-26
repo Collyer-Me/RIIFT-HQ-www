@@ -1,0 +1,47 @@
+{% comment %}
+  PowerPack tier card with product image and spec rows.
+
+  @param {string} tier - e.g. 2P, 3P, 4P
+  @param {string} name - e.g. Entry, All-day, Flagship
+  @param {image} image
+  @param {string} energy
+  @param {string} runtime
+  @param {string} price
+  @param {boolean} reveal
+  @param {string} attributes
+{% endcomment %}
+
+<div
+  class="riift-card riift-card--powerpack"
+  {% if reveal %}data-reveal{% endif %}
+  {{ attributes }}
+>
+  <div class="riift-card__header">
+    {% if tier != blank %}
+      <p class="riift-eyebrow">{{ tier }}</p>
+    {% endif %}
+    {% if name != blank %}
+      <p class="riift-h3 riift-card__title">{{ name }}</p>
+    {% endif %}
+  </div>
+  <div class="riift-card__media riift-card__media--powerpack">
+    {% if image != blank %}
+      {{
+        image
+        | image_url: width: 800
+        | image_tag: loading: 'lazy', alt: name | default: tier
+      }}
+    {% endif %}
+  </div>
+  <div class="riift-card__body riift-card__body--specs">
+    {% if energy != blank %}
+      {% render 'riift-spec-row', label: 'Energy', value: energy %}
+    {% endif %}
+    {% if runtime != blank %}
+      {% render 'riift-spec-row', label: 'Efoil run', value: runtime %}
+    {% endif %}
+    {% if price != blank %}
+      {% render 'riift-spec-row', label: 'Price (AUD)', value: price %}
+    {% endif %}
+  </div>
+</div>

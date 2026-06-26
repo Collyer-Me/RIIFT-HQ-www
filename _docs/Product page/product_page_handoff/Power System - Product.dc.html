@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:#fff;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;color:#111}
+  ::selection{background:#111;color:#fff}
+  a{text-decoration:none;color:inherit}
+  @keyframes riift-kenburns{from{transform:scale(1.06)}to{transform:scale(1.15)}}
+</style>
+</helmet>
+
+<div data-screen-label="Power System Product" style="background:#fff;color:#111;min-height:100vh">
+
+  <dc-import name="Nav" active="electronics" hint-size="100%,68px"></dc-import>
+
+  <!-- BUY BLOCK -->
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(88px,11vw,128px) clamp(20px,4vw,56px) clamp(40px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,4vw,64px);align-items:start">
+
+      <!-- GALLERY -->
+      <div style="min-width:300px">
+        <div style="position:relative;aspect-ratio:4/3;overflow:hidden;background:#0d0d0d">
+          <div style="position:absolute;inset:0;background-image:url('assets/photos/3.jpg');background-size:cover;background-position:center;animation:riift-kenburns 16s ease-out forwards"></div>
+          <span style="position:absolute;left:18px;bottom:16px;font-family:'Poppins';font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)">RIIFT Power System</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+          <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
+            <div style="aspect-ratio:1;background:repeating-linear-gradient(135deg,#f3f1ec,#f3f1ec 8px,#eae7df 8px,#eae7df 16px);border:1px solid #e4e2dc;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px">
+              <span style="font-family:'Poppins';font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#b3aea3">{{ t }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div style="min-width:280px">
+        <p style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#999;margin-bottom:14px">RIIFT Power System</p>
+        <h1 style="font-family:'Poppins';font-weight:800;font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1;letter-spacing:-.02em;text-transform:uppercase">PowerPack Kit</h1>
+        <p style="font-family:'Inter';font-size:1.02rem;line-height:1.7;color:rgba(17,17,17,.66);margin-top:18px;max-width:46ch">Battery, onboard computer and propulsion in one balanced, tool-less, clip-in kit. Choose your range — every pack shares the same pod, remote and case.</p>
+
+        <!-- TIER SELECT -->
+        <p style="font-family:'Poppins';font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#999;margin:30px 0 12px">Choose your pack</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <sc-for list="{{ pills }}" as="pill" hint-placeholder-count="3">
+            <button onClick="{{ pill.onClick }}" style="{{ pill.style }}">
+              <span style="font-family:'Poppins';font-weight:800;font-size:1.05rem;letter-spacing:-.01em">{{ pill.name }}</span>
+              <span style="font-family:'Poppins';font-weight:600;font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7">{{ pill.tier }}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <!-- PRICE -->
+        <div style="display:flex;align-items:baseline;gap:12px;margin-top:28px">
+          <span style="font-family:'Poppins';font-weight:800;font-size:clamp(2rem,4vw,2.8rem);letter-spacing:-.02em">{{ sel.price }}</span>
+          <span style="font-family:'Inter';font-size:.86rem;color:#999">AUD incl. GST</span>
+        </div>
+
+        <!-- KEY SPECS -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e4e2dc;border:1px solid #e4e2dc;margin-top:24px">
+          <div style="background:#fff;padding:16px 18px">
+            <p style="font-family:'Poppins';font-weight:800;font-size:1.4rem;letter-spacing:-.01em">{{ sel.energy }}</p>
+            <p style="font-family:'Inter';font-size:.78rem;color:#999;margin-top:4px">Usable energy</p>
+          </div>
+          <div style="background:#fff;padding:16px 18px">
+            <p style="font-family:'Poppins';font-weight:800;font-size:1.4rem;letter-spacing:-.01em">{{ sel.run }}</p>
+            <p style="font-family:'Inter';font-size:.78rem;color:#999;margin-top:4px">Efoil run time*</p>
+          </div>
+          <div style="background:#fff;padding:16px 18px">
+            <p style="font-family:'Poppins';font-weight:800;font-size:1.4rem;letter-spacing:-.01em">{{ sel.packWeight }}</p>
+            <p style="font-family:'Inter';font-size:.78rem;color:#999;margin-top:4px">Pack weight</p>
+          </div>
+        </div>
+
+        <!-- COMPAT -->
+        <p style="font-family:'Inter';font-size:.9rem;line-height:1.6;color:rgba(17,17,17,.62);margin-top:18px">{{ sel.compat }}</p>
+
+        <!-- BUY -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
+          <a href="#" style="font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:#111;padding:17px 40px;border-radius:999px;display:inline-block;transition:background 200ms ease" onmouseenter="{{ darkEnter }}" onmouseleave="{{ darkLeave }}">Buy now</a>
+          <a href="Wizard - Live Ranking.dc.html" style="font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#111;background:transparent;border:1px solid #111;padding:17px 34px;border-radius:999px;display:inline-block;transition:background 200ms ease,color 200ms ease" onmouseenter="{{ outlineEnter }}" onmouseleave="{{ outlineLeave }}">Help me choose</a>
+        </div>
+        <p style="font-family:'Inter';font-size:.84rem;color:#999;margin-top:18px">Launches September 2026 · PowerPack delivery from December 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S IN THE KIT -->
+  <section style="background:#f2f1ee;padding:clamp(56px,8vw,100px) clamp(20px,4vw,56px)">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="max-width:62ch;margin-bottom:clamp(28px,3.5vw,44px)">
+        <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:14px">What's in the kit</h2>
+        <p style="font-family:'Inter';font-size:1.02rem;line-height:1.7;color:rgba(17,17,17,.66)">Everything you need to ride, in one case. The kit clips into the RIIFT Tracks your shaper builds into the board.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        <sc-for list="{{ kit }}" as="k" hint-placeholder-count="5">
+          <div data-reveal data-card style="background:#fff;border:1px solid #e4e2dc;padding:26px 24px 28px;transition:transform 300ms ease,box-shadow 300ms ease;min-width:220px" onmouseenter="{{ cardEnter }}" onmouseleave="{{ cardLeave }}">
+            <p style="font-family:'Poppins';font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#b3aea3;margin-bottom:12px">{{ k.n }}</p>
+            <h3 style="font-family:'Poppins';font-weight:700;font-size:1.12rem;letter-spacing:.01em;text-transform:uppercase;margin-bottom:10px">{{ k.title }}</h3>
+            <p style="font-family:'Inter';font-size:.94rem;line-height:1.65;color:rgba(17,17,17,.62)">{{ k.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL SPECS -->
+  <section style="padding:clamp(64px,9vw,118px) clamp(20px,4vw,56px);max-width:1080px;margin:0 auto">
+    <div data-reveal style="margin-bottom:clamp(28px,3.5vw,44px)">
+      <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.01em;text-transform:uppercase">Full specifications</h2>
+    </div>
+    <div data-reveal style="border-top:2px solid #111">
+      <!-- header row -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;border-bottom:1px solid #e4e2dc;padding:16px 0">
+        <span></span>
+        <span style="font-family:'Poppins';font-weight:800;font-size:1rem;text-align:right;padding-right:8px">2P</span>
+        <span style="font-family:'Poppins';font-weight:800;font-size:1rem;text-align:right;padding-right:8px">3P</span>
+        <span style="font-family:'Poppins';font-weight:800;font-size:1rem;text-align:right;padding-right:8px">4P</span>
+      </div>
+      <sc-for list="{{ specRows }}" as="r" hint-placeholder-count="12">
+        <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;border-bottom:1px solid #efece5;padding:14px 0">
+          <span style="font-family:'Inter';font-size:.92rem;color:#999">{{ r.label }}</span>
+          <span style="font-family:'Inter';font-weight:600;font-size:.92rem;text-align:right;padding-right:8px">{{ r.a }}</span>
+          <span style="font-family:'Inter';font-weight:600;font-size:.92rem;text-align:right;padding-right:8px">{{ r.b }}</span>
+          <span style="font-family:'Inter';font-weight:600;font-size:.92rem;text-align:right;padding-right:8px">{{ r.c }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <p data-reveal style="font-family:'Inter';font-size:.82rem;line-height:1.6;color:#999;margin-top:18px;max-width:96ch">*80&nbsp;kg rider, flat water, continuous at ~20&nbsp;km/h. Heavier riders and harder riding reduce run time; surfing roughly doubles it. †PowerPack + Propulsion Unit installed. ‡0–100% at 15&nbsp;A, nominal. Prices AUD incl. GST.</p>
+  </section>
+
+  <!-- PROPULSION ADVANTAGE -->
+  <section data-reveal style="position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:url('assets/photos/16.jpg');background-size:cover;background-position:center"></div>
+    <div style="position:absolute;inset:0;background:rgba(13,13,13,.82)"></div>
+    <div style="position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:clamp(56px,8vw,110px) clamp(20px,4vw,56px);color:#fff">
+      <p data-reveal style="font-family:'Poppins';font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:16px;text-align:center">The propulsion unit</p>
+      <h2 data-reveal style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:clamp(32px,4vw,52px);text-align:center;max-width:20ch;margin-left:auto;margin-right:auto">A thinner pod cuts drag at every speed</h2>
+      <div style="display:flex;justify-content:center;gap:clamp(28px,5vw,80px);flex-wrap:wrap;text-align:center">
+        <sc-for list="{{ podStats }}" as="s" hint-placeholder-count="3">
+          <div data-reveal>
+            <p style="font-family:'Poppins';font-weight:800;font-size:clamp(2.6rem,6vw,4.2rem);line-height:.9;letter-spacing:-.03em">{{ s.v }}<span style="font-size:.3em;color:rgba(255,255,255,.6);letter-spacing:.03em">{{ s.unit }}</span></p>
+            <p style="font-family:'Inter';font-size:.98rem;color:rgba(255,255,255,.78);margin-top:12px;max-width:24ch">{{ s.label }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT COMPARES -->
+  <sc-if value="{{ showComparison }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:clamp(64px,9vw,118px) clamp(20px,4vw,56px);max-width:1000px;margin:0 auto">
+    <div data-reveal style="max-width:62ch;margin-bottom:clamp(28px,3.5vw,44px)">
+      <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:14px">How it compares</h2>
+      <p style="font-family:'Inter';font-size:1.02rem;line-height:1.7;color:rgba(17,17,17,.66)">RIIFT 4P against the comparable FoilDrive Fusion. Manufacturer-published figures.</p>
+    </div>
+    <div data-reveal style="border-top:2px solid #111">
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;border-bottom:1px solid #e4e2dc;padding:16px 0">
+        <span></span>
+        <span style="font-family:'Poppins';font-weight:800;font-size:.98rem;text-align:right;padding-right:8px">RIIFT 4P</span>
+        <span style="font-family:'Poppins';font-weight:600;font-size:.98rem;text-align:right;padding-right:8px;color:#999">FoilDrive Fusion</span>
+      </div>
+      <sc-for list="{{ compareRows }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;border-bottom:1px solid #efece5;padding:14px 0">
+          <span style="font-family:'Inter';font-size:.92rem;color:#999">{{ r.label }}</span>
+          <span style="font-family:'Inter';font-weight:600;font-size:.92rem;text-align:right;padding-right:8px">{{ r.riift }}</span>
+          <span style="font-family:'Inter';font-weight:500;font-size:.92rem;text-align:right;padding-right:8px;color:rgba(17,17,17,.6)">{{ r.fd }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- CTA -->
+  <section style="background:#0d0d0d;padding:clamp(64px,9vw,120px) clamp(20px,4vw,56px)">
+    <div data-reveal style="max-width:680px;margin:0 auto;text-align:center;color:#fff">
+      <h2 style="font-family:'Poppins';font-weight:800;font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.01em;text-transform:uppercase;margin-bottom:16px">Not sure which pack?</h2>
+      <p style="font-family:'Inter';font-size:1.05rem;line-height:1.6;color:rgba(255,255,255,.72);max-width:48ch;margin:0 auto 30px">Answer a few questions and we'll rank the right tracks and battery for how you ride.</p>
+      <a href="Wizard - Live Ranking.dc.html" style="font-family:'Poppins';font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#111;background:#fff;padding:17px 40px;border-radius:999px;display:inline-block;transition:transform 200ms ease" onmouseenter="{{ liftEnter }}" onmouseleave="{{ liftLeave }}">Start RIIFT Wizard</a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;defaultTier&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;2P&quot;,&quot;3P&quot;,&quot;4P&quot;],&quot;default&quot;:&quot;4P&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showComparison&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { tierIdx: undefined };
+
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      els.forEach(e => { e.style.opacity='0'; e.style.transform='translateY(26px)'; e.style.transition='opacity 700ms cubic-bezier(.2,.7,.3,1), transform 700ms cubic-bezier(.2,.7,.3,1)'; });
+      if (!('IntersectionObserver' in window)) { els.forEach(e => { e.style.opacity='1'; e.style.transform='none'; }); return; }
+      const io = new IntersectionObserver(es => { es.forEach(x => { if (x.isIntersecting) { x.target.style.opacity='1'; x.target.style.transform='none'; io.unobserve(x.target); } }); }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+      els.forEach(e => io.observe(e));
+    });
+  }
+
+  renderVals() {
+    const hover = (cb) => (e) => cb(e.currentTarget);
+    const packs = [
+      { name:'2P', tier:'Entry',    price:'$7,000',  energy:'518 Wh',   run:'~30 min', packWeight:'3.2 kg', compat:'Fits both 2P and 4P RIIFT Tracks.' },
+      { name:'3P', tier:'All-day',  price:'$8,500',  energy:'778 Wh',   run:'~45 min', packWeight:'4.5 kg', compat:'Fits 4P RIIFT Tracks.' },
+      { name:'4P', tier:'Flagship', price:'$10,000', energy:'1,036 Wh', run:'~60 min', packWeight:'5.8 kg', compat:'Fits 4P RIIFT Tracks.' }
+    ];
+    const defIdx = { '2P':0, '3P':1, '4P':2 }[this.props.defaultTier] ?? 2;
+    const idx = this.state.tierIdx ?? defIdx;
+    const sel = packs[idx];
+
+    const pills = packs.map((p, i) => {
+      const active = i === idx;
+      const style = [
+        'display:flex','flex-direction:column','align-items:center','gap:3px',
+        'min-width:78px','padding:13px 18px','cursor:pointer',
+        'border:1px solid ' + (active ? '#111' : '#d8d5cd'),
+        'background:' + (active ? '#111' : '#fff'),
+        'color:' + (active ? '#fff' : '#111'),
+        'border-radius:2px','transition:background 180ms ease,border-color 180ms ease,color 180ms ease'
+      ].join(';');
+      return { name:p.name, tier:p.tier, style, onClick: () => this.setState({ tierIdx: i }) };
+    });
+
+    return {
+      sel, pills,
+      thumbs: ['PowerPack', 'Propulsion Unit', 'Remote', 'Hard Case'],
+      kit: [
+        { n:'01', title:'PowerPack', body:'The battery and onboard computer — the brain and power source of the system. 2P, 3P or 4P.' },
+        { n:'02', title:'Propulsion Unit', body:'Motor, 49.5 mm pod, hub, blades and cable. Compact, efficient and low-drag.' },
+        { n:'03', title:'Remote', body:'Wireless throttle control, intuitive from the first ride.' },
+        { n:'04', title:'Charger', body:'Recharge your PowerPacks between sessions and stay on the water longer.' },
+        { n:'05', title:'Hard Case', body:'A protective travel and storage case sized for the full kit.' }
+      ],
+      specRows: [
+        { label:'Battery configuration', a:'12S2P', b:'12S3P', c:'12S4P' },
+        { label:'Cell', a:'21700 · 6,000 mAh', b:'21700 · 6,000 mAh', c:'21700 · 6,000 mAh' },
+        { label:'Nominal pack voltage', a:'43.2 V', b:'43.2 V', c:'43.2 V' },
+        { label:'Capacity', a:'12 Ah', b:'18 Ah', c:'24 Ah' },
+        { label:'Usable energy', a:'518 Wh', b:'778 Wh', c:'1,036 Wh' },
+        { label:'Efoil run time*', a:'~30 min', b:'~45 min', c:'~60 min' },
+        { label:'Peak thrust', a:'28 kg', b:'28 kg', c:'28 kg' },
+        { label:'Battery weight', a:'2.5 kg', b:'3.5 kg', c:'4.5 kg' },
+        { label:'PowerPack weight', a:'3.2 kg', b:'4.5 kg', c:'5.8 kg' },
+        { label:'System weight, installed†', a:'4.4 kg', b:'5.7 kg', c:'7.0 kg' },
+        { label:'Recharge‡', a:'~48 min', b:'~72 min', c:'~96 min' },
+        { label:'Compatible tracks', a:'2P & 4P', b:'4P', c:'4P' },
+        { label:'Price AUD incl. GST', a:'$7,000', b:'$8,500', c:'$10,000' }
+      ],
+      podStats: [
+        { v:'49.5', unit:'mm', label:'Pod diameter — vs a 63 mm industry standard.' },
+        { v:'38', unit:'%', label:'Less drag than the industry-standard pod.' },
+        { v:'150', unit:'W/kg', label:'Up to, in 4P — power-to-weight at the top of the class.' }
+      ],
+      showComparison: this.props.showComparison ?? true,
+      compareRows: [
+        { label:'Usable energy', riift:'1,036 Wh', fd:'860 Wh' },
+        { label:'Complete weight', riift:'7.0 kg', fd:'7.9 kg' },
+        { label:'Peak thrust', riift:'28 kg', fd:'34 kg' },
+        { label:'RRP incl. tax', riift:'$10,000', fd:'$11,600' }
+      ],
+      cardEnter: hover(el => { el.style.transform='translateY(-4px)'; el.style.boxShadow='0 18px 44px -22px rgba(0,0,0,.28)'; }),
+      cardLeave: hover(el => { el.style.transform='none'; el.style.boxShadow='none'; }),
+      darkEnter: hover(el => { el.style.background='#333'; }),
+      darkLeave: hover(el => { el.style.background='#111'; }),
+      outlineEnter: hover(el => { el.style.background='#111'; el.style.color='#fff'; }),
+      outlineLeave: hover(el => { el.style.background='transparent'; el.style.color='#111'; }),
+      liftEnter: hover(el => { el.style.transform='translateY(-2px)'; }),
+      liftLeave: hover(el => { el.style.transform='none'; })
+    };
+  }
+}
+</script>
+</body>
+</html>

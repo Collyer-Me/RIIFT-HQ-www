@@ -1,0 +1,102 @@
+{% comment %}
+  Shopify contact form styled for RIIFT.
+
+  @param {string} heading - Optional form heading
+  @param {string} form_id - Unique form id suffix
+{% endcomment %}
+
+{% liquid
+  assign contact_form_id = form_id | default: 'riift-contact'
+  assign contact_form_id = contact_form_id | prepend: 'ContactForm-'
+%}
+
+<div class="riift-contact-form">
+  {% if heading != blank %}
+    <h2 class="riift-h2 riift-contact-form__heading">{{ heading }}</h2>
+  {% endif %}
+
+  {%- form 'contact', id: contact_form_id, class: 'riift-form' -%}
+    <input type="hidden" name="contact[id]" value="{{ contact_form_id }}">
+
+    {% liquid
+      assign form_matches = false
+      if form.id == contact_form_id or form.id == blank
+        assign form_matches = true
+      endif
+    %}
+
+    {%- if form.errors and form_matches -%}
+      <p class="riift-form__message riift-form__message--error" role="alert" tabindex="-1" autofocus>
+        {{ form.errors.translated_fields.email | capitalize }}
+        {{ form.errors.messages.email }}
+      </p>
+    {%- endif -%}
+
+    {%- if form.posted_successfully? and form_matches -%}
+      <p class="riift-form__message riift-form__message--success" role="status" tabindex="-1" autofocus>
+        Thanks — your message has been sent.
+      </p>
+    {%- endif -%}
+
+    <div class="riift-form__row riift-form__row--split">
+      <label class="visually-hidden" for="{{ contact_form_id }}-name">Name</label>
+      <input
+        type="text"
+        id="{{ contact_form_id }}-name"
+        class="riift-form__input"
+        name="contact[name]"
+        autocomplete="name"
+        placeholder="Name"
+        value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+      >
+      <label class="visually-hidden" for="{{ contact_form_id }}-email">Email</label>
+      <input
+        type="email"
+        id="{{ contact_form_id }}-email"
+        class="riift-form__input"
+        name="contact[email]"
+        autocomplete="email"
+        placeholder="Email"
+        required
+        aria-required="true"
+        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+        {% if form.errors contains 'email' and form_matches %}
+          aria-invalid="true"
+        {% endif %}
+      >
+    </div>
+
+    <label class="visually-hidden" for="{{ contact_form_id }}-phone">Phone</label>
+    <input
+      type="tel"
+      id="{{ contact_form_id }}-phone"
+      class="riift-form__input"
+      name="contact[phone]"
+      autocomplete="tel"
+      placeholder="Phone (optional)"
+      value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+    >
+
+    <label class="visually-hidden" for="{{ contact_form_id }}-enquiry">Enquiry type</label>
+    <select id="{{ contact_form_id }}-enquiry" class="riift-form__input riift-form__select" name="contact[enquiry]">
+      <option value="">What's your enquiry about?</option>
+      <option value="Buying a RIIFT Power System">Buying a RIIFT Power System</option>
+      <option value="Finding a RIIFT-enabled board">Finding a RIIFT-enabled board</option>
+      <option value="Becoming a shaper partner">Becoming a shaper partner</option>
+      <option value="Becoming a dealer">Becoming a dealer</option>
+      <option value="Media and partnerships">Media &amp; partnerships</option>
+      <option value="Something else">Something else</option>
+    </select>
+
+    <label class="visually-hidden" for="{{ contact_form_id }}-body">Message</label>
+    <textarea
+      id="{{ contact_form_id }}-body"
+      class="riift-form__input riift-form__textarea"
+      name="contact[body]"
+      rows="5"
+      placeholder="Your message"
+    >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+    {% render 'riift-button', variant: 'solid', label: 'Send message' %}
+  {%- endform -%}
+</div>

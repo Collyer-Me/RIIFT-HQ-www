@@ -1,21 +1,66 @@
 {% comment %}
-  Interior page header band.
+  Interior page header — text band or photo hero.
 
+  @param {string} variant - text | photo (default: text)
+  @param {string} height - tall | short (photo only; default: tall)
+  @param {image} image - Background image for photo variant
+  @param {boolean} ken_burns - Animate photo (default: true for photo)
   @param {string} eyebrow
   @param {string} title
   @param {string} body
+  @param {boolean} reveal
 {% endcomment %}
 
-<div class="riift-page-hero">
-  <div class="riift-page-hero__inner" data-reveal>
-    {% if eyebrow != blank %}
-      {% render 'riift-eyebrow', text: eyebrow %}
-    {% endif %}
-    {% if title != blank %}
-      <h1 class="riift-h1">{{ title }}</h1>
-    {% endif %}
-    {% if body != blank %}
-      <p class="riift-body" style="margin-top: 16px; max-width: 60ch;">{{ body }}</p>
-    {% endif %}
+{% liquid
+  assign hero_variant = variant | default: 'text'
+  assign hero_height = height | default: 'tall'
+  assign animate_photo = ken_burns
+  if hero_variant == 'photo' and ken_burns == blank
+    assign animate_photo = true
+  endif
+  assign use_reveal = reveal | default: true
+%}
+
+{% if hero_variant == 'photo' %}
+  <header
+    class="riift-page-hero riift-page-hero--photo riift-full-bleed{% if hero_height == 'short' %} riift-page-hero--short{% endif %}"
+  >
+    <div class="riift-page-hero__media{% if animate_photo %} riift-page-hero__media--ken-burns{% endif %}">
+      {% if image != blank %}
+        {{
+          image
+          | image_url: width: 2400
+          | image_tag: loading: 'eager', alt: title | default: eyebrow, class: 'riift-page-hero__image'
+        }}
+      {% else %}
+        <div class="riift-page-hero__placeholder" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+    <div class="riift-page-hero__scrim" aria-hidden="true"></div>
+    <div class="riift-page-hero__inner riift-page-hero__inner--center"{% if use_reveal %} data-reveal{% endif %}>
+      {% if eyebrow != blank %}
+        <p class="riift-eyebrow riift-page-hero__eyebrow">{{ eyebrow }}</p>
+      {% endif %}
+      {% if title != blank %}
+        <h1 class="riift-h1">{{ title }}</h1>
+      {% endif %}
+      {% if body != blank %}
+        <p class="riift-body riift-page-hero__body">{{ body }}</p>
+      {% endif %}
+    </div>
+  </header>
+{% else %}
+  <div class="riift-page-hero riift-page-hero--text">
+    <div class="riift-page-hero__inner"{% if use_reveal %} data-reveal{% endif %}>
+      {% if eyebrow != blank %}
+        {% render 'riift-eyebrow', text: eyebrow %}
+      {% endif %}
+      {% if title != blank %}
+        <h1 class="riift-h1">{{ title }}</h1>
+      {% endif %}
+      {% if body != blank %}
+        <p class="riift-body" style="margin-top: 16px; max-width: 60ch;">{{ body }}</p>
+      {% endif %}
+    </div>
   </div>
-</div>
+{% endif %}

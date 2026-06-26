@@ -1,0 +1,10 @@
+query StyleguidePage {
+  pages(first: 1, query: "handle:styleguide") {
+    nodes {
+      id
+      handle
+      title
+      templateSuffix
+    }
+  }
+}

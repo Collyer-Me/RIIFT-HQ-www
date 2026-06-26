@@ -1,79 +1,205 @@
-<div class="riift-page riift-band riift-band--off-white" data-section-id="{{ section.id }}">
-  <div class="riift-band__inner">
-    <div class="riift-styleguide__section" data-reveal>
-      <p class="riift-eyebrow">RIIFT Styleguide</p>
-      <h1 class="riift-h1">Component library</h1>
-      <p class="riift-body">Hidden QA page — tokens, type, buttons, cards, and patterns.</p>
-    </div>
+<div class="riift-page" data-section-id="{{ section.id }}">
+  <div class="riift-band riift-band--off-white">
+    <div class="riift-band__inner">
+      <div class="riift-styleguide__section" data-reveal>
+        <p class="riift-eyebrow">RIIFT Component catalog</p>
+        <h1 class="riift-h1">Design handoff preview</h1>
+        <p class="riift-body">QA page mapping <code>.dc.html</code> patterns to theme primitives. See <code>_docs/COMPONENT_CATALOG.md</code>.</p>
+        <p class="riift-caption" style="margin-top: 12px;">
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+          <span class="riift-styleguide__badge riift-styleguide__badge--partial">Partial</span>
+          <span class="riift-styleguide__badge riift-styleguide__badge--planned">Planned</span>
+        </p>
+        <nav class="riift-styleguide__nav" aria-label="Component sections">
+          <a href="#foundation">Foundation</a>
+          <a href="#atoms">Atoms</a>
+          <a href="#cards">Cards</a>
+          <a href="#bands">Bands</a>
+          <a href="#heroes">Heroes</a>
+          <a href="#split">Split layouts</a>
+          <a href="#sections">Sections</a>
+        </nav>
+      </div>
 
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Colour tokens</h2>
-      <div class="riift-styleguide__grid riift-styleguide__grid--colors">
-        <div><div class="riift-styleguide__swatch" style="background: var(--riift-ink);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-ink #111</p></div>
-        <div><div class="riift-styleguide__swatch" style="background: var(--riift-footer-black);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-footer-black</p></div>
-        <div><div class="riift-styleguide__swatch" style="background: var(--riift-white);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-white</p></div>
-        <div><div class="riift-styleguide__swatch" style="background: var(--riift-off-white);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-off-white</p></div>
-        <div><div class="riift-styleguide__swatch" style="background: var(--riift-label);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-label</p></div>
-        <div><div class="riift-styleguide__swatch" style="background: var(--riift-border);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-border</p></div>
+      <div id="foundation" class="riift-styleguide__section" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Foundation</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Colour tokens</h3>
+        <div class="riift-styleguide__grid riift-styleguide__grid--colors">
+          <div><div class="riift-styleguide__swatch" style="background: var(--riift-ink);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-ink</p></div>
+          <div><div class="riift-styleguide__swatch" style="background: var(--riift-footer-black);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-footer-black</p></div>
+          <div><div class="riift-styleguide__swatch" style="background: var(--riift-white);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-white</p></div>
+          <div><div class="riift-styleguide__swatch" style="background: var(--riift-off-white);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-off-white</p></div>
+          <div><div class="riift-styleguide__swatch" style="background: var(--riift-label);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-label</p></div>
+          <div><div class="riift-styleguide__swatch" style="background: var(--riift-border);"></div><p class="riift-caption" style="margin-top: 8px;">--riift-border</p></div>
+        </div>
+        <h3 class="riift-h3" style="margin: 32px 0 16px;">Typography</h3>
+        <div class="riift-styleguide__grid riift-styleguide__grid--type">
+          <p class="riift-h1">Heading one specimen</p>
+          <p class="riift-h2">Heading two specimen</p>
+          <p class="riift-h3">Heading three specimen</p>
+          <p class="riift-eyebrow">Eyebrow label</p>
+          <p class="riift-body">Body copy specimen. The battery's centre of mass sits directly over the foil's centre of lift.</p>
+          <p class="riift-caption">Caption text for labels and metadata.</p>
+          <p class="riift-pullquote">"Pull-quote specimen — Poppins 500 italic."</p>
+        </div>
+      </div>
+
+      <div id="atoms" class="riift-styleguide__section" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Atoms</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Buttons</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
+          {% render 'riift-button', variant: 'pill', label: 'Pill · light', url: '#' %}
+          {% render 'riift-button', variant: 'solid', label: 'Solid · dark', url: '#' %}
+          {% render 'riift-button', variant: 'ghost', label: 'Ghost · outline', url: '#' %}
+          {% render 'riift-button', variant: 'link', label: 'Text link', url: '#' %}
+        </div>
+        <h3 class="riift-h3" style="margin: 28px 0 16px;">Spec rows</h3>
+        {% render 'riift-spec-row', label: 'Energy', value: '778 Wh' %}
+        {% render 'riift-spec-row', label: 'Efoil run', value: '~45 min' %}
+        {% render 'riift-spec-row', label: 'Price (AUD)', value: '$8,500' %}
+        <h3 class="riift-h3" style="margin: 28px 0 16px;">Newsletter input row</h3>
+        <form class="riift-input-row" style="max-width: 400px;">
+          <input type="email" class="riift-input" placeholder="Enter your email" aria-label="Email">
+          {% render 'riift-button', variant: 'solid', label: '→' %}
+        </form>
+      </div>
+
+      <div id="cards" class="riift-styleguide__section" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Cards</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Image card</h3>
+        <div class="riift-card-grid" style="margin-bottom: 32px;">
+          {% render 'riift-card', eyebrow: 'Mode', title: 'E-Foil', body: 'Motor low on mast. Full electric flight.', reveal: false %}
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Text-only card</h3>
+        <div class="riift-card-grid" style="margin-bottom: 32px;">
+          {% render 'riift-card', variant: 'text', eyebrow: 'Component', title: 'Propulsion Unit', body: '49.5 mm pod. Up to 150 W/kg at 4P.', reveal: false %}
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Compact entity card</h3>
+        <div class="riift-card-grid" style="margin-bottom: 32px;">
+          {% render 'riift-card', variant: 'compact', title: 'South Coast Shapers', body: 'NSW, Australia', reveal: false %}
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Testimonial card</h3>
+        <div class="riift-card-grid" style="margin-bottom: 32px;">
+          {% render 'riift-card', variant: 'testimonial', title: '"The balance is unlike anything else on the water."', body: 'Kane D. · RIIFT rider', reveal: false %}
+        </div>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">PowerPack card</h3>
+        <div class="riift-card-grid">
+          {% render 'riift-powerpack-card', tier: '3P', name: 'All-day', energy: '778 Wh', runtime: '~45 min', price: '$8,500', reveal: false %}
+        </div>
+      </div>
+
+      <div id="bands" class="riift-styleguide__section" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Layout bands</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+        </div>
+        <div class="riift-band" style="margin-bottom: 16px; padding: 32px; border: 1px dashed var(--riift-border);">
+          <p class="riift-caption">White band shell</p>
+        </div>
+        <div class="riift-band riift-band--off-white" style="margin-bottom: 16px; padding: 32px;">
+          <p class="riift-caption">Off-white band — interior page default</p>
+        </div>
+        <div class="riift-band riift-band--dark" style="padding: 32px;">
+          <p class="riift-eyebrow">Dark band</p>
+          <p class="riift-body">PowerPack section, quote scrims, footer-adjacent blocks.</p>
+        </div>
+        <h3 class="riift-h3" style="margin: 28px 0 16px;">Stat column</h3>
+        <div class="riift-stat-column" style="max-width: 320px;">
+          <p class="riift-h3">Drag Free</p>
+          <p class="riift-body">Recess-integrated tracks eliminate bolt-on drag.</p>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Typography</h2>
-      <div class="riift-styleguide__grid riift-styleguide__grid--type">
-        <p class="riift-h1">Heading one specimen</p>
-        <p class="riift-h2">Heading two specimen</p>
-        <p class="riift-h3">Heading three specimen</p>
-        <p class="riift-eyebrow">Eyebrow label</p>
-        <p class="riift-body">Body copy specimen. The battery's centre of mass sits directly over the foil's centre of lift.</p>
-        <p class="riift-caption">Caption text for labels and metadata.</p>
-        <p class="riift-pullquote">"Pull-quote specimen — Poppins 500 italic."</p>
+  <div id="heroes" class="riift-styleguide__section">
+    <div class="riift-band riift-band--off-white">
+      <div class="riift-band__inner" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Heroes</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+        </div>
+        <p class="riift-body" style="margin-bottom: 24px;">Text band hero (fallback) — below. Photo heroes are full-bleed.</p>
+        {% render 'riift-page-hero', variant: 'text', eyebrow: 'Interior', title: 'Text hero', body: 'Off-white band header when no photography is set.' %}
       </div>
     </div>
+    {% render 'riift-page-hero', variant: 'photo', height: 'tall', eyebrow: 'RIIFT Enabled', title: 'Boards', body: 'Photo hero — tall interior variant with ken-burns and centred scrim.' %}
+    {% render 'riift-page-hero', variant: 'photo', height: 'short', eyebrow: 'Get in touch', title: 'Contact', reveal: false %}
+  </div>
 
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Buttons</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
-        {% render 'riift-button', variant: 'pill', label: 'Pill · light', url: '#' %}
-        {% render 'riift-button', variant: 'solid', label: 'Solid · dark', url: '#' %}
-        {% render 'riift-button', variant: 'link', label: 'Text link', url: '#' %}
+  <div id="split" class="riift-band">
+    <div class="riift-band__inner">
+      <div class="riift-styleguide__section" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Split layouts</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span>
+        </div>
+        <div class="riift-split-band riift-split-band--form">
+          <div class="riift-split-band__primary">
+            {% render 'riift-contact-form', heading: 'Send us a message', form_id: 'styleguide' %}
+          </div>
+          <div class="riift-split-band__secondary">
+            <h2 class="riift-h2">Details</h2>
+            <div class="riift-detail-block">
+              <p class="riift-eyebrow riift-detail-block__label">Email</p>
+              <p class="riift-body riift-detail-block__value">hello@riift.com</p>
+            </div>
+            <div class="riift-detail-block">
+              <p class="riift-eyebrow riift-detail-block__label">Location</p>
+              <p class="riift-body riift-detail-block__value">Gold Coast, Australia</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Cards</h2>
-      <div class="riift-card-grid">
-        {% render 'riift-card', eyebrow: 'Eyebrow', title: 'Card title', body: 'White surface, optional hairline border, image on top.', reveal: false %}
-        {% render 'riift-card', eyebrow: 'Eyebrow', title: 'Card with reveal', body: 'Scroll reveal enabled on this card.', reveal: true %}
+  <div id="sections" class="riift-band riift-band--off-white">
+    <div class="riift-band__inner">
+      <div class="riift-styleguide__section" data-reveal>
+        <div class="riift-styleguide__section-title">
+          <h2 class="riift-h2">Theme sections</h2>
+          <span class="riift-styleguide__badge riift-styleguide__badge--partial">Partial</span>
+        </div>
+        <p class="riift-body" style="margin-bottom: 24px;">Full sections are configured in Theme Editor on live pages. Status for homepage-only patterns:</p>
+        <ul class="riift-body" style="display: grid; gap: 12px; list-style: none; padding: 0;">
+          <li><span class="riift-styleguide__badge riift-styleguide__badge--built">Built</span> riift-hero, riift-text-band, riift-card-grid, riift-stat-grid, riift-quote-band, riift-media-band, riift-split-band, riift-wizard</li>
+          <li><span class="riift-styleguide__badge riift-styleguide__badge--partial">Partial</span> riift-media-band caption mode (see Boards overlay)</li>
+          <li><span class="riift-styleguide__badge riift-styleguide__badge--planned">Planned</span> riift-media-grid (reels, gallery, shaper strip)</li>
+          <li><span class="riift-styleguide__badge riift-styleguide__badge--planned">Planned</span> Big-number stat band (Electronics 60/30)</li>
+          <li><span class="riift-styleguide__badge riift-styleguide__badge--built">Separate</span> Wizard app UI — not a generic band component</li>
+        </ul>
       </div>
-    </div>
 
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Spec rows</h2>
-      {% render 'riift-spec-row', label: 'Weight', value: '12.4 kg' %}
-      {% render 'riift-spec-row', label: 'Range', value: '45–90 min' %}
-      {% render 'riift-spec-row', label: 'Charge time', value: '2.5 hours' %}
-    </div>
-
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Stat column</h2>
-      <div class="riift-stat-column" style="max-width: 320px;">
-        <p class="riift-h3">Drag Free</p>
-        <p class="riift-body">Recess-integrated tracks eliminate bolt-on drag.</p>
+      <div class="riift-styleguide__section" data-reveal>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Media band · caption mode</h3>
+        <span class="riift-styleguide__badge riift-styleguide__badge--partial">Partial</span>
+        <div class="riift-media-band riift-full-bleed riift-media-band--caption" style="margin-top: 16px; height: clamp(280px, 40vw, 420px);">
+          <div class="riift-media-band__placeholder"></div>
+          <div class="riift-media-band__scrim"></div>
+          <div class="riift-media-band__caption-wrap">
+            <p class="riift-media-band__caption">Modular Track System</p>
+            <p class="riift-body riift-media-band__caption-body">Carbon tracks laid in before lamination — drag-free from day one.</p>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Form input</h2>
-      <form class="riift-input-row" style="max-width: 400px;">
-        <input type="email" class="riift-input" placeholder="Enter your email">
-        {% render 'riift-button', variant: 'solid', label: '→' %}
-      </form>
-    </div>
-
-    <div class="riift-styleguide__section" data-reveal>
-      <h2 class="riift-h2" style="margin-bottom: 24px;">Page hero</h2>
-      {% render 'riift-page-hero', eyebrow: 'Interior', title: 'Page title', body: 'Optional intro copy for interior pages.' %}
+      <div class="riift-styleguide__section" data-reveal>
+        <h3 class="riift-h3" style="margin-bottom: 16px;">Dual CTA row</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+          {% render 'riift-button', variant: 'solid', label: 'Become a partner', url: '#' %}
+          {% render 'riift-button', variant: 'ghost', label: 'Find your setup', url: '/pages/wizard' %}
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,53 @@
+{% doc %}
+  JSON payload for one PowerPack variant (tier selector + buy block).
+
+  @param {variant} variant
+{% enddoc %}
+
+{% liquid
+  assign tier_code = variant.option1 | default: '' | strip | upcase
+  if tier_code == blank
+    assign tier_code = variant.title | strip | upcase
+  endif
+
+  capture tier_label
+    render 'riift-powerpack-spec-value', variant: variant, key: 'tier_label'
+  endcapture
+
+  capture usable_energy
+    render 'riift-powerpack-spec-value', variant: variant, key: 'usable_energy'
+  endcapture
+
+  capture efoil_run_time
+    render 'riift-powerpack-spec-value', variant: variant, key: 'efoil_run_time'
+  endcapture
+
+  capture pack_weight
+    render 'riift-powerpack-spec-value', variant: variant, key: 'pack_weight'
+  endcapture
+
+  capture track_compat_line
+    render 'riift-powerpack-spec-value', variant: variant, key: 'track_compat_line'
+  endcapture
+
+  assign variant_image = variant.featured_image | default: product.featured_image
+  if variant_image != blank
+    assign image_url = variant_image | image_url: width: 1600
+  else
+    assign image_url = blank
+  endif
+%}
+{
+  "id": {{ variant.id | json }},
+  "tier": {{ tier_code | json }},
+  "tierLabel": {{ tier_label | strip | json }},
+  "price": {{ variant.price | money | json }},
+  "priceRaw": {{ variant.price | json }},
+  "available": {{ variant.available | json }},
+  "usableEnergy": {{ usable_energy | strip | json }},
+  "efoilRunTime": {{ efoil_run_time | strip | json }},
+  "packWeight": {{ pack_weight | strip | json }},
+  "trackCompat": {{ track_compat_line | strip | json }},
+  "imageUrl": {{ image_url | json }},
+  "imageAlt": {{ variant_image.alt | default: product.title | json }}
+}

@@ -1,0 +1,1 @@
+read_metaobject_definitions,write_metaobject_definitions,read_metaobjects,write_metaobjects,read_products,read_content,write_content

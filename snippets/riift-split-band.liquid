@@ -1,0 +1,22 @@
+{% comment %}
+  Two-column split layout.
+
+  @param {string} primary_html - Left / primary column HTML
+  @param {string} secondary_html - Right / secondary column HTML
+  @param {string} ratio - balanced | form (default: balanced)
+  @param {string} class - Extra wrapper classes
+{% endcomment %}
+
+{% liquid
+  assign split_ratio = ratio | default: 'balanced'
+  assign split_class = class | default: ''
+%}
+
+<div class="riift-split-band riift-split-band--{{ split_ratio }} {{ split_class }}">
+  <div class="riift-split-band__primary">
+    {{ primary_html }}
+  </div>
+  <div class="riift-split-band__secondary">
+    {{ secondary_html }}
+  </div>
+</div>
