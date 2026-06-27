@@ -1,0 +1,27 @@
+{% doc %}
+  JSON payload for one standard product variant.
+
+  @param {variant} variant
+  @param {product} [product]
+{% enddoc %}
+
+{% liquid
+  assign p = product | default: variant.product
+  assign variant_image = variant.featured_image | default: p.featured_image
+  if variant_image != blank
+    assign image_url = variant_image | image_url: width: 1600
+  else
+    assign image_url = blank
+  endif
+%}
+{
+  "id": {{ variant.id | json }},
+  "price": {{ variant.price | money | json }},
+  "priceRaw": {{ variant.price | json }},
+  "available": {{ variant.available | json }},
+  "imageUrl": {{ image_url | json }},
+  "imageAlt": {{ variant_image.alt | default: p.title | json }},
+  "option1": {{ variant.option1 | json }},
+  "option2": {{ variant.option2 | json }},
+  "option3": {{ variant.option3 | json }}
+}

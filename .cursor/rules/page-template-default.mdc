@@ -1,0 +1,21 @@
+# Default page template (RIIFT)
+
+The default Shopify page template is [`templates/page.json`](../../templates/page.json). It must use **`riift-page-content`**, not Horizon `main-page`.
+
+## Rules
+
+- Do **not** reintroduce `main-page` or other Horizon page sections into `page.json`.
+- Interior marketing pages use **Default page** in Admin — there is no separate `page.riift.json` alternate.
+- If Horizon layout is needed for an edge case, use the **`page.horizon`** alternate template only.
+
+## Alternates (intentional)
+
+| Template file | Admin label | Use |
+|---------------|-------------|-----|
+| `page.json` | Default page | RIIFT interior pages (Claude HTML) |
+| `page.contact.json` | contact | RIIFT contact form |
+| `page.wizard.json` | wizard | RIIFT wizard |
+| `page.styleguide.json` | styleguide | Dev styleguide |
+| `page.horizon.json` | horizon | Horizon escape hatch |
+
+See [`_docs/PAGE_BUILD_GUIDE.md`](../../_docs/PAGE_BUILD_GUIDE.md).

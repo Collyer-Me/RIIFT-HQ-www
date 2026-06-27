@@ -1,0 +1,23 @@
+query ExampleProductsCheck {
+  spareBattery: productByHandle(handle: "riift-spare-battery") {
+    id
+    handle
+    title
+  }
+  spareRemote: productByHandle(handle: "riift-spare-remote") {
+    id
+    handle
+    title
+  }
+  tee: productByHandle(handle: "riift-tee") {
+    id
+    handle
+    title
+  }
+  publications(first: 10) {
+    nodes {
+      id
+      name
+    }
+  }
+}

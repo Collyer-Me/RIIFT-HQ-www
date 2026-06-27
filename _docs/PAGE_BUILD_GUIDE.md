@@ -60,7 +60,7 @@ New section types are added in Cursor, then configured in Theme Editor after dep
 
 ### Interior pages (Boards, System, Shapers, etc.) — sandwich template
 
-Uses **`templates/page.riift.json`**:
+Uses the **default page template** [`templates/page.json`](templates/page.json) — RIIFT layout out of the box:
 
 | Layer | Section | Edited via |
 |-------|---------|------------|
@@ -68,7 +68,7 @@ Uses **`templates/page.riift.json`**:
 | **Middle** | **`riift-page-content`** → `{{ page.content }}` | Claude → this page’s HTML |
 | Below (optional) | Theme sections | Theme Editor |
 
-Assign template **riift** to each marketing page in Admin.
+New pages use **Default page** in Admin (no manual template pick). Alternate templates: `contact`, `wizard`, `styleguide`, `horizon` (Horizon escape hatch).
 
 ---
 
@@ -143,6 +143,21 @@ Build once in the theme. Use everywhere.
 | **Product / collection / cart** | — | — | Cursor theme templates |
 | **Nav / footer** | — | Cursor (all pages) | — |
 
+### Product templates
+
+Two product layouts — assign per product in Admin (**Product → Theme template**):
+
+| Template | File | Use for |
+|----------|------|---------|
+| **Default product** | `templates/product.json` | Spare parts, accessories, merch — RIIFT minimal PDP (`riift-product-standard`) |
+| **powerpack** | `templates/product.powerpack.json` | Hero kits (PowerPack) — tier selector, kit grid, full specs, propulsion, comparison |
+
+**Default product** reads title, description, media, price, and variants from Shopify. Optional product metafields: `riift.eyebrow`, `riift.price_note`, `riift.footnote`.
+
+**powerpack** reads product + **variant** `riift.*` metafields for tier specs. Do not assign powerpack to spare parts or merch.
+
+Header nav uses **Auto** color scheme (black on all product pages, white elsewhere) — see Theme Editor → Header.
+
 ---
 
 ## 7. Email capture
@@ -171,12 +186,11 @@ Compatibility rules (must hold in UI and copy):
 
 ### A. Interior marketing page (e.g. System)
 
-1. Create Shopify Page in Admin (handle: `system`)
-2. Assign template **riift**
-3. Claude generates HTML from prototype + [`claude-page-html-guide.md`](claude-page-html-guide.md) (when available)
-4. Paste HTML into Page body (HTML mode)
-5. Preview on dev store; adjust in Claude or Admin
-6. If live product data needed → add Theme Editor section above/below in `page.riift.json` (Cursor, one-time)
+1. Create Shopify Page in Admin (handle: `system`) — leave template on **Default page**
+2. Claude generates HTML from prototype + [`claude-page-html-guide.md`](claude-page-html-guide.md) (when available)
+3. Paste HTML into Page body (HTML mode)
+4. Preview on dev store; adjust in Claude or Admin
+5. If live product data needed → add Theme Editor section above/below in `page.json` (Cursor, one-time)
 
 ### B. Homepage content update
 
@@ -192,7 +206,8 @@ Compatibility rules (must hold in UI and copy):
 ### D. Commerce page change
 
 1. Cursor edits product/collection/cart templates
-2. `shopify theme dev` → preview → `git commit` → `git push` → `shopify theme push`
+2. Assign **powerpack** template only to kit products (e.g. RIIFT PowerPack); leave accessories/merch on **Default product**
+3. `.\scripts\theme-dev.ps1` → preview → `git commit` → `git push` (CI deploys to live)
 
 ---
 
@@ -234,7 +249,8 @@ Compatibility rules (must hold in UI and copy):
 | Decision | Choice |
 |----------|--------|
 | Homepage structure | **Theme Editor sections** — `riift-*` stack in `index.json` (not page embed) |
-| Interior pages | **riift** template — Claude HTML middle, optional dynamic sections |
+| Default page template | **`page.json`** — `riift-page-content`; Claude HTML middle, optional dynamic sections |
+| Horizon page fallback | **`page.horizon.json`** — alternate only when Horizon `main-page` is needed |
 | Motion / interactivity | Claude markup + theme JS (`data-*` hooks) |
 | Email | **Klaviyo** embed |
 | Wizard v1 | Static JS + product URL mapping |

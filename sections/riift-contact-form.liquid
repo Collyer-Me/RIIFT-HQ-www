@@ -1,0 +1,71 @@
+<div class="riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% elsif section.settings.band_style == 'dark' %} riift-band--dark{% endif %}" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner">
+    {% if section.settings.intro_heading != blank or section.settings.intro_body != blank %}
+      <div class="riift-split-band riift-split-band--form" data-reveal>
+        <div class="riift-split-band__primary">
+          {% if section.settings.intro_heading != blank %}
+            <h1 class="riift-h1">{{ section.settings.intro_heading }}</h1>
+          {% endif %}
+          {% if section.settings.intro_body != blank %}
+            <div class="riift-body">{{ section.settings.intro_body }}</div>
+          {% endif %}
+        </div>
+        <div class="riift-split-band__secondary">
+          {% render 'riift-contact-form',
+            heading: section.settings.form_heading,
+            form_id: section.id
+          %}
+        </div>
+      </div>
+    {% else %}
+      <div data-reveal>
+        {% render 'riift-contact-form',
+          heading: section.settings.form_heading,
+          form_id: section.id
+        %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Contact form",
+  "class": "riift-contact-form-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Intro heading",
+      "default": "Contact"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_body",
+      "label": "Intro body"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Send us a message"
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "none"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Contact form"
+    }
+  ]
+}
+{% endschema %}

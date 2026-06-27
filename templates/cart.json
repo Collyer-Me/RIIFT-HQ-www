@@ -8,6 +8,13 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "cart_header": {
+      "type": "riift-cart-header",
+      "settings": {
+        "heading": "Cart",
+        "show_count": true
+      }
+    },
     "cart-section": {
       "type": "main-cart",
       "blocks": {
@@ -15,8 +22,8 @@
           "type": "_cart-title",
           "static": true,
           "settings": {
-            "title": "Cart",
-            "show_count": true,
+            "title": "",
+            "show_count": false,
             "type_preset": "h4",
             "alignment": "left",
             "padding-block-start": 0,
@@ -249,6 +256,7 @@
     }
   },
   "order": [
+    "cart_header",
     "cart-section",
     "product_list_NNFgcy"
   ]

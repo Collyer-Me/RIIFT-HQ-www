@@ -1,0 +1,52 @@
+<div class="riift-band riift-band--off-white riift-cart-header" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner riift-text-band riift-text-band--left" data-reveal>
+    {% if section.settings.eyebrow != blank %}
+      {% render 'riift-eyebrow', text: section.settings.eyebrow %}
+    {% endif %}
+    <h1 class="riift-h1">
+      {{ section.settings.heading }}
+      {% if section.settings.show_count and cart.item_count > 0 %}
+        <span class="riift-caption">({{ cart.item_count }})</span>
+      {% endif %}
+    </h1>
+    {% if section.settings.body != blank %}
+      <div class="riift-body riift-text-band__body">{{ section.settings.body }}</div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Cart header",
+  "class": "riift-cart-header-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Cart"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show item count in heading",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Cart header"
+    }
+  ]
+}
+{% endschema %}

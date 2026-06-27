@@ -1,0 +1,63 @@
+<div class="riift-band{% if section.settings.band_style == 'off-white' %} riift-band--off-white{% elsif section.settings.band_style == 'dark' %} riift-band--dark{% endif %}" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner riift-text-band riift-text-band--{{ section.settings.alignment }}" data-reveal>
+    {% if section.settings.show_eyebrow and collection.products_count != blank %}
+      {% if collection.products_count == 1 %}
+        {% assign count_label = '1 product' %}
+      {% else %}
+        {% assign count_label = collection.products_count | append: ' products' %}
+      {% endif %}
+      {% render 'riift-eyebrow', text: count_label %}
+    {% endif %}
+    <h1 class="riift-h1">{{ collection.title }}</h1>
+    {% if section.settings.show_description and collection.description != blank %}
+      <div class="riift-body riift-text-band__body">{{ collection.description }}</div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT Collection header",
+  "class": "riift-collection-header-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Show product count eyebrow",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "band_style",
+      "label": "Band style",
+      "options": [
+        { "value": "none", "label": "White" },
+        { "value": "off-white", "label": "Off-white" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "off-white"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT Collection header"
+    }
+  ]
+}
+{% endschema %}

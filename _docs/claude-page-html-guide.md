@@ -1,6 +1,6 @@
 # Claude page HTML cookbook
 
-Copy-paste HTML for Shopify Pages (`page.riift` template). Use `riift-*` classes only — no Liquid, no `<script>` tags. Theme JS handles `data-reveal` and `data-riift-hero`.
+Copy-paste HTML for Shopify Pages (default page template — `page.json` / **Default page** in Admin). Use `riift-*` classes only — no Liquid, no `<script>` tags. Theme JS handles `data-reveal` and `data-riift-hero`.
 
 Component reference: [`COMPONENT_CATALOG.md`](COMPONENT_CATALOG.md)
 

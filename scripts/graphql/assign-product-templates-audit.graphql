@@ -1,0 +1,54 @@
+query AssignProductTemplatesAudit {
+  powerpack: productByHandle(handle: "riift-powerpack") {
+    id
+    handle
+    title
+    templateSuffix
+    tags
+    metafields(first: 10, namespace: "riift") {
+      nodes {
+        key
+        value
+      }
+    }
+    variants(first: 5) {
+      nodes {
+        id
+        title
+        metafields(first: 5, namespace: "riift") {
+          nodes {
+            key
+            value
+          }
+        }
+      }
+    }
+  }
+  spareBattery: productByHandle(handle: "riift-spare-battery") {
+    id
+    handle
+    title
+    templateSuffix
+  }
+  spareRemote: productByHandle(handle: "riift-spare-remote") {
+    id
+    handle
+    title
+    templateSuffix
+  }
+  tee: productByHandle(handle: "riift-tee") {
+    id
+    handle
+    title
+    templateSuffix
+  }
+  products(first: 25, query: "tag:powerpack OR title:PowerPack") {
+    nodes {
+      id
+      handle
+      title
+      templateSuffix
+      tags
+    }
+  }
+}

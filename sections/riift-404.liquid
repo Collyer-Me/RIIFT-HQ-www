@@ -1,0 +1,85 @@
+<div class="riift-band riift-band--off-white riift-404" data-section-id="{{ section.id }}">
+  <div class="riift-band__inner riift-text-band riift-text-band--center" data-reveal>
+    {% if section.settings.eyebrow != blank %}
+      {% render 'riift-eyebrow', text: section.settings.eyebrow %}
+    {% endif %}
+    <h1 class="riift-h1">{{ section.settings.heading }}</h1>
+    {% if section.settings.body != blank %}
+      <div class="riift-body riift-text-band__body">{{ section.settings.body }}</div>
+    {% endif %}
+    {% liquid
+      assign primary_url = section.settings.primary_url | default: routes.root_url
+      assign secondary_url = section.settings.secondary_url | default: '/pages/wizard'
+    %}
+    <div class="riift-text-band__cta riift-404__actions">
+      {% if section.settings.primary_label != blank %}
+        {% render 'riift-button',
+          variant: 'solid',
+          label: section.settings.primary_label,
+          url: primary_url
+        %}
+      {% endif %}
+      {% if section.settings.secondary_label != blank %}
+        {% render 'riift-button',
+          variant: 'pill',
+          label: section.settings.secondary_label,
+          url: secondary_url
+        %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RIIFT 404",
+  "class": "riift-404-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "404"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Page not found"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>The link may be incorrect, or the page has been removed.</p>"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Back to home"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Find your setup"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RIIFT 404"
+    }
+  ]
+}
+{% endschema %}
