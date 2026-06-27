@@ -65,6 +65,7 @@
         "link_contact"
       ],
       "settings": {
+        "color_scheme": "auto",
         "transparent_mode": true,
         "show_search": true
       }

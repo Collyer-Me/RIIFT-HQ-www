@@ -16,6 +16,8 @@
   --riift-scrim: rgba(13, 13, 13, 0.6);
   --riift-nav-border-scrolled: #222222;
   --riift-nav-bg-scrolled: rgba(13, 13, 13, 0.92);
+  --riift-header-bg-light: rgba(255, 255, 255, 0.96);
+  --riift-header-border-light: var(--riift-border);
   --riift-body-muted: rgba(17, 17, 17, 0.7);
   --riift-body-subtle: rgba(17, 17, 17, 0.62);
   --riift-on-dark-muted: rgba(255, 255, 255, 0.62);

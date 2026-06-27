@@ -1,6 +1,45 @@
-<header class="riift-header{% unless section.settings.transparent_mode %} is-scrolled{% endunless %}" data-section-id="{{ section.id }}">
+{% liquid
+  assign color_scheme = section.settings.color_scheme | default: 'auto'
+
+  if color_scheme == 'auto'
+    if template.name == 'product'
+      assign color_scheme = 'on_light'
+    else
+      assign color_scheme = 'on_dark'
+    endif
+  endif
+
+  assign header_classes = 'riift-header riift-header--' | append: color_scheme
+
+  if color_scheme == 'on_light' or section.settings.transparent_mode == false
+    assign header_classes = header_classes | append: ' is-scrolled'
+  endif
+%}
+
+<header
+  class="{{ header_classes }}"
+  data-section-id="{{ section.id }}"
+  data-header-scheme="{{ color_scheme }}"
+  data-scroll-nav="{% if color_scheme == 'on_dark' and section.settings.transparent_mode %}true{% else %}false{% endif %}"
+>
   <a href="{{ routes.root_url }}" class="riift-header__logo">
-    {% if section.settings.logo != blank %}
+    {% if color_scheme == 'on_light' %}
+      {% if section.settings.logo_on_light != blank %}
+        {{
+          section.settings.logo_on_light
+          | image_url: width: 200
+          | image_tag: alt: shop.name, loading: 'eager'
+        }}
+      {% else %}
+        <img
+          src="{{ 'riift-logo-black.png' | asset_url }}"
+          alt="{{ shop.name }}"
+          width="80"
+          height="24"
+          loading="eager"
+        >
+      {% endif %}
+    {% elsif section.settings.logo != blank %}
       {{
         section.settings.logo
         | image_url: width: 200
@@ -48,7 +87,7 @@
   </button>
 </header>
 
-{% unless section.settings.transparent_mode and template.name == 'index' %}
+{% unless section.settings.transparent_mode and template.name == 'index' and color_scheme == 'on_dark' %}
   <div class="riift-header-spacer" aria-hidden="true"></div>
 {% endunless %}
 
@@ -61,9 +100,17 @@
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--riift-nav-bg-scrolled);
       padding: 20px var(--riift-page-gutter) 28px;
+    }
+
+    .riift-header--on_dark .riift-header__nav.is-open {
+      background: var(--riift-nav-bg-scrolled);
       border-bottom: 1px solid var(--riift-nav-border-scrolled);
+    }
+
+    .riift-header--on_light .riift-header__nav.is-open {
+      background: var(--riift-header-bg-light);
+      border-bottom: 1px solid var(--riift-header-border-light);
     }
   }
 {% endstylesheet %}
@@ -74,14 +121,34 @@
   "class": "riift-header-section",
   "settings": [
     {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Navigation colors",
+      "info": "Auto uses black nav on product pages and white nav elsewhere.",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "on_dark", "label": "White — over photos and dark backgrounds" },
+        { "value": "on_light", "label": "Black — over white and light backgrounds" }
+      ],
+      "default": "auto"
+    },
+    {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo (white on dark)"
+      "label": "Logo (white on dark)",
+      "info": "Used with white navigation over photos and dark backgrounds."
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_on_light",
+      "label": "Logo (black on light)",
+      "info": "Used with black navigation over white and light backgrounds. Defaults to theme black wordmark."
     },
     {
       "type": "checkbox",
       "id": "transparent_mode",
       "label": "Transparent until scroll",
+      "info": "White nav only. Black nav always shows a solid light bar.",
       "default": true
     },
     {

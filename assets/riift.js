@@ -5,6 +5,9 @@
     var header = document.querySelector('.riift-header');
     if (!header) return;
 
+    // Only white-on-dark + transparent uses scroll-to-solid behaviour
+    if (header.dataset.scrollNav !== 'true') return;
+
     var threshold = 40;
 
     function update() {
